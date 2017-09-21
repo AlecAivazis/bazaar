@@ -1,0 +1,10 @@
+dev:
+    summary: Start the necessary infrastructure for local develop
+    command: run start-zk && run start-kafka
+
+install-deps:
+    summary: Install the necessary packages for building the projects
+    command:
+      go get github.com/ethereum/go-ethereum &&
+      cd $GOPATH/src/github.com/ethereum/go-ethereum &&
+      go install ./cmd/abigen
