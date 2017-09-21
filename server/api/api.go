@@ -3,6 +3,7 @@ package api
 import (
 	"github.com/graphql-go/graphql"
 
+	"github.com/alecaivazis/bazr/server/api/mutations"
 	"github.com/alecaivazis/bazr/server/api/objectTypes"
 )
 
@@ -13,7 +14,8 @@ var Schema *graphql.Schema
 func init() {
 	// define the schema
 	schema, err := graphql.NewSchema(graphql.SchemaConfig{
-		Query: objectTypes.Query,
+		Query:    objectTypes.Query,
+		Mutation: mutations.Mutations,
 	})
 	// if something went wrong
 	if err != nil {

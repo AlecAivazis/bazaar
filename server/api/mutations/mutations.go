@@ -5,6 +5,8 @@ import (
 )
 
 var Mutations = graphql.NewObject(graphql.ObjectConfig{
-	Name:   "Mutation",
-	Fields: graphql.Fields{},
+	Name: "Mutation",
+	Fields: graphql.Fields{
+		"CreateFund": createFund,
+	},
 })

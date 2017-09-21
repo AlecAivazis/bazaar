@@ -5,6 +5,13 @@ import (
 )
 
 var Query = graphql.NewObject(graphql.ObjectConfig{
-	Name:   "BazrAPI",
-	Fields: graphql.Fields{},
+	Name: "BazrAPI",
+	Fields: graphql.Fields{
+		"hello": &graphql.Field{
+			Type: graphql.String,
+			Resolve: func(p graphql.ResolveParams) (interface{}, error) {
+				return "world", nil
+			},
+		},
+	},
 })
