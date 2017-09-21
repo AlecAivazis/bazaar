@@ -4,3 +4,10 @@ install-deps:
       go get github.com/ethereum/go-ethereum &&
       cd $GOPATH/src/github.com/ethereum/go-ethereum &&
       go install ./cmd/abigen
+
+build-contracts:
+    summary: Compiles the smart contract into a golang client
+    command:
+        rm -rf server/contracts &&
+        mkdir server/contracts &&
+        abigen --sol contracts/killswitch.sol --pkg contracts --out server/contracts/killswitch.go
