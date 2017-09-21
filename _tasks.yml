@@ -1,7 +1,3 @@
-dev:
-    summary: Start the necessary infrastructure for local develop
-    command: run start-zk && run start-kafka
-
 install-deps:
     summary: Install the necessary packages for building the projects
     command:
