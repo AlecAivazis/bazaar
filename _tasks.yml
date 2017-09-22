@@ -11,3 +11,18 @@ build-contracts:
         rm -rf server/contracts &&
         mkdir server/contracts &&
         abigen --sol contracts/killswitch.sol --pkg contracts --out server/contracts/killswitch.go
+
+genesis:
+    summary: initialize the local test blockchain
+    command: geth init --datadir testnet testnet/Genesis.json
+
+console:
+    summary: start the local blockchain
+    command: geth --datadir testnet --port 8545 console
+
+clean:
+    summary: clean up generated file
+    command:
+        rm -f server/server &&
+        rm -rf testnet/geth
+

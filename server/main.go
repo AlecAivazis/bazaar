@@ -1,8 +1,7 @@
-//go:generate abigen --sol ./contracts/killswitch.sol --pkg contracts --out ./contracts/killswitch.go
-
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/graphql-go/handler"
@@ -18,7 +17,14 @@ func main() {
 		GraphiQL: true,
 	})
 
-	// serve HTTP
+	// the port to run the server on
+	port := ":4000"
+
+	// add the graphql handlers
 	http.Handle("/graphql", h)
-	http.ListenAndServe(":4000", nil)
+
+	// notify the user
+	fmt.Println(fmt.Sprintf("bazr is running on %s", port))
+	// start the server
+	http.ListenAndServe(port, nil)
 }

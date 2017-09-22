@@ -1,2 +1,4 @@
-server/server
-server/contracts
+/server/server
+/server/contracts
+/testnet/geth
+/testnet/history
