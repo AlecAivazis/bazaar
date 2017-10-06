@@ -12,7 +12,7 @@ build-contracts:
         mkdir server/contracts &&
         abigen --sol contracts/killswitch.sol --pkg contracts --out server/contracts/killswitch.go
 
-genesis:
+testnet:
     summary: initialize the local test blockchain
     command: geth init --datadir testnet testnet/Genesis.json
 
