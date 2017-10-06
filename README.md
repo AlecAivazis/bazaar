@@ -1,5 +1,9 @@
 # bazr
 
+A place to compensate open source development
+
+## Running locally
+
 To run locally, install `run`: 
 
 ```bash
