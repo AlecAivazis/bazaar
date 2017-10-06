@@ -2,7 +2,7 @@
 
 A place to compensate open source development
 
-### Running locally
+## Running locally
 
 To run locally, install `run`: 
 
