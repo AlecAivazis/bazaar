@@ -2,19 +2,25 @@
 
 A place to compensate open source development
 
-## Running locally
+## Getting Started
 
 To run locally, install `run`: 
 
 ```bash
 go get github.com/AlecAivazis/run
 ```
-and then run the installation task:
+run the installation task:
 ```bash
 run install-deps
 ```
+initialize the testnet
+```bash
+run genesis
+```
 
-You're then ready to start the test net:
+## Running Locally
+
+Start the test net:
 ```bash
 run testnet
 ```
