@@ -18,10 +18,10 @@ genesis:
 
 testnet:
     summary: start the local blockchain
-    command: geth --datadir testnet --port 8545 console
+    command: geth --datadir testnet --rpc --nodiscover console
 
 clean:
-    summary: clean up generated file
+    summary: clean up generated files
     command:
         rm -f server/server &&
         rm -rf testnet/geth
