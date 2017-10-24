@@ -1,15 +1,15 @@
 install-deps:
     summary: Install the necessary packages for building the projects
-    command:
-      go get github.com/ethereum/go-ethereum &&
-      cd $GOPATH/src/github.com/ethereum/go-ethereum &&
-      go install ./cmd/abigen
+    command: |-
+        go get github.com/ethereum/go-ethereum
+        cd $GOPATH/src/github.com/ethereum/go-ethereum
+        go install ./cmd/abigen
 
 build-contracts:
     summary: Compiles the smart contract into a golang client
-    command:
-        rm -rf server/contracts &&
-        mkdir server/contracts &&
+    command: |-
+        rm -rf server/contracts
+        mkdir server/contracts
         abigen --sol contracts/killswitch.sol --pkg contracts --out server/contracts/killswitch.go
 
 genesis:
@@ -22,7 +22,6 @@ testnet:
 
 clean:
     summary: clean up generated files
-    command:
-        rm -f server/server &&
+    command: |-
+        rm -f server/server
         rm -rf testnet/geth
-
