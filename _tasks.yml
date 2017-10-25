@@ -1,6 +1,7 @@
 install-deps:
     summary: Install the necessary packages for building the projects
     command: |-
+        go get ./server/...
         go get github.com/ethereum/go-ethereum
         cd $GOPATH/src/github.com/ethereum/go-ethereum
         go install ./cmd/abigen
