@@ -4,7 +4,16 @@ A place to compensate open source development
 
 ## Getting Started
 
-To run locally, install `run`: 
+To run locally, first install `solc`: 
+```
+brew update
+brew upgrade
+brew tap ethereum/ethereum
+brew install solidity
+brew linkapps solidity
+```
+
+Then install `run` which is used to manage the development tasks for bazr: 
 
 ```bash
 go get github.com/AlecAivazis/run
