@@ -1,7 +1,13 @@
 // external imports
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { BrowserRouter } from 'react-router-dom'
 // local imports
 import { Root } from './views'
 
-ReactDOM.render(<Root/>, document.getElementById('root'))
+ReactDOM.render(
+    <BrowserRouter>
+        <Root />
+    </BrowserRouter>,
+    document.getElementById('root')
+)

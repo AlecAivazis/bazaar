@@ -1,26 +1,15 @@
 // external imports
-import React from "react";
-import { Card, CardGrid } from "quark-web";
-import { Text } from "react-native-web";
+import React from 'react'
+import { App } from 'quark-web'
+// local imports
+import styles from './styles'
+import AppBar from './AppBar'
 
 const Root = () => (
-  <CardGrid>
-    <Card>
-      <Text>hello</Text>
-    </Card>
-    <Card>
-      <Text>hello</Text>
-    </Card>
-    <Card>
-      <Text>hello</Text>
-    </Card>
-    <Card>
-      <Text>hello</Text>
-    </Card>
-    <Card>
-      <Text>hello</Text>
-    </Card>
-  </CardGrid>
-);
+    <App style={styles.container}>
+        <AppBar />
+        <div style={styles.content}>hello</div>
+    </App>
+)
 
-export default Root;
+export default Root
