@@ -2,3 +2,4 @@
 /server/contracts
 /testnet/geth
 /testnet/history
+/client/node_modules
