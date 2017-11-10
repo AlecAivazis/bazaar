@@ -1,6 +1,15 @@
 // external imports
+import { GraphQLSchema } from 'graphql'
 import { introspectSchema, makeRemoteExecutableSchema, mergeSchemas } from 'graphql-tools'
 import { createApolloFetch } from 'apollo-fetch'
+// local imports
+import { Query } from './objectTypes'
+
+// our local schema
+const localSchema = new GraphQLSchema({
+    description: 'The BazR project API',
+    query: Query
+})
 
 // create an executable wrapper over the remote GH schema
 async function createGHSchema() {
@@ -31,6 +40,8 @@ async function createGHSchema() {
 export async function createSchema() {
     // merge the two
     return mergeSchemas({
-        schemas: [await createGHSchema()]
+        schemas: [localSchema, await createGHSchema()],
+        // prefer local types over remote ones
+        onTypeConflict: (leftType, rightType) => leftType
     })
 }
