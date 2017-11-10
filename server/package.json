@@ -5,7 +5,9 @@
     "main": "index.js",
     "scripts": {
         "test": "jest",
-        "start": "babel-node index.js"
+        "start": "babel-node index.js",
+        "__internal__knex": "knex --knexfile database/knexfile.js",
+        "migrate": "npm run __internal__knex -- migrate:latest"
     },
     "keywords": [],
     "author": "Alec Aivazis",

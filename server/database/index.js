@@ -1,12 +1,6 @@
 // external imports
 import knex from 'knex'
+// local imports
+import { development } from './knexfile'
 
-// the path to the database file
-const filename = `${__dirname}/../db.sqlite3`
-
-export default knex({
-    client: 'sqlite3',
-    connection: {
-        filename
-    }
-})
+export default knex(development)
