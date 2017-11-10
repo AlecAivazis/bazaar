@@ -1,0 +1,35 @@
+{
+    "name": "server",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "jest",
+        "start": "babel-node index.js"
+    },
+    "keywords": [],
+    "author": "Alec Aivazis",
+    "license": "ISC",
+    "prettier": {
+        "tabWidth": 4,
+        "printWidth": 120,
+        "semi": false,
+        "singleQuote": true,
+        "trailing-comma": true
+    },
+    "dependencies": {
+        "@babel/cli": "^7.0.0-beta.31",
+        "@babel/core": "^7.0.0-beta.31",
+        "@babel/node": "^7.0.0-beta.31",
+        "@babel/preset-env": "^7.0.0-beta.31",
+        "apollo-fetch": "^0.6.0",
+        "apollo-server-express": "^1.2.0",
+        "babel-plugin-root-import": "^5.1.0",
+        "babel-preset-stage-0": "^6.24.1",
+        "body-parser": "^1.18.2",
+        "dotenv": "^4.0.0",
+        "express": "^4.16.2",
+        "graphql": "^0.11.7",
+        "graphql-tools": "^2.7.2"
+    }
+}
