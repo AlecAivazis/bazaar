@@ -2,13 +2,13 @@
 import { introspectSchema, makeRemoteExecutableSchema, mergeSchemas } from 'graphql-tools'
 import { createApolloFetch } from 'apollo-fetch'
 
-// a factory for the api's schema
-export async function createSchema() {
-    const githubFetcher = createApolloFetch({
+// create an executable wrapper over the remote GH schema
+async function createGHSchema() {
+    const fetcher = createApolloFetch({
         uri: 'https://api.github.com/graphql'
     })
     // make sure we use our authorization token
-    githubFetcher.use(({ request, options }, next) => {
+    fetcher.use(({ request, options }, next) => {
         if (!options.headers) {
             options.headers = {} // Create the headers object if needed.
         }
@@ -17,15 +17,20 @@ export async function createSchema() {
         next()
     })
 
-    // grab the universe schema
-    const ghSchema = await introspectSchema(githubFetcher)
-    const githubSchema = await makeRemoteExecutableSchema({
-        schema: ghSchema,
-        fetcher: githubFetcher
-    })
+    // grab the github schema
+    const schema = await introspectSchema(fetcher)
 
+    // create an executable version of the schema
+    return await makeRemoteExecutableSchema({
+        schema,
+        fetcher
+    })
+}
+
+// a factory for the api's schema
+export async function createSchema() {
     // merge the two
     return mergeSchemas({
-        schemas: [githubSchema]
+        schemas: [await createGHSchema()]
     })
 }
