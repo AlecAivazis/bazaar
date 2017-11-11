@@ -1,8 +1,7 @@
 exports.up = function(knex, Promise) {
-    return knex.schema.createTableIfNotExists('users', function(table) {
+    return knex.schema.createTableIfNotExists('projects', function(table) {
         table.increments()
-        table.string('name')
-        table.timestamps()
+        table.string('repoID')
     })
 }
 
