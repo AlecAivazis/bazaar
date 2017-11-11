@@ -40,6 +40,10 @@ const linkTypes = `
   extend type Project {
     repository: Repository
   }
+
+  extend type Transaction {
+    recipient: User
+  }
 `
 
 // a factory for the api's schema
@@ -63,6 +67,21 @@ export async function createSchema() {
                             'query',
                             'repository',
                             { owner, name },
+                            context,
+                            info
+                        )
+                    }
+                }
+            },
+            Transaction: {
+                recipient: {
+                    fragment: `fragment TransactionRecipientFragment on Transaction { recipientName }`,
+                    resolve: (parent, args, context, info) => {
+                        // return the repository designated by the ID
+                        return mergeInfo.delegate(
+                            'query',
+                            'user',
+                            { login: parent.recipientName },
                             context,
                             info
                         )
