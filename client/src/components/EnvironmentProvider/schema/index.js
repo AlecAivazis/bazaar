@@ -1,8 +1,8 @@
 // external imports
-const { mergeSchemas } = require('graphql-tools')
+import { mergeSchemas } from 'graphql-tools'
 // local imports
-var createGHSchema = require('./github')
-var createServerSchema = require('./server')
+import createGHSchema from './github'
+import createServerSchema from './server'
 
 // the type extensions to link schema together
 const linkTypes = `
@@ -16,7 +16,7 @@ extend type Transaction {
 `
 
 // a factory for the api's schema
-module.exports = async function createSchema() {
+export default async function createSchema() {
     // the remote schema
     const remoteSchemas = await Promise.all([createServerSchema(), createGHSchema()])
 

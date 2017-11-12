@@ -19,6 +19,12 @@
             "target": "http://localhost:4000"
         }
     },
+    "babel": {
+        "presets": [
+            "babel-preset-env",
+            "stage-0"
+        ]
+    },
     "dependencies": {
         "apollo-fetch": "^0.6.0",
         "babel-plugin-relay": "^1.4.1",
@@ -49,6 +55,7 @@
         "trailing-comma": true
     },
     "devDependencies": {
-        "babel-cli": "^6.26.0"
+        "babel-cli": "^6.26.0",
+        "babel-preset-env": "^1.6.1"
     }
 }
