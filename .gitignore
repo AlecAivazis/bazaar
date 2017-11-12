@@ -3,6 +3,7 @@
 /testnet/geth
 /testnet/history
 /client/node_modules
+/client/schema.json
 /server/node_modules
 /server/.env
 /server/dev.sqlite3
