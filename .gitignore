@@ -4,6 +4,8 @@
 /testnet/history
 /client/node_modules
 /client/schema.json
+/client/.env
 /server/node_modules
 /server/.env
 /server/dev.sqlite3
+__generated__

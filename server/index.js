@@ -4,14 +4,11 @@ import * as bodyParser from 'body-parser'
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express'
 import { config as configEnv } from 'dotenv'
 // local imports
-import { createSchema } from './schema'
+import schema from './schema'
 
 async function run() {
     // load environment variables
     configEnv()
-
-    // build the schema we will use
-    const schema = await createSchema()
 
     // an express app to use
     const app = express()

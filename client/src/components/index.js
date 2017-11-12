@@ -1,3 +1,4 @@
-export { default as Icon } from './Icon'
-export { default as Title } from './Title'
-export { default as PrimaryButton } from './PrimaryButton'
+export Icon from './Icon'
+export Title from './Title'
+export PrimaryButton from './PrimaryButton'
+export EnvironmentProvider from './EnvironmentProvider'

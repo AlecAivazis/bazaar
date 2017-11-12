@@ -4,10 +4,13 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter } from 'react-router-dom'
 // local imports
 import { Root } from './views'
+import { EnvironmentProvider } from './components'
 
 ReactDOM.render(
-    <BrowserRouter>
-        <Root />
-    </BrowserRouter>,
+    <EnvironmentProvider>
+        <BrowserRouter>
+            <Root />
+        </BrowserRouter>
+    </EnvironmentProvider>,
     document.getElementById('root')
 )
