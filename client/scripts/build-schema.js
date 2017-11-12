@@ -4,15 +4,17 @@ import { graphql } from 'graphql'
 import { introspectionQuery } from 'graphql/utilities'
 import fs from 'fs'
 // local imports
-import buildSchema from '../src/components/EnvironmentProvider/schema'
+import createSchema from '../src/schema'
 
 async function build() {
     // load the environment
     config()
+
+    // hit the remote server for the schema
     process.env.SERVER_ENDPOINT = 'http://localhost:4000/graphql'
 
     // build the schema we'll use in the client
-    const schema = await buildSchema()
+    const schema = await createSchema()
 
     // perform the introspection query
     const introspected = JSON.stringify(await graphql(schema, introspectionQuery), 2)

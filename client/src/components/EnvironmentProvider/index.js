@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import { Environment, Network, RecordSource, Store } from 'relay-runtime'
 import { graphql } from 'graphql'
 // local imports
-import createSchema from './schema'
+import createSchema from '../../schema'
 
 type Props = {
     children: any
