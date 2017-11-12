@@ -17,7 +17,7 @@ export default new GraphQLObjectType({
         project: {
             type: new GraphQLNonNull(Project),
             sqlJoin: (transactionTable, projectTable) =>
-                `${transactionTable}.project = ${projectTable}.id`
+                `${transactionTable}.project = ${projectTable}.repoID`
         }
     })
 })

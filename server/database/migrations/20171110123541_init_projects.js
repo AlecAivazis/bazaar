@@ -5,6 +5,12 @@ exports.up = function(knex, Promise) {
             table.string('repoID').unique()
         }),
 
+        // project membership table
+        knex.schema.createTableIfNotExists('project_membership', function(table) {
+            table.string('project').references('projects.repoID')
+            table.string('accountName')
+        }),
+
         // transaction table
         knex.schema.createTableIfNotExists('transactions', function(table) {
             table.increments()

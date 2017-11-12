@@ -8,7 +8,6 @@ export default new GraphQLObjectType({
     sqlTable: 'projects',
     uniqueKey: 'repoID',
     fields: () => ({
-        name: { type: new GraphQLNonNull(GraphQLString) },
         repoID: { type: new GraphQLNonNull(GraphQLString) },
         transactions: {
             type: new GraphQLList(Transaction),

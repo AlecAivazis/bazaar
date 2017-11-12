@@ -7,7 +7,9 @@
         "test": "jest",
         "start": "babel-node index.js",
         "__internal__knex": "knex --knexfile database/knexfile.js",
-        "migrate": "npm run __internal__knex -- migrate:latest"
+        "db:migrate": "npm run __internal__knex -- migrate:latest",
+        "db:seed": "npm run __internal__knex -- seed:run",
+        "db:init": "npm run db:migrate && npm run db:seed"
     },
     "keywords": [],
     "author": "Alec Aivazis",

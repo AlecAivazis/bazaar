@@ -57,7 +57,7 @@ export async function createSchema() {
         resolvers: mergeInfo => ({
             Project: {
                 repository: {
-                    fragment: `fragment ProjectRepositoryFragment on Project { repoID }`,
+                    fragment: 'fragment ProjectRepositoryFragment on Project { repoID }',
                     resolve: (parent, args, context, info) => {
                         // assume the id is in the format of <owner>/<name>
                         const [owner, name] = parent.repoID.split('/')
@@ -75,7 +75,8 @@ export async function createSchema() {
             },
             Transaction: {
                 recipient: {
-                    fragment: `fragment TransactionRecipientFragment on Transaction { recipientName }`,
+                    fragment:
+                        'fragment TransactionRecipientFragment on Transaction { recipientName }',
                     resolve: (parent, args, context, info) => {
                         // return the repository designated by the ID
                         return mergeInfo.delegate(
