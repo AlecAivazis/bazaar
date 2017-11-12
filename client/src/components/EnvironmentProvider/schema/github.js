@@ -1,9 +1,9 @@
 // external imports
-import { introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools'
-import { createApolloFetch } from 'apollo-fetch'
+var { introspectSchema, makeRemoteExecutableSchema } = require('graphql-tools')
+var { createApolloFetch } = require('apollo-fetch')
 
 // create an executable wrapper over the remote GH schema
-export default async function createGHSchema() {
+module.exports = async function createGHSchema() {
     const fetcher = createApolloFetch({
         uri: 'https://api.github.com/graphql'
     })
