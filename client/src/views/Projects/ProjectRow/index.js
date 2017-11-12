@@ -9,7 +9,9 @@ import styles from './styles'
 
 const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: any }) => (
     <View style={[styles.container, style]}>
-        <Text>{project.repository && project.repository.name}</Text>
+        <View style={styles.infoContainer}>
+            <Text style={styles.title}>{project.repository ? project.repository.name : 'repository not found'}</Text>
+        </View>
     </View>
 )
 

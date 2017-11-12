@@ -1,5 +1,3 @@
-import { grey2 } from 'quark-core/styles'
-
 export default {
     container: {
         flex: 1
