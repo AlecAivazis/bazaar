@@ -1,4 +1,5 @@
 # bazr
+[![Coverage Status](https://coveralls.io/repos/github/AlecAivazis/bazr/badge.svg)](https://coveralls.io/github/AlecAivazis/bazr)
 
 A place to compensate open source development
 
