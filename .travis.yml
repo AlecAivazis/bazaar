@@ -1,0 +1,17 @@
+# system setup
+sudo: required
+dist: trusty
+
+# language setup
+language: node_js
+node_js:
+  - "6"
+
+# setup yarn
+cache:
+  directories:
+    - server/node_modules
+
+# command to run tests
+script:
+  - cd server && npm i && npm run test:coverage:report
