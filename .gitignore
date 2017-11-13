@@ -8,4 +8,5 @@
 /server/node_modules
 /server/.env
 /server/dev.sqlite3
+/server/coverage
 __generated__

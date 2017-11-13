@@ -23,8 +23,12 @@ const Projects = (props, { environment }) => (
                     query={graphql`
                         query ProjectsQuery {
                             projects {
-                                repoID
-                                ...ProjectRow_project
+                                edges {
+                                    node {
+                                        repoID
+                                        ...ProjectRow_project
+                                    }
+                                }
                             }
                         }
                     `}
@@ -40,7 +44,7 @@ const Projects = (props, { environment }) => (
                         }
 
                         // we are done loading
-                        return props.projects.map((project, i) => (
+                        return props.projects.edges.map(({ node: project }, i) => (
                             <ProjectRow
                                 project={project}
                                 key={project.repoID}
