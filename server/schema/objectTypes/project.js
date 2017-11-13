@@ -1,8 +1,8 @@
 // external imports
 import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList } from 'graphql'
-import { connectionDefinitions } from 'graphql-relay'
+import { connectionDefinitions, connectionFromArray, connectionArgs } from 'graphql-relay'
 // local imports
-import { Transaction } from '.'
+import { TransactionConnection } from '.'
 
 export const ProjectType = new GraphQLObjectType({
     name: 'Project',
@@ -11,9 +11,11 @@ export const ProjectType = new GraphQLObjectType({
     fields: () => ({
         repoID: { type: new GraphQLNonNull(GraphQLString) },
         transactions: {
-            type: new GraphQLList(Transaction),
+            type: TransactionConnection,
+            args: connectionArgs,
             sqlJoin: (projectTable, transactionTable) =>
-                `${projectTable}.repoID = ${transactionTable}.project`
+                `${projectTable}.repoID = ${transactionTable}.project`,
+            resolve: (root, args) => connectionFromArray(root.transactions, args)
         }
     })
 })

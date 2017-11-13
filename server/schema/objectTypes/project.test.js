@@ -47,12 +47,12 @@ describe('API', () => {
         it('can be located on the root object', async () => {
             // the query for each project and its transactions
             const query = `
-              query {
-                  project(repoID: "AlecAivazis/survey") {
-                    repoID
-                  }
-              }
-          `
+                query {
+                    project(repoID: "AlecAivazis/survey") {
+                        repoID
+                    }
+               }
+            `
 
             // execute the query
             const result = await graphql(schema, query)
@@ -60,7 +60,40 @@ describe('API', () => {
             // make sure nothing went wrong
             expect(result.errors).toBeUndefined()
 
+            // make sure the ID matches what we supplied
             expect(result.data.project.repoID).toEqual('AlecAivazis/survey')
+        })
+
+        it('can find the transactions associated with a project', async () => {
+            // the query for each project and its transactions
+            const query = `
+                query {
+                    project(repoID: "AlecAivazis/survey") {
+                        transactions {
+                            edges {
+                                node {
+                                    amount
+                                }
+                            }
+                        }
+                    }
+               }
+            `
+
+            // execute the query
+            const result = await graphql(schema, query)
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+
+            // make sure we got all of the transactions
+            const transactions = result.data.project.transactions.edges.map(({ node }) => node)
+
+            // sort the transactions amounts
+            const amounts = transactions.map(({ amount }) => amount).sort()
+
+            // make sure we got each amount
+            expect(amounts).toEqual([1, 2, 3, 4])
         })
     })
 })

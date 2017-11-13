@@ -35,19 +35,19 @@ exports.seed = function(knex, Promise) {
                     {
                         fund: 1,
                         recipientName: 'AlecAivazis',
-                        amount: 1,
+                        amount: 2,
                         project: 'AlecAivazis/survey'
                     },
                     {
                         fund: 1,
                         recipientName: 'AlecAivazis',
-                        amount: 1,
+                        amount: 3,
                         project: 'AlecAivazis/survey'
                     },
                     {
                         fund: 1,
                         recipientName: 'AlecAivazis',
-                        amount: 1,
+                        amount: 4,
                         project: 'AlecAivazis/survey'
                     }
                 ])
