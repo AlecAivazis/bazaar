@@ -1,14 +1,20 @@
 // external imports
 import { GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLString } from 'graphql'
-import { connectionDefinitions } from 'graphql-relay'
+import { connectionDefinitions, globalIdField } from 'graphql-relay'
 // local imports
 import { Fund, ProjectType } from '.'
+import { nodeInterface } from '../nodeDefinition'
 
 const TransactionType = new GraphQLObjectType({
     name: 'Transaction',
+    interfaces: [nodeInterface],
     sqlTable: 'transactions',
     uniqueKey: 'id',
     fields: () => ({
+        id: {
+            ...globalIdField(),
+            sqlDeps: ['id']
+        },
         amount: { type: new GraphQLNonNull(GraphQLFloat) },
         recipientName: { type: new GraphQLNonNull(GraphQLString) },
         fund: {

@@ -6,6 +6,7 @@ import { connectionFromArray, connectionArgs } from 'graphql-relay'
 import { Project } from '.'
 import db from '../../database'
 import { ProjectType, ProjectConnection } from './project'
+import { nodeField } from '../nodeDefinition'
 
 export default new GraphQLObjectType({
     name: 'BazrAPI',
@@ -35,6 +36,7 @@ export default new GraphQLObjectType({
             resolve: (_, args, __, resolveInfo) => {
                 return joinMonster(resolveInfo, {}, db.raw)
             }
-        }
+        },
+        node: nodeField
     })
 })

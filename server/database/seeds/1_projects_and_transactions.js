@@ -6,9 +6,9 @@ exports.seed = function(knex, Promise) {
             .then(function() {
                 // Inserts seed entries
                 return knex('projects').insert([
-                    { repoID: 'AlecAivazis/survey' },
-                    { repoID: 'AlecAivazis/redux-responsive' },
-                    { repoID: 'AlecAivazis/feynman' }
+                    { id: 1, repoID: 'AlecAivazis/survey' },
+                    { id: 2, repoID: 'AlecAivazis/redux-responsive' },
+                    { id: 3, repoID: 'AlecAivazis/feynman' }
                 ])
             }),
         knex('funds')
@@ -27,24 +27,28 @@ exports.seed = function(knex, Promise) {
             .then(function() {
                 return knex('transactions').insert([
                     {
+                        id: 1,
                         fund: 1,
                         recipientName: 'AlecAivazis',
                         amount: 1,
                         project: 'AlecAivazis/survey'
                     },
                     {
+                        id: 2,
                         fund: 1,
                         recipientName: 'AlecAivazis',
                         amount: 2,
                         project: 'AlecAivazis/survey'
                     },
                     {
+                        id: 3,
                         fund: 1,
                         recipientName: 'AlecAivazis',
                         amount: 3,
                         project: 'AlecAivazis/survey'
                     },
                     {
+                        id: 4,
                         fund: 1,
                         recipientName: 'AlecAivazis',
                         amount: 4,
