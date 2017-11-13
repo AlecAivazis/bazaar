@@ -33,7 +33,8 @@ export const ProjectType = new GraphQLObjectType({
             type: new GraphQLNonNull(GraphQLInt),
             description: 'The total amount of ethereum earned over the lifetime of this project',
             sqlExpr: projects =>
-                `(SELECT sum(amount) FROM transactions WHERE project = ${projects}.id)`
+                `(SELECT sum(amount) FROM transactions WHERE project = ${projects}.id)`,
+            resolve: root => root.totalEarned || 0
         }
     })
 })

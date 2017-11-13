@@ -138,5 +138,26 @@ describe('API', () => {
             // make sure we computed the right total earned
             expect(result.data.node.totalEarned).toEqual(10)
         })
+
+        test('total amount earned defaults to 0', async () => {
+            // find the total earned
+            const result = await graphql(
+                schema,
+                `
+                    query {
+                        node(id: "${toGlobalId('Project', 2)}") {
+                            ... on Project {
+                                totalEarned
+                            }
+                        }
+                    }
+                `
+            )
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+            // make sure we computed the right total earned
+            expect(result.data.node.totalEarned).toEqual(0)
+        })
     })
 })
