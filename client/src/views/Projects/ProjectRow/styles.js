@@ -1,4 +1,4 @@
-import { grey5, grey2 } from 'quark-core/styles'
+import { grey5, grey4, grey2 } from 'quark-core/styles'
 
 export default {
     container: {
@@ -17,5 +17,15 @@ export default {
         fontSize: 18,
         color: grey5,
         marginBottom: 12
+    },
+    statContainer: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    stat: {
+        marginRight: 20,
+        fontSize: 14,
+        fontWeight: '100',
+        color: grey4
     }
 }

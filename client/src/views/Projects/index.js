@@ -48,7 +48,7 @@ const Projects = (props, { environment }) => (
                             <ProjectRow
                                 project={project}
                                 key={project.repoID}
-                                style={i === props.projects.length - 1 && styles.lastRow}
+                                style={i === props.projects.edges.length - 1 && styles.lastRow}
                             />
                         ))
                     }}
