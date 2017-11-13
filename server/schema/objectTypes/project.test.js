@@ -5,7 +5,7 @@ import { initDb, cleanDb } from '../../database'
 import schema from '..'
 
 describe('API', () => {
-    describe('Query', () => {
+    describe('Project', () => {
         beforeEach(initDb)
         afterEach(cleanDb)
 
@@ -42,6 +42,25 @@ describe('API', () => {
                 // there should be one project around survey
                 expect(projects.find(project => project.repoID === repoID)).toBeTruthy()
             }
+        })
+
+        it('can be located on the root object', async () => {
+            // the query for each project and its transactions
+            const query = `
+              query {
+                  project(repoID: "AlecAivazis/survey") {
+                    repoID
+                  }
+              }
+          `
+
+            // execute the query
+            const result = await graphql(schema, query)
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+
+            expect(result.data.project.repoID).toEqual('AlecAivazis/survey')
         })
     })
 })

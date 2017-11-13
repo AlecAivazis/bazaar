@@ -4,7 +4,7 @@ import { connectionDefinitions } from 'graphql-relay'
 // local imports
 import { Transaction } from '.'
 
-const Project = new GraphQLObjectType({
+export const ProjectType = new GraphQLObjectType({
     name: 'Project',
     sqlTable: 'projects',
     uniqueKey: 'repoID',
@@ -18,6 +18,6 @@ const Project = new GraphQLObjectType({
     })
 })
 
-export const { connectionType: ProjectConnection } = connectionDefinitions({ nodeType: Project })
-
-export default Project
+export const { connectionType: ProjectConnection } = connectionDefinitions({
+    nodeType: ProjectType
+})

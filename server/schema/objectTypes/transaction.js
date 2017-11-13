@@ -1,7 +1,7 @@
 // external imports
 import { GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLString } from 'graphql'
 // local imports
-import { Fund, Project } from '.'
+import { Fund, ProjectType } from '.'
 
 export default new GraphQLObjectType({
     name: 'Transaction',
@@ -15,7 +15,7 @@ export default new GraphQLObjectType({
             sqlJoin: (transactionTable, fundTable) => `${transactionTable}.fund = ${fundTable}.id`
         },
         project: {
-            type: new GraphQLNonNull(Project),
+            type: new GraphQLNonNull(ProjectType),
             sqlJoin: (transactionTable, projectTable) =>
                 `${transactionTable}.project = ${projectTable}.repoID`
         }
