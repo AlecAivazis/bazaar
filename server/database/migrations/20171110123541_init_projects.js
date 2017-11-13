@@ -2,8 +2,8 @@ exports.up = function(knex, Promise) {
     return Promise.all([
         // project table
         knex.schema.createTableIfNotExists('projects', function(table) {
-            table.increments()
-            table.string('repoID').unique()
+            table.increments().unique()
+            table.string('repoID')
         }),
 
         // project membership table

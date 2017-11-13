@@ -61,15 +61,12 @@ describe('API', () => {
         })
 
         it('can compute the project associated with a transaction', async () => {
-            // create a global ID from the id we are looking for
-            const id = toGlobalId('Transaction', 1)
-
             // find the transaction via the node endpoint
             const result = await graphql(
                 schema,
                 `
                   query {
-                      node(id: "${id}") {
+                      node(id: "${toGlobalId('Transaction', 1)}") {
                         ... on Transaction {
                           project {
                             id

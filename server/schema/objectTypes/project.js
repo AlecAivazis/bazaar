@@ -14,7 +14,7 @@ export const ProjectType = new GraphQLObjectType({
     name: 'Project',
     interfaces: [nodeInterface],
     sqlTable: 'projects',
-    uniqueKey: 'repoID',
+    uniqueKey: 'id',
     fields: () => ({
         id: {
             ...globalIdField(),

@@ -1,5 +1,6 @@
 // external imports
 import { graphql } from 'graphql'
+import { toGlobalId } from 'graphql-relay'
 // local imports
 import { initDb, cleanDb } from '../../database'
 import schema from '..'
@@ -44,7 +45,7 @@ describe('API', () => {
             }
         })
 
-        it('can be located on the root object', async () => {
+        test('can be located on the root object', async () => {
             // the query for each project and its transactions
             const query = `
                 query {
@@ -64,7 +65,7 @@ describe('API', () => {
             expect(result.data.project.repoID).toEqual('AlecAivazis/survey')
         })
 
-        it('can find the transactions associated with a project', async () => {
+        test('can find the transactions associated with a project', async () => {
             // the query for each project and its transactions
             const query = `
                 query {
@@ -94,6 +95,28 @@ describe('API', () => {
 
             // make sure we got each amount
             expect(amounts).toEqual([1, 2, 3, 4])
+        })
+
+        test('can find a project by id', async () => {
+            console.log(toGlobalId('Project', 1))
+            // look for the project with id 1
+            const result = await graphql(
+                schema,
+                `
+                    query {
+                        node(id: "${toGlobalId('Project', 1)}") {
+                            ... on Project {
+                                repoID
+                            }
+                        }
+                    }
+                `
+            )
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+            // make sure we got the right project
+            expect(result.data.node.repoID).toEqual('AlecAivazis/survey')
         })
     })
 })
