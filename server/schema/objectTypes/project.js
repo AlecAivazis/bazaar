@@ -23,6 +23,7 @@ export const ProjectType = new GraphQLObjectType({
         repoID: { type: new GraphQLNonNull(GraphQLString) },
         transactions: {
             type: TransactionConnection,
+            description: 'The transactions that have benefited this project',
             args: connectionArgs,
             sqlJoin: (projectTable, transactionTable) =>
                 `${projectTable}.id = ${transactionTable}.project`,
@@ -30,6 +31,7 @@ export const ProjectType = new GraphQLObjectType({
         },
         totalEarned: {
             type: new GraphQLNonNull(GraphQLInt),
+            description: 'The total amount of ethereum earned over the lifetime of this project',
             sqlExpr: projects =>
                 `(SELECT sum(amount) FROM transactions WHERE project = ${projects}.id)`
         }
