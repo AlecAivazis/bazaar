@@ -1,5 +1,5 @@
 // external imports
-import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList } from 'graphql'
+import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLList, GraphQLInt } from 'graphql'
 import {
     connectionDefinitions,
     connectionFromArray,
@@ -25,8 +25,13 @@ export const ProjectType = new GraphQLObjectType({
             type: TransactionConnection,
             args: connectionArgs,
             sqlJoin: (projectTable, transactionTable) =>
-                `${projectTable}.repoID = ${transactionTable}.project`,
+                `${projectTable}.id = ${transactionTable}.project`,
             resolve: (root, args) => connectionFromArray(root.transactions, args)
+        },
+        totalEarned: {
+            type: new GraphQLNonNull(GraphQLInt),
+            sqlExpr: projects =>
+                `(SELECT sum(amount) FROM transactions WHERE project = ${projects}.id)`
         }
     })
 })

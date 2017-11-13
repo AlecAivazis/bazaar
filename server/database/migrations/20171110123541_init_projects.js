@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
 
         // project membership table
         knex.schema.createTableIfNotExists('project_membership', function(table) {
-            table.string('project').references('projects.repoID')
+            table.string('project').references('projects.id')
             table.string('accountName')
         }),
 
@@ -21,7 +21,7 @@ exports.up = function(knex, Promise) {
 
             // project foreign key
             table.integer('project').unsigned()
-            table.foreign('project').references('projects.repoID')
+            table.foreign('project').references('projects.id')
 
             // fund foreign key
             table.integer('fund').unsigned()

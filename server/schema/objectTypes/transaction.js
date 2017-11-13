@@ -1,5 +1,5 @@
 // external imports
-import { GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLString } from 'graphql'
+import { GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLString, GraphQLInt } from 'graphql'
 import { connectionDefinitions, globalIdField } from 'graphql-relay'
 // local imports
 import { Fund, ProjectType } from '.'
@@ -24,7 +24,7 @@ const TransactionType = new GraphQLObjectType({
         project: {
             type: new GraphQLNonNull(ProjectType),
             sqlJoin: (transactionTable, projectTable) =>
-                `${transactionTable}.project = ${projectTable}.repoID`
+                `${transactionTable}.project = ${projectTable}.id`
         }
     })
 })
