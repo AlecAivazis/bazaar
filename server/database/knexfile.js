@@ -14,6 +14,14 @@ module.exports = {
         migrations
     },
 
+    test: {
+        client: 'sqlite3',
+        connection: {
+            filename: ':memory:'
+        },
+        migrations
+    },
+
     staging: {
         client: 'postgresql',
         connection: {

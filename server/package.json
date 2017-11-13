@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "jest",
+        "test": "NODE_ENV=test jest",
+        "test:watch": "npm run test -- --watch",
         "start": "babel-node index.js",
         "__internal__knex": "knex --knexfile database/knexfile.js",
         "db:migrate": "npm run __internal__knex -- migrate:latest",
@@ -21,15 +22,16 @@
         "singleQuote": true,
         "trailing-comma": true
     },
+    "jest": {
+        "testMatch": ["**/*test.js?(x)"]
+    },
     "dependencies": {
-        "@babel/cli": "^7.0.0-beta.31",
-        "@babel/core": "^7.0.0-beta.31",
-        "@babel/node": "^7.0.0-beta.31",
-        "@babel/preset-env": "^7.0.0-beta.31",
-        "@babel/preset-stage-0": "^7.0.0-beta.31",
         "apollo-fetch": "^0.6.0",
         "apollo-server-express": "^1.2.0",
+        "babel-cli": "^6.26.0",
+        "babel-jest": "^21.2.0",
         "babel-plugin-root-import": "^5.1.0",
+        "babel-preset-env": "^1.6.1",
         "babel-preset-stage-0": "^6.24.1",
         "body-parser": "^1.18.2",
         "dotenv": "^4.0.0",
@@ -39,6 +41,7 @@
         "join-monster": "^2.0.15",
         "join-monster-graphql-tools-adapter": "0.0.2",
         "knex": "^0.14.0",
+        "regenerator-runtime": "^0.11.0",
         "sqlite": "^2.8.0"
     }
 }

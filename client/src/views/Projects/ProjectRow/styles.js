@@ -13,7 +13,7 @@ export default {
         flexDirection: 'column'
     },
     title: {
-        fontWeight: 200,
+        fontWeight: '200',
         fontSize: 18,
         color: grey5,
         marginBottom: 12
