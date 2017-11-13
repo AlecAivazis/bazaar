@@ -98,7 +98,6 @@ describe('API', () => {
         })
 
         test('can find a project by id', async () => {
-            console.log(toGlobalId('Project', 1))
             // look for the project with id 1
             const result = await graphql(
                 schema,
