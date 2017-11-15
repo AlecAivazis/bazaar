@@ -20,7 +20,10 @@
         }
     },
     "babel": {
-        "presets": ["babel-preset-env", "stage-0"]
+        "presets": [
+            "babel-preset-env",
+            "stage-0"
+        ]
     },
     "dependencies": {
         "apollo-fetch": "^0.6.0",
@@ -42,6 +45,7 @@
         "react-relay": "^1.4.1",
         "react-router-dom": "^4.2.2",
         "react-scripts": "1.0.17",
+        "react-sparklines": "^1.7.0",
         "relay-compiler": "^1.4.1"
     },
     "prettier": {

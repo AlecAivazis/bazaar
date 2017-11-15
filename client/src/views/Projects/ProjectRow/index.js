@@ -6,6 +6,7 @@ import { createFragmentContainer, graphql } from 'react-relay'
 // local imports
 import type { ProjectRow_project } from './__generated__/ProjectRow_project.graphql.js'
 import styles from './styles'
+import { Sparkline } from '../../../components'
 
 const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: any }) => (
     <View style={[styles.container, style]}>
@@ -16,6 +17,13 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
                 <Text style={styles.stat}>{project.repository.issues.totalCount} open issues</Text>
             </View>
         </View>
+        <Sparkline
+            data={[1, 2, 3]}
+            style={{ width: 285 }}
+            color={project.repository.languages.edges[0].node.color}
+            width={285}
+            height={44}
+        />
     </View>
 )
 
@@ -28,6 +36,13 @@ export default createFragmentContainer(
                 name
                 issues(states: [OPEN]) {
                     totalCount
+                }
+                languages(first: 1, orderBy: { field: SIZE, direction: DESC }) {
+                    edges {
+                        node {
+                            color
+                        }
+                    }
                 }
             }
         }
