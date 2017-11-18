@@ -12,7 +12,8 @@ export default {
     infoContainer: {
         display: 'flex',
         flexGrow: 1,
-        flexDirection: 'column'
+        flexDirection: 'column',
+        justifyContent: 'center'
     },
     title: {
         fontWeight: '200',

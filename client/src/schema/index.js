@@ -10,8 +10,8 @@ extend type Project {
   repository: Repository
 }
 
-extend type Transaction {
-  recipient: User
+extend type BazrUser {
+  profile: User
 }
 `
 
