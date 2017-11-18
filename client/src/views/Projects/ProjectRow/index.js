@@ -42,7 +42,7 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
                 </View>
             </View>
             <Sparkline
-                data={sparklineData}
+                data={sparklineData.length > 0 ? sparklineData : [1, 1]}
                 style={{ width: 285 }}
                 color={project.repository.languages.edges[0].node.color}
                 width={285}
