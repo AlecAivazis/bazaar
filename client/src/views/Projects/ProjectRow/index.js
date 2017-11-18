@@ -15,6 +15,9 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
             <View style={styles.statContainer}>
                 <Text style={styles.stat}>{project.totalEarned} Ξ earned</Text>
                 <Text style={styles.stat}>{project.repository.issues.totalCount} open issues</Text>
+                <Text style={styles.stat}>
+                    {project.contributors.count} contributor{project.contributors.count > 1 && 's'}
+                </Text>
             </View>
         </View>
         <Sparkline
@@ -32,6 +35,9 @@ export default createFragmentContainer(
     graphql`
         fragment ProjectRow_project on Project {
             totalEarned
+            contributors {
+                count
+            }
             repository {
                 name
                 issues(states: [OPEN]) {

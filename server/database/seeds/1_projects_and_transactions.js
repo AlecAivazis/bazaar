@@ -24,7 +24,10 @@ exports.seed = function(knex, Promise) {
         knex('users')
             .del()
             .then(function() {
-                return knex('users').insert([{ id: 1, accountName: 'AlecAivazis' }])
+                return knex('users').insert([
+                    { id: 1, accountName: 'AlecAivazis' },
+                    { id: 2, accountName: 'aivazis' }
+                ])
             })
         // once we've made some funds and projects
     ]).then(function() {
@@ -80,6 +83,14 @@ exports.seed = function(knex, Promise) {
                     return knex('project_membership').insert([
                         {
                             project: 1,
+                            user: 1
+                        },
+                        {
+                            project: 1,
+                            user: 2
+                        },
+                        {
+                            project: 2,
                             user: 1
                         }
                     ])
