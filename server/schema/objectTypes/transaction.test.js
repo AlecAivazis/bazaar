@@ -11,15 +11,12 @@ describe('API', () => {
         afterEach(cleanDb)
 
         it('can find transaction by id', async () => {
-            // create a global ID from the id we are looking for
-            const id = toGlobalId('Transaction', 1)
-
             // find the transaction via the node endpoint
             const result = await graphql(
                 schema,
                 `
                     query {
-                        node(id: "${id}") {
+                        node(id: "${toGlobalId('Transaction', 1)}") {
                           ... on Transaction {
                             amount
                           }
@@ -35,15 +32,12 @@ describe('API', () => {
         })
 
         it('can compute the fund associated with a transaction', async () => {
-            // create a global ID from the id we are looking for
-            const id = toGlobalId('Transaction', 1)
-
             // find the transaction via the node endpoint
             const result = await graphql(
                 schema,
                 `
                     query {
-                        node(id: "${id}") {
+                        node(id: "${toGlobalId('Transaction', 1)}") {
                           ... on Transaction {
                             fund {
                               id

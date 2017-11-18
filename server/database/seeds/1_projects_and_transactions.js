@@ -1,3 +1,5 @@
+var moment = require('moment')
+
 exports.seed = function(knex, Promise) {
     // make some projects and funds
     return Promise.all([
@@ -18,6 +20,11 @@ exports.seed = function(knex, Promise) {
                     { id: 1, name: "Bill Gate's fund" },
                     { id: 2, name: 'Another Awesome Fund' }
                 ])
+            }),
+        knex('users')
+            .del()
+            .then(function() {
+                return knex('users').insert([{ id: 1, accountName: 'AlecAivazis' }])
             })
         // once we've made some funds and projects
     ]).then(function() {
@@ -28,29 +35,39 @@ exports.seed = function(knex, Promise) {
                 return knex('transactions').insert([
                     {
                         id: 1,
+                        created_at: moment().toDate(),
                         fund: 1,
-                        recipientName: 'AlecAivazis',
+                        recipientId: 1,
                         amount: 1,
                         project: 1
                     },
                     {
                         id: 2,
+                        created_at: moment()
+                            .subtract(1, 'day')
+                            .toDate(),
                         fund: 1,
-                        recipientName: 'AlecAivazis',
+                        recipientId: 1,
                         amount: 2,
                         project: 1
                     },
                     {
                         id: 3,
+                        created_at: moment()
+                            .subtract(2, 'day')
+                            .toDate(),
                         fund: 1,
-                        recipientName: 'AlecAivazis',
+                        recipientId: 1,
                         amount: 3,
                         project: 1
                     },
                     {
                         id: 4,
+                        created_at: moment()
+                            .subtract(3, 'day')
+                            .toDate(),
                         fund: 1,
-                        recipientName: 'AlecAivazis',
+                        recipientId: 1,
                         amount: 4,
                         project: 1
                     }

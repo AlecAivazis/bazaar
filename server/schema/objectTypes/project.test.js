@@ -97,6 +97,26 @@ describe('API', () => {
             expect(amounts).toEqual([1, 2, 3, 4])
         })
 
+        test('can compute the sparkline data', async () => {
+            // the query for the sparkline data
+            const result = await graphql(
+                schema,
+                `
+                    query {
+                        project(repoID: "AlecAivazis/survey") {
+                            sparkLine(days: 2)
+                        }
+                    }
+                `
+            )
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+
+            // make sure we only go t a list of the most recent transacion
+            expect(result.data.project.sparkLine).toEqual([2, 1])
+        })
+
         test('can find a project by id', async () => {
             // look for the project with id 1
             const result = await graphql(

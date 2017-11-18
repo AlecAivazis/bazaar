@@ -2,7 +2,7 @@
 import { GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLString, GraphQLInt } from 'graphql'
 import { connectionDefinitions, globalIdField } from 'graphql-relay'
 // local imports
-import { Fund, ProjectType } from '.'
+import { Fund, ProjectType, User } from '.'
 import { nodeInterface } from '../nodeDefinition'
 
 const TransactionType = new GraphQLObjectType({
@@ -16,7 +16,11 @@ const TransactionType = new GraphQLObjectType({
             sqlDeps: ['id']
         },
         amount: { type: new GraphQLNonNull(GraphQLFloat) },
-        recipientName: { type: new GraphQLNonNull(GraphQLString) },
+        recipient: {
+            type: new GraphQLNonNull(User),
+            sqlJoin: (transactionTable, userTable) =>
+                `${transactionTable}.recipient = ${userTable}.id`
+        },
         fund: {
             type: new GraphQLNonNull(Fund),
             sqlJoin: (transactionTable, fundTable) => `${transactionTable}.fund = ${fundTable}.id`

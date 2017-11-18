@@ -35,6 +35,19 @@ export const ProjectType = new GraphQLObjectType({
             sqlExpr: projects =>
                 `(SELECT sum(amount) FROM transactions WHERE project = ${projects}.id)`,
             resolve: root => root.totalEarned || 0
+        },
+        sparkLine: {
+            type: new GraphQLList(GraphQLInt),
+            args: {
+                days: { type: GraphQLInt, defaultValue: 365 }
+            },
+            description:
+                'The amount of money earned starting at the specified number of days before today',
+            sqlTable: '(SELECT * FROM transactions WHERE project = projects.id)',
+            resolve: root => {
+                // the transaction
+                console.log(root)
+            }
         }
     })
 })
