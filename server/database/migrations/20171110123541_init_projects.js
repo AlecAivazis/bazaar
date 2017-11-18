@@ -23,7 +23,7 @@ exports.up = function(knex, Promise) {
             table.increments()
             table.float('amount')
             table.string('recipientId').references('users.id')
-            table.timestamps()
+            table.timestamp('created_at').defaultTo(knex.fn.now())
 
             // project foreign key
             table.integer('project').unsigned()

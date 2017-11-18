@@ -39,7 +39,9 @@ exports.seed = function(knex, Promise) {
                     return knex('transactions').insert([
                         {
                             id: 1,
-                            created_at: moment().toDate(),
+                            created_at: moment()
+                                .utc()
+                                .format(),
                             fund: 1,
                             recipientId: 1,
                             amount: 1,
@@ -49,7 +51,8 @@ exports.seed = function(knex, Promise) {
                             id: 2,
                             created_at: moment()
                                 .subtract(1, 'day')
-                                .toDate(),
+                                .utc()
+                                .format(),
                             fund: 1,
                             recipientId: 1,
                             amount: 2,
@@ -58,8 +61,9 @@ exports.seed = function(knex, Promise) {
                         {
                             id: 3,
                             created_at: moment()
-                                .subtract(2, 'day')
-                                .toDate(),
+                                .subtract(1, 'day')
+                                .utc()
+                                .format(),
                             fund: 1,
                             recipientId: 1,
                             amount: 3,
@@ -69,7 +73,8 @@ exports.seed = function(knex, Promise) {
                             id: 4,
                             created_at: moment()
                                 .subtract(3, 'day')
-                                .toDate(),
+                                .utc()
+                                .format(),
                             fund: 1,
                             recipientId: 1,
                             amount: 4,

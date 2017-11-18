@@ -9,6 +9,7 @@ import {
 // local imports
 import { TransactionConnection, UserConnection } from '.'
 import { nodeInterface } from '../nodeDefinition'
+import database from '../../database'
 
 export const ProjectType = new GraphQLObjectType({
     name: 'Project',
@@ -55,19 +56,6 @@ export const ProjectType = new GraphQLObjectType({
                 connection.count = root.contributors.length
                 // return the final connection
                 return connection
-            }
-        },
-        sparkLine: {
-            type: new GraphQLList(GraphQLInt),
-            args: {
-                days: { type: GraphQLInt, defaultValue: 365 }
-            },
-            description:
-                'The amount of money earned starting at the specified number of days before today',
-            sqlTable: '(SELECT * FROM transactions WHERE project = projects.id)',
-            resolve: root => {
-                // the transaction
-                console.log(root)
             }
         }
     })

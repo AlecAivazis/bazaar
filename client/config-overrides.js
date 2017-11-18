@@ -7,6 +7,8 @@ configEnv()
 module.exports = function override(config, env) {
     // add the relay plugin
     let innerConfig = injectBabelPlugin('relay', config)
+    // add the lodash plugin
+    innerConfig = injectBabelPlugin('lodash', config)
     // tranform process variables to the client
     innerConfig = injectBabelPlugin(
         [

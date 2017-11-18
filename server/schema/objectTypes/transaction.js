@@ -16,6 +16,7 @@ const TransactionType = new GraphQLObjectType({
             sqlDeps: ['id']
         },
         amount: { type: new GraphQLNonNull(GraphQLFloat) },
+        created_at: { type: new GraphQLNonNull(GraphQLString) },
         recipient: {
             type: new GraphQLNonNull(User),
             sqlJoin: (transactionTable, userTable) =>

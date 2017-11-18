@@ -97,26 +97,6 @@ describe('API', () => {
             expect(amounts).toEqual([1, 2, 3, 4])
         })
 
-        test('can compute the sparkline data', async () => {
-            // the query for the sparkline data
-            const result = await graphql(
-                schema,
-                `
-                    query {
-                        project(repoID: "AlecAivazis/survey") {
-                            sparkLine(days: 2)
-                        }
-                    }
-                `
-            )
-
-            // make sure nothing went wrong
-            expect(result.errors).toBeUndefined()
-
-            // make sure we only go t a list of the most recent transacion
-            expect(result.data.project.sparkLine).toEqual([2, 1])
-        })
-
         test('can find a project by id', async () => {
             // look for the project with id 1
             const result = await graphql(
@@ -188,7 +168,8 @@ describe('API', () => {
 
             // make sure we computed the right total earned
             expect(result.data.node.contributors.edges.map(({ node }) => node.id)).toEqual([
-                toGlobalId('BazrUser', 1)
+                toGlobalId('BazrUser', 1),
+                toGlobalId('BazrUser', 2)
             ])
         })
 
@@ -213,7 +194,7 @@ describe('API', () => {
             expect(result.errors).toBeUndefined()
 
             // make sure we got the right count
-            expect(result.data.node.contributors.count).toEqual(1)
+            expect(result.data.node.contributors.count).toEqual(2)
         })
 
         test('total amount earned defaults to 0', async () => {
