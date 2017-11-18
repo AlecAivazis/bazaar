@@ -76,5 +76,28 @@ describe('API', () => {
             // make sure we found the right transaction
             expect(result.data.node.project.id).toEqual(toGlobalId('Project', 1))
         })
+
+        it('can find the recipient of a transaction', async () => {
+            // find the transaction via the node endpoint
+            const result = await graphql(
+                schema,
+                `
+                  query {
+                    node(id: "${toGlobalId('Transaction', 1)}") {
+                      ... on Transaction {
+                        recipient {
+                          id
+                        }
+                      }
+                    }
+                  }
+              `
+            )
+
+            // make sure there aren't any errors
+            expect(result.errors).toBeUndefined()
+            // make sure we found the right transaction
+            expect(result.data.node.recipient.id).toEqual(toGlobalId('BazrUser', 1))
+        })
     })
 })

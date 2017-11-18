@@ -29,49 +29,61 @@ exports.seed = function(knex, Promise) {
         // once we've made some funds and projects
     ]).then(function() {
         // let's pay some users
-        return knex('transactions')
-            .del()
-            .then(function() {
-                return knex('transactions').insert([
-                    {
-                        id: 1,
-                        created_at: moment().toDate(),
-                        fund: 1,
-                        recipientId: 1,
-                        amount: 1,
-                        project: 1
-                    },
-                    {
-                        id: 2,
-                        created_at: moment()
-                            .subtract(1, 'day')
-                            .toDate(),
-                        fund: 1,
-                        recipientId: 1,
-                        amount: 2,
-                        project: 1
-                    },
-                    {
-                        id: 3,
-                        created_at: moment()
-                            .subtract(2, 'day')
-                            .toDate(),
-                        fund: 1,
-                        recipientId: 1,
-                        amount: 3,
-                        project: 1
-                    },
-                    {
-                        id: 4,
-                        created_at: moment()
-                            .subtract(3, 'day')
-                            .toDate(),
-                        fund: 1,
-                        recipientId: 1,
-                        amount: 4,
-                        project: 1
-                    }
-                ])
-            })
+        return Promise.all([
+            knex('transactions')
+                .del()
+                .then(function() {
+                    return knex('transactions').insert([
+                        {
+                            id: 1,
+                            created_at: moment().toDate(),
+                            fund: 1,
+                            recipientId: 1,
+                            amount: 1,
+                            project: 1
+                        },
+                        {
+                            id: 2,
+                            created_at: moment()
+                                .subtract(1, 'day')
+                                .toDate(),
+                            fund: 1,
+                            recipientId: 1,
+                            amount: 2,
+                            project: 1
+                        },
+                        {
+                            id: 3,
+                            created_at: moment()
+                                .subtract(2, 'day')
+                                .toDate(),
+                            fund: 1,
+                            recipientId: 1,
+                            amount: 3,
+                            project: 1
+                        },
+                        {
+                            id: 4,
+                            created_at: moment()
+                                .subtract(3, 'day')
+                                .toDate(),
+                            fund: 1,
+                            recipientId: 1,
+                            amount: 4,
+                            project: 1
+                        }
+                    ])
+                }),
+            knex('project_membership')
+                .del()
+                .then(function() {
+                    return knex('project_membership').insert([
+                        {
+                            project: 1,
+                            user: 1
+                        }
+                    ])
+                })
+        ])
     })
 }

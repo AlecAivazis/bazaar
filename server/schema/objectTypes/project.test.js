@@ -159,6 +159,63 @@ describe('API', () => {
             expect(result.data.node.totalEarned).toEqual(10)
         })
 
+        test('can find the contributors for a project', async () => {
+            // find the total earned
+            const result = await graphql(
+                schema,
+                `
+                    query {
+                        node(id: "${toGlobalId('Project', 1)}") {
+                            ... on Project {
+                                contributors {
+                                    edges {
+                                        node {
+                                            id
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                `
+            )
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+
+            // make sure we got some sort of list back
+            expect(result.data.node.contributors.edges).toBeTruthy()
+
+            // make sure we computed the right total earned
+            expect(result.data.node.contributors.edges.map(({ node }) => node.id)).toEqual([
+                toGlobalId('BazrUser', 1)
+            ])
+        })
+
+        test('can count the number of contributors', async () => {
+            // find the number of contributors
+            const result = await graphql(
+                schema,
+                `
+                    query {
+                        node(id: "${toGlobalId('Project', 1)}") {
+                            ... on Project {
+                                contributors {
+                                    count
+                                }
+                            }
+                        }
+                    }
+                `
+            )
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+
+            // make sure we got the right count
+            expect(result.data.node.contributors.count).toEqual(1)
+        })
+
         test('total amount earned defaults to 0', async () => {
             // find the total earned
             const result = await graphql(

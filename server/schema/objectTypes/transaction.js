@@ -19,7 +19,7 @@ const TransactionType = new GraphQLObjectType({
         recipient: {
             type: new GraphQLNonNull(User),
             sqlJoin: (transactionTable, userTable) =>
-                `${transactionTable}.recipient = ${userTable}.id`
+                `${transactionTable}.recipientId = ${userTable}.id`
         },
         fund: {
             type: new GraphQLNonNull(Fund),

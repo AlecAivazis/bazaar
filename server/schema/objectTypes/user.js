@@ -1,10 +1,10 @@
 // external imports
-import { GraphQLObjectType, GraphQLString, GraphQLNonNull } from 'graphql'
-import { globalIdField } from 'graphql-relay'
+import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLInt } from 'graphql'
+import { globalIdField, connectionDefinitions } from 'graphql-relay'
 // local imports
 import { nodeInterface } from '../nodeDefinition'
 
-export default new GraphQLObjectType({
+export const User = new GraphQLObjectType({
     name: 'BazrUser',
     interfaces: [nodeInterface],
     sqlTable: 'users',
@@ -15,5 +15,12 @@ export default new GraphQLObjectType({
             sqlDeps: ['id']
         },
         accountName: { type: new GraphQLNonNull(GraphQLString) }
+    })
+})
+
+export const { connectionType: UserConnection } = connectionDefinitions({
+    nodeType: User,
+    connectionFields: () => ({
+        count: { type: GraphQLInt }
     })
 })

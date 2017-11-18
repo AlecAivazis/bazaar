@@ -7,7 +7,7 @@ import {
     globalIdField
 } from 'graphql-relay'
 // local imports
-import { TransactionConnection } from '.'
+import { TransactionConnection, UserConnection } from '.'
 import { nodeInterface } from '../nodeDefinition'
 
 export const ProjectType = new GraphQLObjectType({
@@ -35,6 +35,27 @@ export const ProjectType = new GraphQLObjectType({
             sqlExpr: projects =>
                 `(SELECT sum(amount) FROM transactions WHERE project = ${projects}.id)`,
             resolve: root => root.totalEarned || 0
+        },
+        contributors: {
+            type: new GraphQLNonNull(UserConnection),
+            description: 'The users who are allowed to earn money for this project',
+            args: connectionArgs,
+            junction: {
+                sqlTable: 'project_membership',
+                sqlJoins: [
+                    (projectTable, membershipTable) =>
+                        `${projectTable}.id = ${membershipTable}.project`,
+                    (membershipTable, userTable) => `${membershipTable}.user = ${userTable}.id`
+                ]
+            },
+            resolve: (root, args) => {
+                // turn the list into a connection
+                const connection = connectionFromArray(root.contributors, args)
+                // save the length
+                connection.count = root.contributors.length
+                // return the final connection
+                return connection
+            }
         },
         sparkLine: {
             type: new GraphQLList(GraphQLInt),

@@ -39,12 +39,12 @@ export default async function createSchema() {
                     }
                 }
             },
-            Transaction: {
-                recipient: {
-                    fragment: 'fragment TransactionRecipientFragment on Transaction { recipientName }',
+            BazrUser: {
+                profile: {
+                    fragment: 'fragment BazrUserProfile on BazrUesr { accountName }',
                     resolve: (parent, args, context, info) => {
                         // return the repository designated by the ID
-                        return mergeInfo.delegate('query', 'user', { login: parent.recipientName }, context, info)
+                        return mergeInfo.delegate('query', 'user', { login: parent.accountName }, context, info)
                     }
                 }
             }
