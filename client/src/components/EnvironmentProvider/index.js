@@ -32,14 +32,7 @@ class EnvironmentProvider extends React.Component<Props, State> {
         // load the client's schema
         const schema = await createSchema()
 
-        // define how queries are performed
-        async function fetchQuery(operation, variables, cacheConfig, uploadables) {
-            // perform the query
-            const result = await graphql(schema, operation.text, variables)
-
-            // return the result
-            return result
-        }
+        const fetchQuery = async (operation, variables) => await graphql(schema, operation.text, null, null, variables)
 
         // create an environment stored in state
         this.setState({

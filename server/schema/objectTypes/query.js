@@ -1,5 +1,5 @@
 // external imports
-import { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLNonNull } from 'graphql'
+import { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLID, GraphQLNonNull } from 'graphql'
 import joinMonster from 'join-monster'
 import { connectionFromArray, connectionArgs } from 'graphql-relay'
 // local imports
@@ -28,7 +28,7 @@ export default new GraphQLObjectType({
             type: ProjectType,
             args: {
                 repoID: {
-                    type: new GraphQLNonNull(GraphQLString),
+                    type: new GraphQLNonNull(GraphQLID),
                     description: 'The name of the repository that the project is tracking'
                 }
             },

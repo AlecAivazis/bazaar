@@ -5,6 +5,8 @@ import { View, Text } from 'react-native-web'
 import { createFragmentContainer, graphql } from 'react-relay'
 import moment from 'moment'
 import { countBy } from 'lodash'
+import { BooleanState } from 'quark-web'
+import { Link } from 'react-router-dom'
 // local imports
 import type { ProjectRow_project } from './__generated__/ProjectRow_project.graphql.js'
 import styles from './styles'
@@ -36,27 +38,37 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
     }
 
     return (
-        <View style={[styles.container, style]}>
-            <View style={styles.infoContainer}>
-                <Text style={styles.title}>
-                    {project.repository ? project.repository.name : 'repository not found'}
-                </Text>
-                <View style={styles.statContainer}>
-                    <Text style={styles.stat}>{project.totalEarned} Ξ earned</Text>
-                    <Text style={styles.stat}>{project.repository.issues.totalCount} open issues</Text>
-                    <Text style={styles.stat}>
-                        {project.contributors.count} contributor{project.contributors.count > 1 && 's'}
-                    </Text>
-                </View>
-            </View>
-            <Sparkline
-                data={sparklineData.length > 0 ? sparklineData : [1, 1]}
-                style={{ width: 285 }}
-                color={project.repository.languages.edges[0].node.color}
-                width={285}
-                height={44}
-            />
-        </View>
+        <BooleanState>
+            {({ state, set }) => (
+                <Link to={`/${project.repoID}`}>
+                    <View
+                        style={[state ? styles.containerHover : styles.container, style]}
+                        onMouseEnter={() => set(true)}
+                        onMouseLeave={() => set(false)}
+                    >
+                        <View style={styles.infoContainer}>
+                            <Text style={styles.title}>
+                                {project.repository ? project.repository.name : 'repository not found'}
+                            </Text>
+                            <View style={styles.statContainer}>
+                                <Text style={styles.stat}>{project.totalEarned} Ξ earned</Text>
+                                <Text style={styles.stat}>{project.repository.issues.totalCount} open issues</Text>
+                                <Text style={styles.stat}>
+                                    {project.contributors.count} contributor{project.contributors.count > 1 && 's'}
+                                </Text>
+                            </View>
+                        </View>
+                        <Sparkline
+                            data={sparklineData.length > 0 ? sparklineData : [1, 1]}
+                            style={{ width: 285 }}
+                            color={project.repository.languages.edges[0].node.color}
+                            width={285}
+                            height={44}
+                        />
+                    </View>
+                </Link>
+            )}
+        </BooleanState>
     )
 }
 
@@ -64,6 +76,7 @@ export default createFragmentContainer(
     ProjectRow,
     graphql`
         fragment ProjectRow_project on Project {
+            repoID
             totalEarned
             contributors {
                 count
