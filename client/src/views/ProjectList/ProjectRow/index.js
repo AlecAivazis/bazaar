@@ -10,13 +10,18 @@ import { Link } from 'react-router-dom'
 // local imports
 import type { ProjectRow_project } from './__generated__/ProjectRow_project.graphql.js'
 import styles from './styles'
-import { Sparkline } from '../../../components'
+import { Sparkline, RepositoryOpenIssues } from '../../../components'
 
 const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: any }) => {
+    // guards
+    if (!project.transactions || !project.transactions.edges || !project.repository) {
+        throw new Error('Could not find transactions associated with this project.')
+    }
+
     // group the transactions by the day they occured
 
     // the count of transactions by day
-    const dayCount = countBy(project.transactions.edges.map(({ node }) => node), datum => {
+    const dayCount = countBy(project.transactions.edges.map(edge => edge && edge.node), datum => {
         return moment(datum.created_at)
             .startOf('day')
             .format()
@@ -54,9 +59,13 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
                             </Text>
                             <View style={styles.statContainer}>
                                 <Text style={styles.stat}>{project.totalEarned} Ξ earned</Text>
-                                <Text style={styles.stat}>{project.repository.issues.totalCount} open issues</Text>
                                 <Text style={styles.stat}>
-                                    {project.contributors.count} contributor{project.contributors.count > 1 && 's'}
+                                    <RepositoryOpenIssues repository={project.repository}>
+                                        {openIssues => `${openIssues} open issues`}
+                                    </RepositoryOpenIssues>
+                                </Text>
+                                <Text style={styles.stat}>
+                                    {project.contributors.count} contributor{(project.contributors.count || 0) > 1 && 's'}
                                 </Text>
                             </View>
                         </View>
@@ -95,9 +104,7 @@ export default createFragmentContainer(
                 owner {
                     login
                 }
-                issues(states: [OPEN]) {
-                    totalCount
-                }
+                ...OpenIssues_repository
                 languages(first: 1, orderBy: { field: SIZE, direction: DESC }) {
                     edges {
                         node {

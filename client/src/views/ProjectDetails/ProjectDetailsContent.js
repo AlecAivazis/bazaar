@@ -16,8 +16,15 @@ type Props = {
 }
 
 const ProjectDetailsContent = ({ project }: Props) => {
-    // the base url
+    console.log(project)
+    // if there is no owner
+    if (!project.repository || !project.repository.owner) {
+        return null
+    }
+
+    // the base urld
     const url = `/${project.repository.owner.login}/${project.repository.name}`
+    console.log(url)
     return [
         <View key="header" style={styles.header}>
             <Title>
@@ -33,7 +40,10 @@ const ProjectDetailsContent = ({ project }: Props) => {
             </View>
         </View>,
         <Switch key="routes">
-            <Route path={`${url}/overview`} render={match => <Overview project={project} {...match} />} />
+            <Route
+                path={`${url}/overview`}
+                render={match => <Overview project={project} repository={project.repository} {...match} />}
+            />
             <Route path={`${url}/settings`} render={match => <Settings project={project} {...match} />} />
             <Route render={() => <Redirect to={`${url}/overview`} />} />
         </Switch>
@@ -50,6 +60,7 @@ export default withRouter(
                     owner {
                         login
                     }
+                    ...ProjectOverview_repository
                 }
                 ...ProjectOverview_project
                 ...ProjectSettings_project

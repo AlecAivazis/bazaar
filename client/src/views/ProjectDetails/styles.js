@@ -6,7 +6,8 @@ export default {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginBottom: 32
     },
     links: {
         display: 'flex',

@@ -33,6 +33,7 @@ export default async function createSchema() {
                     resolve: (parent, args, context, info) => {
                         // assume the id is in the format of <owner>/<name>
                         const [owner, name] = parent.repoID.split('/')
+                        console.log(owner, name)
 
                         // return the repository designated by the ID
                         return mergeInfo.delegate('query', 'repository', { owner, name }, context, info)
