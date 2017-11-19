@@ -19,13 +19,21 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
             .startOf('day')
             .format()
     })
+    // the sparkline data
+    const sparklineData = []
 
-    // the list of sorted counts
-    const sparklineData = Object.keys(dayCount)
-        .sort(function(a, b) {
-            return moment(a) - moment(b)
-        })
-        .map(key => dayCount[key])
+    // the starting date
+    let day = moment()
+        .startOf('day')
+        .subtract(14, 'days')
+
+    // iterate over every day between our starting date and now
+    while (day.isSameOrBefore(moment())) {
+        // add an entry for the day in the sparkline
+        sparklineData.push(dayCount[day.format()] || 0)
+        // move to the next day
+        day = day.add(1, 'day')
+    }
 
     return (
         <View style={[styles.container, style]}>
