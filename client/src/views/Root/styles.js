@@ -7,6 +7,9 @@ export default {
     content: {
         display: 'flex',
         flexGrow: 1,
-        padding: 30
+        paddingTop: 30,
+        paddingBottom: 30,
+        paddingLeft: 60,
+        paddingRight: 60
     }
 }

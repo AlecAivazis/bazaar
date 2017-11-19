@@ -1,0 +1,27 @@
+import { grey5 } from 'quark-core/styles'
+import { primaryColor } from '../../styles/colors'
+
+export default {
+    header: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    links: {
+        display: 'flex',
+        flexDirection: 'row',
+        height: '100%',
+        alignItems: 'flex-end'
+    },
+    link: {
+        marginLeft: 32,
+        color: grey5
+    },
+    linkActive: {
+        color: primaryColor
+    },
+    linkText: {
+        fontSize: 18
+    }
+}
