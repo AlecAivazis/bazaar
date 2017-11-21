@@ -17,4 +17,10 @@ async function graphQLFetcher(graphQLParams) {
     return await graphql(schema, graphQLParams.query)
 }
 
-export default () => ReactDOM.createPortal(<GraphiQL fetcher={graphQLFetcher} />, modalRoot)
+export default () =>
+    ReactDOM.createPortal(
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
+            <GraphiQL fetcher={graphQLFetcher} />
+        </div>,
+        modalRoot
+    )

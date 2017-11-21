@@ -10,13 +10,13 @@ type Props = {
     children: number => Node
 }
 
-const OpenIssues = ({ repository, children }: Props) => children(repository.issues.totalCount)
+const OpenIssues = ({ repository, children }: Props) => children(repository.openIssues.totalCount)
 
 export default createFragmentContainer(
     OpenIssues,
     graphql`
         fragment OpenIssues_repository on Repository {
-            issues(states: [OPEN], first: 10) {
+            openIssues: issues(states: [OPEN], first: 10) {
                 totalCount
             }
         }

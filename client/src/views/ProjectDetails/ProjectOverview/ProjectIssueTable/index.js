@@ -1,7 +1,7 @@
 // @flow
 // external imports
 import React from 'react'
-import { View } from 'react-native-web'
+import { View, Text } from 'react-native-web'
 import { createFragmentContainer, graphql } from 'react-relay'
 // local imports
 import styles from './styles'
@@ -19,9 +19,18 @@ const ProjectIssueTable = ({ repository, style }: Props) => {
     }
     return (
         <View style={{ ...styles.container, ...style }}>
-            <View style={styles.header}>Open Issues ({repository.issues.totalCount})</View>
+            <View style={styles.header}>
+                <Text>Open Issues ({repository.issues.totalCount})</Text>
+            </View>
             <View style={styles.issueRows}>
-                {repository.issues.edges.map(({ node: issue }) => issue && <View>{issue.title}</View>)}
+                {repository.issues.edges.map(
+                    ({ node: issue }) =>
+                        issue && (
+                            <View key={issue.id}>
+                                <Text>{issue.title}</Text>
+                            </View>
+                        )
+                )}
             </View>
         </View>
     )
@@ -35,6 +44,7 @@ export default createFragmentContainer(
                 totalCount
                 edges {
                     node {
+                        id
                         title
                     }
                 }
