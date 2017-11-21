@@ -6,7 +6,7 @@ import { View } from 'react-native-web'
 // local imports
 import styles from './styles'
 import AppBar from './AppBar'
-import { ProjectList, ProjectDetails, Funds, Settings } from '..'
+import { ProjectList, ProjectDetails, Funds, Settings, Graphiql } from '..'
 
 const Root = () => (
     <App style={styles.container}>
@@ -18,6 +18,7 @@ const Root = () => (
                 <Route path="/funds" component={Funds} />
                 <Route path="/settings" component={Settings} />
                 <Route path="/:owner/:name" component={ProjectDetails} />
+                <Route path="/graphiql" component={Graphiql} />
             </Switch>
         </View>
     </App>
