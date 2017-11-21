@@ -1,7 +1,7 @@
 // external imports
 import React from 'react'
 import { App } from 'quark-web'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { View } from 'react-native-web'
 // local imports
 import styles from './styles'
@@ -13,6 +13,7 @@ const Root = () => (
         <AppBar />
         <View style={styles.content}>
             <Switch>
+                <Route path="/" exact render={() => <Redirect to="/projects" />} />
                 <Route path="/projects" component={ProjectList} />
                 <Route path="/funds" component={Funds} />
                 <Route path="/settings" component={Settings} />

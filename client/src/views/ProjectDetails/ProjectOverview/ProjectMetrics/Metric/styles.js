@@ -6,7 +6,7 @@ export default {
     },
     iconContainer: {
         width: 44,
-        dispay: 'flex',
+        display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
     },

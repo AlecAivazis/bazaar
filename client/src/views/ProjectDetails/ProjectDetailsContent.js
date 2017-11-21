@@ -16,15 +16,13 @@ type Props = {
 }
 
 const ProjectDetailsContent = ({ project }: Props) => {
-    console.log(project)
     // if there is no owner
     if (!project.repository || !project.repository.owner) {
-        return null
+        throw new Error('Cannot find repository associated with ' + project.repoID)
     }
 
     // the base urld
     const url = `/${project.repository.owner.login}/${project.repository.name}`
-    console.log(url)
     return [
         <View key="header" style={styles.header}>
             <Title>
@@ -55,6 +53,7 @@ export default withRouter(
         ProjectDetailsContent,
         graphql`
             fragment ProjectDetailsContent_project on Project {
+                repoID
                 repository {
                     name
                     owner {

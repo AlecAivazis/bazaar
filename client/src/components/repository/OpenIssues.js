@@ -16,7 +16,7 @@ export default createFragmentContainer(
     OpenIssues,
     graphql`
         fragment OpenIssues_repository on Repository {
-            issues(states: [OPEN]) {
+            issues(states: [OPEN], first: 10) {
                 totalCount
             }
         }

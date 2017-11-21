@@ -14,7 +14,7 @@ import { Sparkline, RepositoryOpenIssues } from '../../../components'
 
 const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: any }) => {
     // guards
-    if (!project.transactions || !project.transactions.edges || !project.repository) {
+    if (!project.transactions || !project.transactions.edges) {
         throw new Error('Could not find transactions associated with this project.')
     }
 
@@ -41,6 +41,15 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
         // move to the next day
         day = day.add(1, 'day')
     }
+    if (!project || !project.repository || !project.repository.languages || !project.repository.languages.edges) {
+        throw new Error('Could not compute project language')
+    }
+
+    // find the color of the project
+    const color =
+        project.repository.languages.edges && project.repository.languages.edges[0]
+            ? project.repository.languages.edges[0].node.color
+            : null
 
     return (
         <BooleanState>
@@ -72,7 +81,7 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
                         <Sparkline
                             data={sparklineData.length > 0 ? sparklineData : [1, 1]}
                             style={{ width: 285 }}
-                            color={project.repository.languages.edges[0].node.color}
+                            color={color}
                             width={285}
                             height={44}
                         />
