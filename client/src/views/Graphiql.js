@@ -11,7 +11,6 @@ let schema
 
 async function graphQLFetcher(graphQLParams) {
     if (!schema) {
-        console.log('loading schema')
         schema = await createSchema()
     }
 
