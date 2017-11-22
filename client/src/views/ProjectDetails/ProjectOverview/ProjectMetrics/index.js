@@ -12,11 +12,12 @@ import styles from './styles'
 
 type Props = {
     project: ProjectMetrics_project,
-    repository: ProjectMetrics_repository
+    repository: ProjectMetrics_repository,
+    style: any
 }
 
-const ProjectMetrics = ({ project, repository }: Props) => (
-    <View style={styles.container}>
+const ProjectMetrics = ({ project, repository, style, ...unused }: Props) => (
+    <View style={{ ...styles.container, ...style }} {...unused}>
         <RepositoryOpenIssues repository={repository}>
             {numIssues => (
                 <Metric

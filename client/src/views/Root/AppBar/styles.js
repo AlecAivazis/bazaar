@@ -2,7 +2,8 @@ export default {
     container: {
         width: 74,
         backgroundColor: '#FAFAFA',
-        height: '100%'
+        height: '100%',
+        position: 'fixed'
     },
     branding: {
         backgroundColor: '#FF9C6E',

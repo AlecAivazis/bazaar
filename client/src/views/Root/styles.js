@@ -10,6 +10,7 @@ export default {
         paddingTop: 30,
         paddingBottom: 30,
         paddingLeft: 60,
-        paddingRight: 60
+        paddingRight: 60,
+        marginLeft: 74
     }
 }

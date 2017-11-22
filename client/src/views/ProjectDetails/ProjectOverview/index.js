@@ -18,7 +18,7 @@ type Props = {
 
 const ProjectOverview = ({ project, repository }: Props) => (
     <View style={styles.container}>
-        <Metrics project={project} repository={repository} />
+        <Metrics project={project} repository={repository} style={styles.metrics} />
         <Issues repository={repository} />
     </View>
 )
