@@ -1,12 +1,13 @@
 // @flow
 // external imports
 import React from 'react'
-import { View, Text } from 'react-native-web'
+import { View } from 'react-native-web'
 import { createFragmentContainer, graphql } from 'react-relay'
 import moment from 'moment'
 import { countBy } from 'lodash'
 import { BooleanState } from 'quark-web'
 import { Link } from 'react-router-dom'
+import { Title, Text } from 'quark-web'
 // local imports
 import type { ProjectRow_project } from './__generated__/ProjectRow_project.graphql.js'
 import styles from './styles'
@@ -61,11 +62,11 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
                         onMouseLeave={() => set(false)}
                     >
                         <View style={styles.infoContainer}>
-                            <Text style={styles.title}>
+                            <Title style={styles.title}>
                                 {project.repository
                                     ? `${project.repository.owner.login} / ${project.repository.name}`
                                     : 'repository not found'}
-                            </Text>
+                            </Title>
                             <View style={styles.statContainer}>
                                 <Text style={styles.stat}>{project.totalEarned} Ξ earned</Text>
                                 <Text style={styles.stat}>

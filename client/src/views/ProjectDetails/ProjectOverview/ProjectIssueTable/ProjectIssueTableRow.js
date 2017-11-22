@@ -2,9 +2,8 @@
 // external imports
 import React from 'react'
 import { graphql, createFragmentContainer } from 'react-relay'
-import { View, Text } from 'react-native-web'
-import { Link } from 'react-router-dom'
-import { BooleanState } from 'quark-core'
+import { View } from 'react-native-web'
+import { BooleanState, Text } from 'quark-web'
 // local imports
 import type { ProjectIssueTableRow_issue } from './__generated__/ProjectIssueTableRow_issue.graphql'
 import styles from './styles'
@@ -36,6 +35,7 @@ export default createFragmentContainer(
     ProjectIssueTableRow,
     graphql`
         fragment ProjectIssueTableRow_issue on Issue {
+            id
             title
             url
             reactions(first: 0, content: THUMBS_UP) {

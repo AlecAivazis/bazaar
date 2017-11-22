@@ -4,11 +4,11 @@ import React from 'react'
 import { graphql, createFragmentContainer } from 'react-relay'
 import { View, Text } from 'react-native-web'
 import { Switch, Route, Redirect, NavLink, withRouter } from 'react-router-dom'
+import { H1 } from 'quark-web'
 // local imports
 import styles from './styles'
 import Overview from './ProjectOverview'
 import Settings from './ProjectSettings'
-import { Title } from '../../components'
 import type { ProjectDetailsContent_project } from './__generated__/ProjectDetailsContent_project.graphql'
 
 type Props = {
@@ -25,9 +25,9 @@ const ProjectDetailsContent = ({ project }: Props) => {
     const url = `/${project.repository.owner.login}/${project.repository.name}`
     return [
         <View key="header" style={styles.header}>
-            <Title>
+            <H1>
                 {project.repository.owner.login} / {project.repository.name}
-            </Title>
+            </H1>
             <View style={styles.links}>
                 <NavLink style={styles.link} activeStyle={styles.linkActive} to={`${url}/overview`}>
                     <Text style={styles.linkText}>overview</Text>

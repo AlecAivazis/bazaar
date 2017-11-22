@@ -1,8 +1,9 @@
 // @flow
 // external imports
 import React from 'react'
-import { View, Text } from 'react-native-web'
+import { View } from 'react-native-web'
 import { createFragmentContainer, graphql } from 'react-relay'
+import { Title } from 'quark-web'
 // local imports
 import styles from './styles'
 import type { ProjectIssueTable_repository } from './__generated__/ProjectIssueTable_repository.graphql'
@@ -23,10 +24,12 @@ const ProjectIssueTable = ({ repository, style }: Props) => {
     return (
         <View style={{ ...styles.container, ...style }}>
             <View>
-                <Text style={styles.header}>Open Issues ({repository.issues.totalCount})</Text>
+                <Title style={styles.header}>Open Issues ({repository.issues.totalCount})</Title>
             </View>
             <View style={styles.issueRowContainer}>
-                {repository.issues.edges.map(edge => edge && edge.node && <TableRow issue={edge.node} />)}
+                {repository.issues.edges.map(
+                    edge => edge && edge.node && <TableRow issue={edge.node} key={edge.node.id} />
+                )}
             </View>
         </View>
     )

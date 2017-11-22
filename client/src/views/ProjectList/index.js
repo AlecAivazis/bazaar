@@ -2,15 +2,16 @@
 import React from 'react'
 import { View } from 'react-native-web'
 import { graphql } from 'react-relay'
+import { H1 } from 'quark-web'
 // local imports
-import { Title, PrimaryButton, QueryRenderer } from '../../components'
+import { PrimaryButton, QueryRenderer } from '../../components'
 import styles from './styles'
 import ProjectRow from './ProjectRow'
 
 const ProjectList = props => (
     <View style={styles.container}>
         <View style={styles.header}>
-            <Title>My Projects</Title>
+            <H1>My Projects</H1>
             <PrimaryButton>Add Project</PrimaryButton>
         </View>
         <View style={styles.content}>

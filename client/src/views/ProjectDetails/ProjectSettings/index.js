@@ -1,15 +1,17 @@
+// @flow
 // external imports
 import React from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 import { withRouter } from 'react-router-dom'
 // local imports
 import type { ProjectSettings_project } from './__generated__/ProjectSettings_project.graphql'
+import UserSummary from './ProjectUserSummary'
 
 type Props = {
     project: ProjectSettings_project
 }
 
-const ProjectSettings = ({ project }: Props) => <div>{project.repoID} settings</div>
+const ProjectSettings = ({ project }: Props) => [<UserSummary project={project} key="contributors" />]
 
 export default withRouter(
     createFragmentContainer(
@@ -17,6 +19,7 @@ export default withRouter(
         graphql`
             fragment ProjectSettings_project on Project {
                 repoID
+                ...ProjectUserSummary_project
             }
         `
     )

@@ -2,11 +2,7 @@ import { grey1, grey3, grey5, grey4 } from 'quark-core/styles'
 
 export default {
     container: {},
-    header: {
-        fontSize: 20,
-        marginBottom: 12,
-        color: grey5
-    },
+    header: { marginBottom: 12 },
     issueRowContainer: {
         marginBottom: 80
     },

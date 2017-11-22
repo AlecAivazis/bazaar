@@ -1,11 +1,11 @@
 // external imports
 import React from 'react'
+import { H1 } from 'quark-web'
 // local imports
-import { Title } from '../../components'
 
 const Settings = () => (
     <div>
-        <Title>Settings</Title>
+        <H1>Settings</H1>
     </div>
 )
 

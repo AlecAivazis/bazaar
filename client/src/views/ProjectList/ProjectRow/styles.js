@@ -1,4 +1,4 @@
-import { grey5, grey4, grey2, grey1 } from 'quark-core/styles'
+import { grey4, grey2, grey1 } from 'quark-core/styles'
 
 const container = {
     display: 'flex',
@@ -23,9 +23,6 @@ export default {
         justifyContent: 'center'
     },
     title: {
-        fontWeight: '200',
-        fontSize: 18,
-        color: grey5,
         marginBottom: 12
     },
     statContainer: {
