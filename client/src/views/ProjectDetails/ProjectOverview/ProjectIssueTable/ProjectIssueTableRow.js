@@ -15,19 +15,7 @@ type Props = {
 
 const ProjectIssueTableRow = ({ issue }: Props) => {
     // the number of votes that weight this issue is just the number of THUMBS_UP on the initial comment
-    let nVotes
-    // guards
-    if (
-        !issue ||
-        !issue.comments.edges ||
-        !issue.comments.edges[0] ||
-        !issue.comments.edges[0].node ||
-        !issue.comments.edges[0].node.reactions.edges
-    ) {
-        nVotes = 0
-    } else {
-        nVotes = issue.comments.edges[0].node.reactions.edges.length
-    }
+    const nVotes = issue.reactions.totalCount
 
     return (
         <BooleanState>
@@ -48,18 +36,8 @@ export default createFragmentContainer(
         fragment ProjectIssueTableRow_issue on Issue {
             title
             url
-            comments(first: 1) {
-                edges {
-                    node {
-                        reactions(first: 100, content: THUMBS_UP) {
-                            edges {
-                                node {
-                                    id
-                                }
-                            }
-                        }
-                    }
-                }
+            reactions(first: 0, content: THUMBS_UP) {
+                totalCount
             }
         }
     `
