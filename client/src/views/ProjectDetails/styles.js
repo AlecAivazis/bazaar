@@ -1,4 +1,3 @@
-import { grey5 } from 'quark-core/styles'
 import { primaryColor } from '../../styles/colors'
 
 export default {
