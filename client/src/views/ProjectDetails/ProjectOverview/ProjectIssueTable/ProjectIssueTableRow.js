@@ -23,7 +23,9 @@ const ProjectIssueTableRow = ({ issue }: Props) => {
                 <a target="_blank" href={issue.url} onMouseEnter={() => set(true)} onMouseLeave={() => set(false)}>
                     <View style={[styles.issueRow, state && styles.hoverStyle]}>
                         <Text style={styles.issueTitle}>{issue.title}</Text>
-                        <Text style={styles.votes}>{nVotes} Votes</Text>
+                        <Text style={styles.votes}>
+                            {nVotes} Vote{nVotes !== 1 && 's'}
+                        </Text>
                     </View>
                 </a>
             )}
