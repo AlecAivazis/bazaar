@@ -5,6 +5,7 @@ import { graphql, createFragmentContainer } from 'react-relay'
 import { View, Text } from 'react-native-web'
 import { Switch, Route, Redirect, NavLink, withRouter } from 'react-router-dom'
 import { H1 } from 'quark-web'
+import { link } from 'quark-web/styles'
 // local imports
 import styles from './styles'
 import Overview from './ProjectOverview'
@@ -29,10 +30,10 @@ const ProjectDetailsContent = ({ project }: Props) => {
                 {project.repository.owner.login} / {project.repository.name}
             </H1>
             <View style={styles.links}>
-                <NavLink style={styles.link} activeStyle={styles.linkActive} to={`${url}/overview`}>
+                <NavLink style={{ ...link, marginRight: 20 }} activeStyle={styles.linkActive} to={`${url}/overview`}>
                     <Text style={styles.linkText}>overview</Text>
                 </NavLink>
-                <NavLink style={styles.link} activeStyle={styles.linkActive} to={`${url}/settings`}>
+                <NavLink style={link} activeStyle={styles.linkActive} to={`${url}/settings`}>
                     <Text style={styles.linkText}>settings</Text>
                 </NavLink>
             </View>

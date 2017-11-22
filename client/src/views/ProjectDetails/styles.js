@@ -15,10 +15,6 @@ export default {
         height: '100%',
         alignItems: 'flex-end'
     },
-    link: {
-        marginLeft: 32,
-        color: grey5
-    },
     linkActive: {
         color: primaryColor
     },
