@@ -1,4 +1,4 @@
-import { grey3, grey5, grey4 } from 'quark-core/styles'
+import { grey1, grey3, grey5, grey4 } from 'quark-core/styles'
 
 export default {
     container: {},
@@ -20,6 +20,9 @@ export default {
         alignItems: 'center',
         paddingLeft: 20,
         paddingRight: 20
+    },
+    hoverStyle: {
+        backgroundColor: grey1
     },
     issueTitle: {
         color: grey5,

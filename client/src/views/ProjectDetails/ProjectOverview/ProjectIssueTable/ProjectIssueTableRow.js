@@ -3,6 +3,8 @@
 import React from 'react'
 import { graphql, createFragmentContainer } from 'react-relay'
 import { View, Text } from 'react-native-web'
+import { Link } from 'react-router-dom'
+import { BooleanState } from 'quark-core'
 // local imports
 import type { ProjectIssueTableRow_issue } from './__generated__/ProjectIssueTableRow_issue.graphql'
 import styles from './styles'
@@ -28,10 +30,16 @@ const ProjectIssueTableRow = ({ issue }: Props) => {
     }
 
     return (
-        <View style={styles.issueRow}>
-            <Text style={styles.issueTitle}>{issue.title}</Text>
-            <Text style={styles.votes}>{nVotes} Votes</Text>
-        </View>
+        <BooleanState>
+            {({ state, set }) => (
+                <a target="_blank" href={issue.url} onMouseEnter={() => set(true)} onMouseLeave={() => set(false)}>
+                    <View style={[styles.issueRow, state && styles.hoverStyle]}>
+                        <Text style={styles.issueTitle}>{issue.title}</Text>
+                        <Text style={styles.votes}>{nVotes} Votes</Text>
+                    </View>
+                </a>
+            )}
+        </BooleanState>
     )
 }
 export default createFragmentContainer(
@@ -39,6 +47,7 @@ export default createFragmentContainer(
     graphql`
         fragment ProjectIssueTableRow_issue on Issue {
             title
+            url
             comments(first: 1) {
                 edges {
                     node {
