@@ -9,10 +9,11 @@ import styles from './styles'
 import type { ProjectUserSummary_project } from './__generated__/ProjectUserSummary_project.graphql'
 
 type Props = {
-    project: ProjectUserSummary_project
+    project: ProjectUserSummary_project,
+    lastElementStyle: {}
 }
 
-const ProjectUserSummary = ({ project }: Props) => {
+const ProjectUserSummary = ({ project, lastElementStyle }: Props) => {
     // guards
     if (!project.members || !project.members.edges) {
         throw new Error(`Could not render user summary for project:${project.repoID}`)
@@ -22,7 +23,7 @@ const ProjectUserSummary = ({ project }: Props) => {
         <View style={styles.header} key="usersummary-header">
             <H3>Collaborators</H3>
         </View>,
-        ...project.members.edges.map(edge => {
+        ...project.members.edges.map((edge, i) => {
             // guards
             if (!edge || !edge.node || !edge.node.profile) {
                 console.warn('ProjectUserSummary: Could not connect to github.')
@@ -31,8 +32,12 @@ const ProjectUserSummary = ({ project }: Props) => {
 
             // pull out the info we're gonna use from the edge
             const { name, login } = edge.node.profile
+
+            // check if we need to add extra styling
+            const extraStyle = i === project.members.edges.length - 1 ? lastElementStyle : {}
+
             return (
-                <View key={login} style={styles.userRow}>
+                <View key={login} style={{ ...styles.userRow, ...extraStyle }}>
                     <Text>{name}</Text>
                 </View>
             )
