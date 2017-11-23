@@ -25,7 +25,6 @@ const ProjectIssueTable = ({ repository, style }: Props) => {
         .filter(edge => edge && edge.node)
         .map(({ node }) => node)
         .sort((a, b) => b.reactions.totalCount - a.reactions.totalCount)
-    console.log(issues)
 
     // guards
     return (

@@ -31,13 +31,14 @@ const ProjectUserSummary = ({ project, lastElementStyle }: Props) => {
             }
 
             // pull out the info we're gonna use from the edge
-            const { name, login } = edge.node.profile
+            const { name, login, avatarUrl } = edge.node.profile
 
             // check if we need to add extra styling
             const extraStyle = i === project.members.edges.length - 1 ? lastElementStyle : {}
 
             return (
                 <View key={login} style={{ ...styles.userRow, ...extraStyle }}>
+                    <img src={avatarUrl} style={styles.avatar} />
                     <Text>{name}</Text>
                 </View>
             )
@@ -55,6 +56,7 @@ export default createFragmentContainer(
                     node {
                         accountName
                         profile {
+                            avatarUrl
                             login
                             name
                         }

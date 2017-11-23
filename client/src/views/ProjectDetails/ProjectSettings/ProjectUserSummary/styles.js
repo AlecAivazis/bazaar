@@ -12,6 +12,16 @@ export default {
     userRow: {
         display: 'flex',
         flexDirection: 'row',
-        padding: 20
+        alignItems: 'center',
+        paddingTop: 12,
+        paddingBottom: 12,
+        paddingLeft: 24,
+        paddingRight: 24
+    },
+    avatar: {
+        height: 32,
+        weight: 32,
+        borderRadius: '50%',
+        marginRight: 12
     }
 }
