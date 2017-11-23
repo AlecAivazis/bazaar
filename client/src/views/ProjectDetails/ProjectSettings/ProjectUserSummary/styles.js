@@ -14,13 +14,11 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 12,
-        paddingBottom: 12,
-        paddingLeft: 24,
-        paddingRight: 24
+        paddingBottom: 12
     },
     avatar: {
-        height: 32,
-        weight: 32,
+        height: 36,
+        weight: 36,
         borderRadius: '50%',
         marginRight: 12
     }
