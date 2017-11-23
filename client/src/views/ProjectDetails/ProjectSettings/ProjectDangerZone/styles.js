@@ -12,11 +12,12 @@ export default {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
+        alignItems: 'center',
         marginTop: 20
     },
     infoTitle: {
         fontWeight: '500',
-        marginBottom: 4
+        marginBottom: 8
     },
     button: {
         width: 150

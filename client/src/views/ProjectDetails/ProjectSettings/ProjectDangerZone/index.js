@@ -13,16 +13,16 @@ type Props = {
 }
 
 const ProjectDangerZone = ({ project }: Props) => [
-    <View style={styles.header}>
+    <View style={styles.header} key="header">
         <H3 style={styles.headerText}>Danger Zone</H3>
     </View>,
-    <View style={styles.section}>
+    <View style={styles.section} key="delete-project">
         <View style={styles.info}>
             <Text style={styles.infoTitle}>Delete This Project</Text>
             <Text>Permanently remove {project.repoID} from BazR</Text>
         </View>
         <WarningButton size="small" style={styles.button}>
-            <Text style={{ color: 'white' }}>Delete Project</Text>
+            Delete Project
         </WarningButton>
     </View>
 ]
