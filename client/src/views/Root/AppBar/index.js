@@ -1,10 +1,10 @@
 // external imports
 import React from 'react'
 import { View } from 'react-native-web'
+import { IconCommand, IconBriefcase, IconSettings } from 'quark-web'
 // local imports
 import styles from './styles'
 import Logo from './Logo'
-import NavIcon from './NavIcon'
 import NavLink from './NavLink'
 
 const AppBar = () => (
@@ -13,13 +13,13 @@ const AppBar = () => (
             <Logo />
         </View>
         <NavLink to="/projects">
-            <NavIcon name="code" />
+            <IconCommand style={styles.icon} />
         </NavLink>
         <NavLink to="/funds">
-            <NavIcon name="money" />
+            <IconBriefcase style={styles.icon} />
         </NavLink>
         <NavLink to="/settings">
-            <NavIcon name="gear" />
+            <IconSettings style={styles.icon} />
         </NavLink>
     </View>
 )

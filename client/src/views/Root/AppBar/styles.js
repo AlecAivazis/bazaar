@@ -1,3 +1,5 @@
+import { grey5 } from 'quark-core/styles'
+
 export default {
     container: {
         width: 74,
@@ -14,5 +16,10 @@ export default {
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: 12
+    },
+    icon: {
+        height: 24,
+        width: 24,
+        color: grey5
     }
 }

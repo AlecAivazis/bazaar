@@ -14,7 +14,13 @@ export default {
         flexDirection: 'row',
         alignItems: 'center',
         paddingTop: 12,
-        paddingBottom: 12
+        paddingBottom: 12,
+        justifyContent: 'space-between'
+    },
+    avatarContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center'
     },
     avatar: {
         height: 36,

@@ -25,6 +25,7 @@ module.exports = function override(config, env) {
     )
     // add the stage-0 preset
     innerConfig.module.rules[1].oneOf[1].options.presets.push('stage-0')
+    innerConfig.resolve.symlinks = false
 
     // return the modified configuration
     return innerConfig

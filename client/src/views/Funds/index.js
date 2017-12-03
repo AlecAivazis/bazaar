@@ -5,12 +5,10 @@ import { H1 } from 'quark-web'
 // local imports
 import styles from './styles'
 
-const Funds = () => (
-    <View>
-        <View style={styles.header}>
-            <H1>Funds</H1>
-        </View>
+const Funds = () => [
+    <View style={styles.header} key="header">
+        <H1>Funds</H1>
     </View>
-)
+]
 
 export default Funds

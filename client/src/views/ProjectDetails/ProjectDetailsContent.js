@@ -26,14 +26,18 @@ const ProjectDetailsContent = ({ project }: Props) => {
     const url = `/${project.repository.owner.login}/${project.repository.name}`
     return [
         <View key="header" style={styles.header}>
-            <H1>
+            <H1 style={{ marginBottom: 0 }}>
                 {project.repository.owner.login} / {project.repository.name}
             </H1>
             <View style={styles.links}>
-                <NavLink style={{ ...link, marginRight: 20 }} activeStyle={styles.linkActive} to={`${url}/overview`}>
+                <NavLink
+                    style={{ ...link, fontSize: 16, marginRight: 16 }}
+                    activeStyle={styles.linkActive}
+                    to={`${url}/overview`}
+                >
                     <Text style={styles.linkText}>overview</Text>
                 </NavLink>
-                <NavLink style={link} activeStyle={styles.linkActive} to={`${url}/settings`}>
+                <NavLink style={{ ...link, fontSize: 16 }} activeStyle={styles.linkActive} to={`${url}/settings`}>
                     <Text style={styles.linkText}>settings</Text>
                 </NavLink>
             </View>

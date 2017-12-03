@@ -2,9 +2,9 @@
 import React from 'react'
 import { View } from 'react-native-web'
 import { graphql } from 'react-relay'
-import { H1 } from 'quark-web'
+import { PrimaryButton, H1 } from 'quark-web'
 // local imports
-import { PrimaryButton, QueryRenderer } from '../../components'
+import { QueryRenderer } from '../../components'
 import styles from './styles'
 import ProjectRow from './ProjectRow'
 

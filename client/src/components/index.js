@@ -1,5 +1,3 @@
-export Icon from './Icon'
-export PrimaryButton from './PrimaryButton'
 export EnvironmentProvider from './EnvironmentProvider'
 export Sparkline from './Sparkline'
 export QueryRenderer from './QueryRenderer'

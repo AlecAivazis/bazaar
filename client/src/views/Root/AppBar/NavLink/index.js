@@ -8,7 +8,7 @@ import styles from './styles'
 const BazrLink = ({ to, ...unused }) => (
     <Route path={to}>
         {({ match }) => (
-            <View style={match && styles.active}>
+            <View style={match ? styles.active : styles.inactive}>
                 <Link to={to} {...unused} />
             </View>
         )}

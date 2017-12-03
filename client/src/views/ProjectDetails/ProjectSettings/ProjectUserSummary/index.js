@@ -3,7 +3,7 @@
 import React from 'react'
 import { View } from 'react-native-web'
 import { createFragmentContainer, graphql } from 'react-relay'
-import { H3, Text } from 'quark-web'
+import { H3, Text, Select, Option } from 'quark-web'
 // local imports
 import styles from './styles'
 import type { ProjectUserSummary_project } from './__generated__/ProjectUserSummary_project.graphql'
@@ -37,9 +37,25 @@ const ProjectUserSummary = ({ project, lastElementStyle }: Props) => {
             const extraStyle = i === project.members.edges.length - 1 ? lastElementStyle : {}
 
             return (
-                <View key={login} style={{ ...styles.userRow, ...extraStyle }}>
-                    <img src={avatarUrl} style={styles.avatar} />
-                    <Text>{name}</Text>
+                <View key={i} style={{ ...styles.userRow, ...extraStyle }}>
+                    <View style={styles.avatarContainer}>
+                        <img src={avatarUrl} style={styles.avatar} />
+                        <Text>{name}</Text>
+                    </View>
+                    <Select style={{ width: 200 }} value="asdf!">
+                        <Option value="asdf" key="asdf">
+                            hello
+                        </Option>
+                        <Option value="asdf!" key="asdf!">
+                            hello!
+                        </Option>
+                        <Option value="asdf@" key="asdf@">
+                            hello@
+                        </Option>
+                        <Option value="asdf#" key="asdf#">
+                            hello#
+                        </Option>
+                    </Select>
                 </View>
             )
         })

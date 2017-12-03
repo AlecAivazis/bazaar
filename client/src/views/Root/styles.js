@@ -1,7 +1,6 @@
 export default {
     container: {
         flexDirection: 'row',
-        flexGrow: 1,
         height: '100%'
     },
     content: {
