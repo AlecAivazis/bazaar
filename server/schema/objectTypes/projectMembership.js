@@ -12,7 +12,7 @@ const ProjectMembershipType = new GraphQLObjectType({
     uniqueKey: ['projectId', 'userId'],
     fields: () => ({
         id: {
-            ...globalIdField('ProjectMembership', obj => `${obj.project}:${obj.user}`),
+            ...globalIdField('ProjectMembership', obj => `${obj.projectId}:${obj.userId}`),
             sqlDeps: ['projectId', 'userId']
         },
         role: { type: new GraphQLNonNull(GraphQLString) },

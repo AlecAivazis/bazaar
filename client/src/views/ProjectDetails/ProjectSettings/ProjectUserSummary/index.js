@@ -43,8 +43,8 @@ const ProjectUserSummary = ({ project, lastElementStyle }: Props) => {
                         <Text>{name}</Text>
                     </View>
                     <Select style={{ width: 200 }} value="asdf!" value={role}>
-                        <Option value="admin">admin</Option>
-                        <Option value="contributor">contributor</Option>
+                        <Option value="admin">Admin</Option>
+                        <Option value="contributor">Contributor</Option>
                     </Select>
                 </View>
             )

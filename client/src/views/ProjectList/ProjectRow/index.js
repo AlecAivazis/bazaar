@@ -107,6 +107,9 @@ export default createFragmentContainer(
                     }
                 }
             }
+            contributors {
+                count
+            }
             repository {
                 name
                 owner {
