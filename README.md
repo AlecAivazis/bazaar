@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/AlecAivazis/bazr/badge.svg)](https://coveralls.io/github/AlecAivazis/bazr)
 
 A place to compensate open source development
-
+<!--
 ## Getting Started
 
 To run locally, first install `solc`: 
@@ -34,8 +34,4 @@ Start the test net:
 ```bash
 run testnet
 ```
-
-In order to build the go server, you first have to build the contract clients:
-```
-run build-contracts
-```
+-->
