@@ -8,8 +8,9 @@ exports.up = function(knex, Promise) {
 
         // project membership table
         knex.schema.createTableIfNotExists('project_membership', function(table) {
-            table.string('project').references('projects.id')
-            table.string('user').references('users.id')
+            table.string('projectId').references('projects.id')
+            table.string('userId').references('users.id')
+            table.string('role').notNullable()
         }),
 
         // user table

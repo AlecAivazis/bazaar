@@ -3,10 +3,10 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import GraphiQL from 'graphiql'
 import { graphql } from 'graphql'
+import { WithPortal } from 'quark-web'
 // local imports
 import createSchema from '../schema'
 
-const modalRoot = document.getElementById('portal')
 let schema
 
 async function graphQLFetcher(graphQLParams) {
@@ -17,10 +17,15 @@ async function graphQLFetcher(graphQLParams) {
     return await graphql(schema, graphQLParams.query)
 }
 
-export default () =>
-    ReactDOM.createPortal(
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
-            <GraphiQL fetcher={graphQLFetcher} />
-        </div>,
-        modalRoot
-    )
+export default () => (
+    <WithPortal id="graphiql">
+        {element =>
+            ReactDOM.createPortal(
+                <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
+                    <GraphiQL fetcher={graphQLFetcher} />
+                </div>,
+                element
+            )
+        }
+    </WithPortal>
+)

@@ -25,36 +25,26 @@ const ProjectUserSummary = ({ project, lastElementStyle }: Props) => {
         </View>,
         ...project.members.edges.map((edge, i) => {
             // guards
-            if (!edge || !edge.node || !edge.node.profile) {
+            if (!edge || !edge.node || !edge.node.user || !edge.node.user.profile) {
                 console.warn('ProjectUserSummary: Could not connect to github.')
                 return null
             }
-
+            const { user, role } = edge.node
             // pull out the info we're gonna use from the edge
-            const { name, login, avatarUrl } = edge.node.profile
+            const { name, login, avatarUrl } = user.profile
 
             // check if we need to add extra styling
             const extraStyle = i === project.members.edges.length - 1 ? lastElementStyle : {}
 
             return (
-                <View key={i} style={{ ...styles.userRow, ...extraStyle }}>
+                <View key={user.id} style={{ ...styles.userRow, ...extraStyle }}>
                     <View style={styles.avatarContainer}>
                         <img src={avatarUrl} style={styles.avatar} />
                         <Text>{name}</Text>
                     </View>
-                    <Select style={{ width: 200 }} value="asdf!">
-                        <Option value="asdf" key="asdf">
-                            hello
-                        </Option>
-                        <Option value="asdf!" key="asdf!">
-                            hello!
-                        </Option>
-                        <Option value="asdf@" key="asdf@">
-                            hello@
-                        </Option>
-                        <Option value="asdf#" key="asdf#">
-                            hello#
-                        </Option>
+                    <Select style={{ width: 200 }} value="asdf!" value={role}>
+                        <Option value="admin">Admin</Option>
+                        <Option value="contributor">Contributor</Option>
                     </Select>
                 </View>
             )
@@ -70,11 +60,14 @@ export default createFragmentContainer(
             members: contributors(first: 10) {
                 edges {
                     node {
-                        accountName
-                        profile {
-                            avatarUrl
-                            login
-                            name
+                        user {
+                            id
+                            accountName
+                            profile {
+                                avatarUrl
+                                login
+                                name
+                            }
                         }
                     }
                 }

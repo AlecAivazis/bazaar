@@ -19,8 +19,5 @@ export const User = new GraphQLObjectType({
 })
 
 export const { connectionType: UserConnection } = connectionDefinitions({
-    nodeType: User,
-    connectionFields: () => ({
-        count: { type: GraphQLInt }
-    })
+    nodeType: User
 })

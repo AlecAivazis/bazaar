@@ -7,7 +7,7 @@ import {
     globalIdField
 } from 'graphql-relay'
 // local imports
-import { TransactionConnection, UserConnection } from '.'
+import { TransactionConnection, UserConnection, ProjectMembershipConnection } from '.'
 import { nodeInterface } from '../nodeDefinition'
 import database from '../../database'
 
@@ -38,17 +38,11 @@ export const ProjectType = new GraphQLObjectType({
             resolve: root => root.totalEarned || 0
         },
         contributors: {
-            type: new GraphQLNonNull(UserConnection),
+            type: new GraphQLNonNull(ProjectMembershipConnection),
             description: 'The users who are allowed to earn money for this project',
             args: connectionArgs,
-            junction: {
-                sqlTable: 'project_membership',
-                sqlJoins: [
-                    (projectTable, membershipTable) =>
-                        `${projectTable}.id = ${membershipTable}.project`,
-                    (membershipTable, userTable) => `${membershipTable}.user = ${userTable}.id`
-                ]
-            },
+            sqlJoin: (projectTable, membershipTable) =>
+                `${projectTable}.id = ${membershipTable}.projectId`,
             resolve: (root, args) => {
                 // turn the list into a connection
                 const connection = connectionFromArray(root.contributors, args)

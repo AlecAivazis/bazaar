@@ -75,7 +75,8 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
                                     </RepositoryOpenIssues>
                                 </Text>
                                 <Text style={styles.stat}>
-                                    {project.contributors.count} contributor{(project.contributors.count || 0) > 1 && 's'}
+                                    {project.contributors.count} contributor{(project.contributors.count || 0) > 1 &&
+                                        's'}
                                 </Text>
                             </View>
                         </View>
@@ -99,15 +100,15 @@ export default createFragmentContainer(
         fragment ProjectRow_project on Project {
             repoID
             totalEarned
-            contributors {
-                count
-            }
             transactions {
                 edges {
                     node {
                         created_at
                     }
                 }
+            }
+            contributors {
+                count
             }
             repository {
                 name
