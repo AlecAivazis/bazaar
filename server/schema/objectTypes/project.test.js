@@ -150,7 +150,9 @@ describe('API', () => {
                                 contributors {
                                     edges {
                                         node {
-                                            id
+                                            project {
+                                                id
+                                            }
                                         }
                                     }
                                 }
@@ -167,9 +169,43 @@ describe('API', () => {
             expect(result.data.node.contributors.edges).toBeTruthy()
 
             // make sure we computed the right total earned
-            expect(result.data.node.contributors.edges.map(({ node }) => node.id)).toEqual([
-                toGlobalId('BazrUser', 1),
-                toGlobalId('BazrUser', 2)
+            expect(result.data.node.contributors.edges.map(({ node }) => node.project.id)).toEqual([
+                toGlobalId('Project', 1),
+                toGlobalId('Project', 1)
+            ])
+        })
+
+        test('can compute the role of a user within a project', async () => {
+            // find the total earned
+            const result = await graphql(
+                schema,
+                `
+                    query {
+                        node(id: "${toGlobalId('Project', 1)}") {
+                            ... on Project {
+                                contributors {
+                                    edges {
+                                        node {
+                                            role
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                `
+            )
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+
+            // make sure we got some sort of list back
+            expect(result.data.node.contributors.edges).toBeTruthy()
+
+            // make sure we computed the right total earned
+            expect(result.data.node.contributors.edges.map(({ node }) => node.role)).toEqual([
+                'admin',
+                'admin'
             ])
         })
 
