@@ -1,23 +1,20 @@
 // @flow
 // external imports
-import { commitMutation, graphql } from 'react-relay'
 import * as Relay from 'react-relay'
 
 export default (mutation: any) => ({
     environment,
     input,
     onCompleted,
-    onError
+    onError,
+    ...rest
 }: {
     environment: Relay.Environment,
-    input: { [key: string]: any },
-    onCompleted?: (response: ?Object, errors: ?[Error]) => void,
-    onError?: (error: Error) => void
-}): void =>
+    input: { [key: string]: any }
+} & Relay.MutationConfig<any>): void =>
     // commit the mutation to the environment with the given input
-    commitMutation(environment, {
+    Relay.commitMutation(environment, {
         mutation,
         variables: { input },
-        onCompleted,
-        onError
+        ...rest
     })

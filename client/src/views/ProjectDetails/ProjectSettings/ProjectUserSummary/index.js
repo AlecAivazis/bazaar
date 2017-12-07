@@ -62,7 +62,7 @@ const ProjectUserSummary = ({ project, lastElementStyle, relay }: Props) => {
                     <Select
                         style={{ width: 200, paddingRight: 0 }}
                         value={role}
-                        onChange={_changeRole({ project, user, relay })}
+                        onChange={_changeRole({ project, user, relay, membership: edge.node })}
                     >
                         <Option value="ADMIN">Admin</Option>
                         <Option value="CONTRIBUTOR">Contributor</Option>
@@ -76,11 +76,13 @@ const ProjectUserSummary = ({ project, lastElementStyle, relay }: Props) => {
 const _changeRole = ({
     relay,
     project,
-    user
+    user,
+    membership
 }: {
     relay: RelayProp,
     project: { +id: string },
-    user: { +id: string }
+    user: { +id: string },
+    membership: { +id: string }
 }) => (role: string) => {
     updateUserRole({
         environment: relay.environment,
@@ -88,6 +90,14 @@ const _changeRole = ({
             project: project.id,
             user: user.id,
             role
+        },
+        optimisticResponse: {
+            UpdateUserRole: {
+                membership: {
+                    id: membership.id,
+                    role
+                }
+            }
         }
     })
 }
@@ -101,6 +111,7 @@ export default createFragmentContainer(
             members: contributors(first: 10) {
                 edges {
                     node {
+                        id
                         role
                         user {
                             id
