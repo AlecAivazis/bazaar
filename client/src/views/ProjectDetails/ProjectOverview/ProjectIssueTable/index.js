@@ -23,8 +23,14 @@ const ProjectIssueTable = ({ repository, style }: Props) => {
     // sort the issues by
     const issues = repository.issues.edges
         .filter(edge => edge && edge.node)
-        .map(({ node }) => node)
-        .sort((a, b) => b.reactions.totalCount - a.reactions.totalCount)
+        .map(edge => edge && edge.node)
+        .sort((a, b) => {
+            // the reactions in a
+            const aReactions = a ? a.reactions.totalCount : 0
+            const bReactions = b ? b.reactions.totalCount : 0
+
+            return bReactions - aReactions
+        })
 
     // guards
     return (
@@ -33,7 +39,7 @@ const ProjectIssueTable = ({ repository, style }: Props) => {
                 <Title style={styles.header}>Open Issues ({repository.issues.totalCount})</Title>
             </View>
             <View style={styles.issueRowContainer}>
-                {issues.map(issue => <TableRow issue={issue} key={issue.id} />)}
+                {issues.map(issue => issue && <TableRow issue={issue} key={issue.id} />)}
             </View>
         </View>
     )
