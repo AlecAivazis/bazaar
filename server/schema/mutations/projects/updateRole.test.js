@@ -9,6 +9,7 @@ describe('API', () => {
     describe('Project', () => {
         beforeEach(initDb)
         afterEach(cleanDb)
+
         describe('Update Role', () => {
             test('can update a user role', async () => {
                 // look for the project with id 1
@@ -39,7 +40,7 @@ describe('API', () => {
                 expect(result.data.UpdateUserRole.membership).toBeDefined()
 
                 // make sure we updated the role of the user
-                expect(result.data.UpdateUserRole.membership.role).toEqual('contributor')
+                expect(result.data.UpdateUserRole.membership.role).toEqual('CONTRIBUTOR')
                 // make sure we retrieved the right user
                 expect(result.data.UpdateUserRole.membership.user.id).toEqual(
                     toGlobalId('BazrUser', 1)

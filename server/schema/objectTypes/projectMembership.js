@@ -4,6 +4,7 @@ import { connectionDefinitions, globalIdField } from 'graphql-relay'
 // local imports
 import { Fund, ProjectType, User } from '.'
 import { nodeInterface } from '../nodeDefinition'
+import { MembershipRole } from '../types'
 
 export const ProjectMembershipType = new GraphQLObjectType({
     name: 'ProjectMembership',
@@ -15,7 +16,7 @@ export const ProjectMembershipType = new GraphQLObjectType({
             ...globalIdField('ProjectMembership', obj => `${obj.projectId}:${obj.userId}`),
             sqlDeps: ['projectId', 'userId']
         },
-        role: { type: new GraphQLNonNull(GraphQLString) },
+        role: { type: new GraphQLNonNull(MembershipRole) },
         user: {
             type: new GraphQLNonNull(User),
             sqlJoin: (membershipTable, userTable) => `${membershipTable}.userId = ${userTable}.id`,

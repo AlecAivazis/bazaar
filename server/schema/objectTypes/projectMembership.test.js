@@ -75,9 +75,33 @@ describe('API', () => {
 
             // make sure we computed the right total earned
             expect(result.data.node.contributors.edges.map(({ node }) => node.role)).toEqual([
-                'admin',
-                'admin'
+                'ADMIN',
+                'ADMIN'
             ])
+        })
+
+        test('can count the number of contributors', async () => {
+            // find the number of contributors
+            const result = await graphql(
+                schema,
+                `
+                    query {
+                        node(id: "${toGlobalId('Project', 1)}") {
+                            ... on Project {
+                                contributors {
+                                    count
+                                }
+                            }
+                        }
+                    }
+                `
+            )
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+
+            // make sure we got the right count
+            expect(result.data.node.contributors.count).toEqual(2)
         })
 
         test('can find the user associated with a membership', async () => {
