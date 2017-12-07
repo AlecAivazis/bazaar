@@ -5,7 +5,7 @@ import { connectionDefinitions, globalIdField } from 'graphql-relay'
 import { Fund, ProjectType, User } from '.'
 import { nodeInterface } from '../nodeDefinition'
 
-const ProjectMembershipType = new GraphQLObjectType({
+export const ProjectMembershipType = new GraphQLObjectType({
     name: 'ProjectMembership',
     interfaces: [nodeInterface],
     sqlTable: 'project_membership',
@@ -31,7 +31,10 @@ const ProjectMembershipType = new GraphQLObjectType({
     })
 })
 
-export const { connectionType: ProjectMembershipConnection } = connectionDefinitions({
+export const {
+    connectionType: ProjectMembershipConnection,
+    edgeType: ProjectMembershipEdgeType
+} = connectionDefinitions({
     nodeType: ProjectMembershipType,
     connectionFields: () => ({
         count: { type: GraphQLInt }

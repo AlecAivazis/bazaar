@@ -11,7 +11,8 @@ module.exports = {
         connection: {
             filename: path.join(__dirname, '..', 'dev.sqlite3')
         },
-        migrations
+        migrations,
+        useNullAsDefault: true
     },
 
     test: {
@@ -19,7 +20,8 @@ module.exports = {
         connection: {
             filename: ':memory:'
         },
-        migrations
+        migrations,
+        useNullAsDefault: true
     },
 
     staging: {

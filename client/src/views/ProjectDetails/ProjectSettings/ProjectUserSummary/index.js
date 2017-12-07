@@ -22,6 +22,7 @@ const ProjectUserSummary = ({ project, lastElementStyle }: Props) => {
     return [
         <View style={styles.header} key="usersummary-header">
             <H3>Collaborators</H3>
+            <H3>Role</H3>
         </View>,
         ...project.members.edges.map((edge, i) => {
             // guards
@@ -42,7 +43,7 @@ const ProjectUserSummary = ({ project, lastElementStyle }: Props) => {
                         <img src={avatarUrl} style={styles.avatar} />
                         <Text>{name}</Text>
                     </View>
-                    <Select style={{ width: 200 }} value="asdf!" value={role}>
+                    <Select style={{ width: 200, paddingRight: 0 }} value={role}>
                         <Option value="admin">Admin</Option>
                         <Option value="contributor">Contributor</Option>
                     </Select>
@@ -60,6 +61,7 @@ export default createFragmentContainer(
             members: contributors(first: 10) {
                 edges {
                     node {
+                        role
                         user {
                             id
                             accountName

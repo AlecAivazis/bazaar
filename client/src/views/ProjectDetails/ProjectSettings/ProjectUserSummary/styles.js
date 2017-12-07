@@ -3,7 +3,9 @@ import { grey3 } from 'quark-core/styles'
 export default {
     header: {
         borderBottomWidth: 1,
-        borderColor: grey3
+        borderColor: grey3,
+        flexDirection: 'row',
+        justifyContent: 'space-between'
     },
     headerText: {
         fontSize: 20,

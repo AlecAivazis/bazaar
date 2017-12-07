@@ -35,10 +35,10 @@ const ProjectDetailsContent = ({ project }: Props) => {
                     activeStyle={styles.linkActive}
                     to={`${url}/overview`}
                 >
-                    <Text style={styles.linkText}>overview</Text>
+                    <Text style={styles.linkText}>Overview</Text>
                 </NavLink>
                 <NavLink style={{ ...link, fontSize: 16 }} activeStyle={styles.linkActive} to={`${url}/settings`}>
-                    <Text style={styles.linkText}>settings</Text>
+                    <Text style={styles.linkText}>Settings</Text>
                 </NavLink>
             </View>
         </View>,
