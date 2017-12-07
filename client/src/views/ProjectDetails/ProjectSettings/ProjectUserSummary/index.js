@@ -3,17 +3,20 @@
 import React from 'react'
 import { View } from 'react-native-web'
 import { createFragmentContainer, graphql } from 'react-relay'
+import type { RelayProp } from 'react-relay'
 import { H3, Text, Select, Option } from 'quark-web'
 // local imports
 import styles from './styles'
 import type { ProjectUserSummary_project } from './__generated__/ProjectUserSummary_project.graphql'
+import { updateUserRole } from '../../../../mutations'
 
 type Props = {
     project: ProjectUserSummary_project,
-    lastElementStyle: {}
+    lastElementStyle: {},
+    relay: RelayProp
 }
 
-const ProjectUserSummary = ({ project, lastElementStyle }: Props) => {
+const ProjectUserSummary = ({ project, lastElementStyle, relay }: Props) => {
     // guards
     if (!project.members || !project.members.edges) {
         throw new Error(`Could not render user summary for project:${project.repoID}`)
@@ -56,9 +59,13 @@ const ProjectUserSummary = ({ project, lastElementStyle }: Props) => {
                         <img src={avatarUrl} style={styles.avatar} />
                         <Text>{name}</Text>
                     </View>
-                    <Select style={{ width: 200, paddingRight: 0 }} value={role}>
-                        <Option value="admin">Admin</Option>
-                        <Option value="contributor">Contributor</Option>
+                    <Select
+                        style={{ width: 200, paddingRight: 0 }}
+                        value={role}
+                        onChange={_changeRole({ project, user, relay })}
+                    >
+                        <Option value="ADMIN">Admin</Option>
+                        <Option value="CONTRIBUTOR">Contributor</Option>
                     </Select>
                 </View>
             )
@@ -66,10 +73,30 @@ const ProjectUserSummary = ({ project, lastElementStyle }: Props) => {
     ]
 }
 
+const _changeRole = ({
+    relay,
+    project,
+    user
+}: {
+    relay: RelayProp,
+    project: { +id: string },
+    user: { +id: string }
+}) => (role: string) => {
+    updateUserRole({
+        environment: relay.environment,
+        input: {
+            project: project.id,
+            user: user.id,
+            role
+        }
+    })
+}
+
 export default createFragmentContainer(
     ProjectUserSummary,
     graphql`
         fragment ProjectUserSummary_project on Project {
+            id
             repoID
             members: contributors(first: 10) {
                 edges {
