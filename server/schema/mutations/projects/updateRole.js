@@ -27,6 +27,7 @@ export default mutationWithClientMutationId({
         membership: {
             type: new GraphQLNonNull(ProjectMembershipType),
             where: (table, args, { __userId, __projectId }) =>
+                // grab the ids out of the request context to resolve the appropriate membership object
                 `${table}.userId = '${__userId}' and ${table}.projectId = ${__projectId}`,
             resolve: (data, __, _, resolveInfo) =>
                 // save the result of mutateAndGetPayload in the context to retrieve later

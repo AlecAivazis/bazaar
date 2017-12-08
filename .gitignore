@@ -10,3 +10,4 @@
 /server/dev.sqlite3
 /server/coverage
 __generated__
+.DS_Store
