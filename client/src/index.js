@@ -9,16 +9,18 @@ import { EnvironmentProvider, Auth } from './components'
 import { primaryColor, primaryShadow } from './styles'
 
 ReactDOM.render(
-    <Auth>
-        {() => (
-            <EnvironmentProvider>
-                <BrowserRouter>
-                    <Theme theme={{ primaryColor, primaryColorDark: primaryShadow }}>
-                        <Root />
-                    </Theme>
-                </BrowserRouter>
-            </EnvironmentProvider>
-        )}
-    </Auth>,
+    <BrowserRouter>
+        <Auth>
+            {githubToken =>
+                githubToken && (
+                    <EnvironmentProvider githubToken={githubToken}>
+                        <Theme theme={{ primaryColor, primaryColorDark: primaryShadow }}>
+                            <Root />
+                        </Theme>
+                    </EnvironmentProvider>
+                )
+            }
+        </Auth>
+    </BrowserRouter>,
     document.getElementById('root')
 )

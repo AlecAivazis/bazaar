@@ -8,7 +8,8 @@ import { graphql } from 'graphql'
 import createSchema from '../../schema'
 
 type Props = {
-    children: any
+    children: any,
+    githubToken: string
 }
 
 type State = {
@@ -30,7 +31,7 @@ class EnvironmentProvider extends React.Component<Props, State> {
 
     async componentDidMount() {
         // load the client's schema
-        const schema = await createSchema()
+        const schema = await createSchema(this.props.githubToken)
 
         const fetchQuery = async (operation, variables) => await graphql(schema, operation.text, null, null, variables)
 

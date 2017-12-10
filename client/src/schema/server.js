@@ -5,7 +5,7 @@ import { createApolloFetch } from 'apollo-fetch'
 // create an executable wrapper over the server's schema
 export default async function createServerSchema() {
     const fetcher = createApolloFetch({
-        uri: process.env.SERVER_ENDPOINT || 'http://localhost:3000/graphql'
+        uri: process.env.SERVER_ENDPOINT || '/graphql'
     })
 
     // grab the github schema

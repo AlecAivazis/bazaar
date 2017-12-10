@@ -13,7 +13,11 @@ const Root = () => (
         <AppBar />
         <View style={styles.content}>
             <Switch>
-                <Route path="/" exact render={() => <Redirect to="/projects" />} />
+                <Route
+                    path="/"
+                    exact
+                    render={matchProps => <Redirect to={`/projects${matchProps.location.search}`} />}
+                />
                 <Route path="/projects" component={ProjectList} />
                 <Route path="/funds" component={Funds} />
                 <Route path="/settings" component={Settings} />

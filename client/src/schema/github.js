@@ -3,7 +3,7 @@ import { introspectSchema, makeRemoteExecutableSchema } from 'graphql-tools'
 import { createApolloFetch } from 'apollo-fetch'
 
 // create an executable wrapper over the remote GH schema
-export default async function createGHSchema() {
+export default async function createGHSchema(token) {
     const fetcher = createApolloFetch({
         uri: 'https://api.github.com/graphql'
     })
@@ -12,7 +12,7 @@ export default async function createGHSchema() {
         if (!options.headers) {
             options.headers = {} // Create the headers object if needed.
         }
-        options.headers['authorization'] = `Bearer ${process.env.GITHUB_ACCESS_TOKEN}`
+        options.headers['authorization'] = `Bearer ${token}`
 
         next()
     })

@@ -14,7 +14,7 @@ async function build() {
     process.env.SERVER_ENDPOINT = 'http://localhost:4000/graphql'
 
     // build the schema we'll use in the client
-    const schema = await createSchema()
+    const schema = await createSchema(process.env.GITHUB_CLIENT_TOKEN)
 
     // perform the introspection query
     const introspected = JSON.stringify(await graphql(schema, introspectionQuery), 2)

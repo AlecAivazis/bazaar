@@ -67,9 +67,10 @@ app.get('/oauthCallback', async (req, res) => {
 
     try {
         // try to parse the response as a query string
-        const { access_token: token } = querystring.parse(body)
+        const { access_token: token, ...rest } = querystring.parse(body)
+
         // redirect the user back to the frontend with the access token as a param
-        return res.redirect(`localhost:3000/?token=${token}`)
+        return res.redirect(`http://localhost:3000/?token=${token}`)
     } catch (err) {
         // if we couldn't parse it as json
         return res.status(500).send(body)

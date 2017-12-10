@@ -16,9 +16,9 @@ extend type BazrUser {
 `
 
 // a factory for the api's schema
-export default async function createSchema() {
+export default async function createSchema(githubToken) {
     // the remote schema
-    const remoteSchemas = await Promise.all([createServerSchema(), createGHSchema()])
+    const remoteSchemas = await Promise.all([createServerSchema(), createGHSchema(githubToken)])
 
     // merge the two
     return mergeSchemas({

@@ -17,6 +17,7 @@
     "keywords": [],
     "author": "Alec Aivazis",
     "license": "ISC",
+    "proxy": "http://localhost:4000",
     "prettier": {
         "tabWidth": 4,
         "printWidth": 100,
