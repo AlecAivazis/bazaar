@@ -8,7 +8,7 @@ import styles from './styles'
 import AppBar from './AppBar'
 import { ProjectList, ProjectDetails, Funds, Settings, Graphiql } from '..'
 
-const Root = () => (
+const Root = ({ githubToken }) => (
     <App style={styles.container}>
         <AppBar />
         <View style={styles.content}>
@@ -22,7 +22,7 @@ const Root = () => (
                 <Route path="/funds" component={Funds} />
                 <Route path="/settings" component={Settings} />
                 <Route path="/:owner/:name" component={ProjectDetails} />
-                <Route path="/graphiql" component={Graphiql} />
+                <Route path="/graphiql" render={() => <Graphiql githubToken={githubToken} />} />
             </Switch>
         </View>
     </App>

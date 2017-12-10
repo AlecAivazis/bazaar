@@ -9,20 +9,21 @@ import createSchema from '../schema'
 
 let schema
 
-async function graphQLFetcher(graphQLParams) {
+const graphQLFetcher = token => async graphQLParams => {
+    console.log(token)
     if (!schema) {
-        schema = await createSchema()
+        schema = await createSchema(token)
     }
 
     return await graphql(schema, graphQLParams.query)
 }
 
-export default () => (
+export default ({ githubToken }) => (
     <WithPortal id="graphiql">
         {element =>
             ReactDOM.createPortal(
                 <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0 }}>
-                    <GraphiQL fetcher={graphQLFetcher} />
+                    <GraphiQL fetcher={graphQLFetcher(githubToken)} />
                 </div>,
                 element
             )

@@ -15,7 +15,7 @@ ReactDOM.render(
                 githubToken && (
                     <EnvironmentProvider githubToken={githubToken}>
                         <Theme theme={{ primaryColor, primaryColorDark: primaryShadow }}>
-                            <Root />
+                            <Root githubToken={githubToken} />
                         </Theme>
                     </EnvironmentProvider>
                 )
