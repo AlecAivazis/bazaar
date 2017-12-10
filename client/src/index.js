@@ -5,16 +5,20 @@ import { BrowserRouter } from 'react-router-dom'
 import { Theme } from 'quark-web'
 // local imports
 import { Root } from './views'
-import { EnvironmentProvider } from './components'
+import { EnvironmentProvider, Auth } from './components'
 import { primaryColor, primaryShadow } from './styles'
 
 ReactDOM.render(
-    <EnvironmentProvider>
-        <BrowserRouter>
-            <Theme theme={{ primaryColor, primaryColorDark: primaryShadow }}>
-                <Root />
-            </Theme>
-        </BrowserRouter>
-    </EnvironmentProvider>,
+    <Auth>
+        {() => (
+            <EnvironmentProvider>
+                <BrowserRouter>
+                    <Theme theme={{ primaryColor, primaryColorDark: primaryShadow }}>
+                        <Root />
+                    </Theme>
+                </BrowserRouter>
+            </EnvironmentProvider>
+        )}
+    </Auth>,
     document.getElementById('root')
 )
