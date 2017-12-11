@@ -2,7 +2,7 @@
 import { GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLString, GraphQLInt } from 'graphql'
 import { connectionDefinitions, globalIdField } from 'graphql-relay'
 // local imports
-import { Fund, ProjectType, User } from '.'
+import { Fund, ProjectType, UserType } from '.'
 import { nodeInterface } from '../nodeDefinition'
 import { MembershipRole } from '../types'
 
@@ -18,7 +18,7 @@ export const ProjectMembershipType = new GraphQLObjectType({
         },
         role: { type: new GraphQLNonNull(MembershipRole) },
         user: {
-            type: new GraphQLNonNull(User),
+            type: new GraphQLNonNull(UserType),
             sqlJoin: (membershipTable, userTable) => `${membershipTable}.userId = ${userTable}.id`,
             resolve: root => {
                 return root.user

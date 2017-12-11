@@ -4,7 +4,7 @@ import { globalIdField, connectionDefinitions } from 'graphql-relay'
 // local imports
 import { nodeInterface } from '../nodeDefinition'
 
-export const User = new GraphQLObjectType({
+export const UserType = new GraphQLObjectType({
     name: 'BazrUser',
     interfaces: [nodeInterface],
     sqlTable: 'users',
@@ -19,5 +19,5 @@ export const User = new GraphQLObjectType({
 })
 
 export const { connectionType: UserConnection } = connectionDefinitions({
-    nodeType: User
+    nodeType: UserType
 })

@@ -6,6 +6,7 @@ import { connectionFromArray, connectionArgs } from 'graphql-relay'
 import { Project } from '.'
 import db from '../../database'
 import { ProjectType, ProjectConnection } from './project'
+import { UserType } from './user'
 import { nodeField } from '../nodeDefinition'
 
 export default new GraphQLObjectType({
@@ -33,6 +34,18 @@ export default new GraphQLObjectType({
                 }
             },
             where: (table, args, context) => `${table}.repoID = "${args.repoID}"`,
+            resolve: (_, args, __, resolveInfo) => {
+                return joinMonster(resolveInfo, {}, db.raw)
+            }
+        },
+        bazrUser: {
+            type: UserType,
+            args: {
+                accountName: {
+                    type: new GraphQLNonNull(GraphQLString)
+                }
+            },
+            where: (table, args, context) => `${table}.accountName = "${args.accountName}"`,
             resolve: (_, args, __, resolveInfo) => {
                 return joinMonster(resolveInfo, {}, db.raw)
             }

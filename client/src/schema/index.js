@@ -13,6 +13,10 @@ extend type Project {
 extend type BazrUser {
   profile: User
 }
+
+extend type User {
+    bazrUser: BazrUser
+}
 `
 
 // a factory for the api's schema
@@ -45,6 +49,15 @@ export default async function createSchema(githubToken) {
                     resolve: (parent, args, context, info) => {
                         // return the repository designated by the ID
                         return mergeInfo.delegate('query', 'user', { login: parent.accountName }, context, info)
+                    }
+                }
+            },
+            User: {
+                bazrUser: {
+                    fragment: 'fragment UserProfile on User { login }',
+                    resolve: (parent, args, context, info) => {
+                        // return the repository designated by the ID
+                        return mergeInfo.delegate('query', 'bazrUser', { accountName: parent.login }, context, info)
                     }
                 }
             }
