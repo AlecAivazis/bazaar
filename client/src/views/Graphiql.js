@@ -10,7 +10,6 @@ import createSchema from '../schema'
 let schema
 
 const graphQLFetcher = token => async graphQLParams => {
-    console.log(token)
     if (!schema) {
         schema = await createSchema(token)
     }
