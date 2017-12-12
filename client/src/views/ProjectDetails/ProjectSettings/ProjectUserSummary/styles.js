@@ -15,9 +15,8 @@ export default {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: 12,
-        paddingBottom: 12,
-        justifyContent: 'space-between'
+        paddingTop: 16,
+        paddingBottom: 16
     },
     avatarContainer: {
         display: 'flex',
@@ -29,5 +28,15 @@ export default {
         weight: 36,
         borderRadius: '50%',
         marginRight: 12
+    },
+    metaData: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 8
+    },
+    metaDataText: {
+        color: grey3,
+        fontSize: 12,
+        marginRight: 20
     }
 }

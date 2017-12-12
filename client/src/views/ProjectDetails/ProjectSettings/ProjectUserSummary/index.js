@@ -4,11 +4,11 @@ import React from 'react'
 import { View } from 'react-native-web'
 import { createFragmentContainer, graphql } from 'react-relay'
 import type { RelayProp } from 'react-relay'
-import { H3, Text, Select, Option } from 'quark-web'
+import { H3, Text, Subtitle } from 'quark-web'
+import moment from 'moment'
 // local imports
 import styles from './styles'
 import type { ProjectUserSummary_project } from './__generated__/ProjectUserSummary_project.graphql'
-import { updateUserRole } from '../../../../mutations'
 
 type Props = {
     project: ProjectUserSummary_project,
@@ -25,7 +25,6 @@ const ProjectUserSummary = ({ project, lastElementStyle, relay }: Props) => {
     return [
         <View style={styles.header} key="usersummary-header">
             <H3>Collaborators</H3>
-            <H3>Role</H3>
         </View>,
         ...project.members.edges.map((edge, i) => {
             // guards
@@ -37,8 +36,14 @@ const ProjectUserSummary = ({ project, lastElementStyle, relay }: Props) => {
             // check if we need to add extra styling
             const extraStyle = i === project.members.edges.length - 1 ? lastElementStyle : {}
 
-            // grab the user and their role from the node
-            const { user, role } = edge.node
+            // grab the user and their from the node
+            const { user, firstTransaction, lastTransaction, totalAmountEarned } = edge.node
+
+            // the date the first transaction occured
+            const firstStamp = moment(firstTransaction.edges[0].node.created_at)
+            const lastStamp = moment(lastTransaction.edges[0].node.created_at_)
+            // the format string for dates
+            const format = 'll'
 
             // if we can't access the profile
             if (!user.profile) {
@@ -51,55 +56,29 @@ const ProjectUserSummary = ({ project, lastElementStyle, relay }: Props) => {
             }
 
             // pull out the info we're gonna use from the edge
-            const { name, login, avatarUrl } = user.profile
+            const { name, avatarUrl } = user.profile
 
             return (
                 <View key={user.id} style={{ ...styles.userRow, ...extraStyle }}>
                     <View style={styles.avatarContainer}>
                         <img src={avatarUrl} style={styles.avatar} />
-                        <Text>{name}</Text>
                     </View>
-                    <Select
-                        style={{ width: 200, paddingRight: 0 }}
-                        value={role}
-                        onChange={_changeRole({ project, user, relay, membership: edge.node })}
-                    >
-                        <Option value="ADMIN">Admin</Option>
-                        <Option value="CONTRIBUTOR">Contributor</Option>
-                    </Select>
+                    <View>
+                        <Text>{name}</Text>
+                        <View style={styles.metaData}>
+                            <Subtitle style={styles.metaDataText}>Total amount earned: {totalAmountEarned} Ξ</Subtitle>
+                            <Subtitle style={styles.metaDataText}>
+                                Latest contribution: {lastStamp.format(format)}
+                            </Subtitle>
+                            <Subtitle style={styles.metaDataText}>
+                                First contribution: {firstStamp.format(format)}
+                            </Subtitle>
+                        </View>
+                    </View>
                 </View>
             )
         })
     ]
-}
-
-const _changeRole = ({
-    relay,
-    project,
-    user,
-    membership
-}: {
-    relay: RelayProp,
-    project: { +id: string },
-    user: { +id: string },
-    membership: { +id: string }
-}) => (role: string) => {
-    updateUserRole({
-        environment: relay.environment,
-        input: {
-            project: project.id,
-            user: user.id,
-            role
-        },
-        optimisticResponse: {
-            UpdateUserRole: {
-                membership: {
-                    id: membership.id,
-                    role
-                }
-            }
-        }
-    })
 }
 
 export default createFragmentContainer(
@@ -112,13 +91,26 @@ export default createFragmentContainer(
                 edges {
                     node {
                         id
-                        role
+                        totalAmountEarned
+                        firstTransaction: transactions(first: 1) {
+                            edges {
+                                node {
+                                    created_at
+                                }
+                            }
+                        }
+                        lastTransaction: transactions(last: 1) {
+                            edges {
+                                node {
+                                    created_at
+                                }
+                            }
+                        }
                         user {
                             id
                             accountName
                             profile {
                                 avatarUrl
-                                login
                                 name
                             }
                         }
