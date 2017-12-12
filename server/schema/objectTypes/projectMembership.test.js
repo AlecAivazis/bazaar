@@ -186,9 +186,6 @@ describe('API', () => {
                                     contributors {
                                         edges {
                                             node {
-                                                user {
-                                                    accountName
-                                                }
                                                 transactions {
                                                     edges {
                                                         node {
@@ -216,7 +213,35 @@ describe('API', () => {
                 result.data.node.contributors.edges[0].node.transactions.edges
                     .map(({ node }) => node.amount)
                     .sort()
-            ).toEqual([1, 2, 3, 4])
+            ).toEqual([1, 2, 3])
+        })
+
+        test('can compute the total amount earned by a given project membership', async () => {
+            // find the total earned
+            const result = await graphql(
+                schema,
+                `
+                        query {
+                            node(id: "${toGlobalId('Project', 1)}") {
+                                ... on Project {
+                                    contributors {
+                                        edges {
+                                            node {
+                                                totalAmountEarned
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    `
+            )
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+
+            // make sure we got some sort of list back
+            expect(result.data.node.contributors.edges[0].node.totalAmountEarned).toEqual(6)
         })
     })
 })

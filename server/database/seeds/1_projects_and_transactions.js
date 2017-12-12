@@ -76,7 +76,7 @@ exports.seed = function(knex, Promise) {
                                 .utc()
                                 .format(),
                             fund: 1,
-                            recipientId: 1,
+                            recipientId: 2,
                             amount: 4,
                             project: 1
                         }
