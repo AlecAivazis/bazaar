@@ -1,8 +1,8 @@
 // external imports
 import { GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLString, GraphQLInt } from 'graphql'
-import { connectionDefinitions, globalIdField } from 'graphql-relay'
+import { connectionDefinitions, globalIdField, connectionFromArray } from 'graphql-relay'
 // local imports
-import { Fund, ProjectType, UserType } from '.'
+import { Fund, ProjectType, UserType, TransactionConnection } from '.'
 import { nodeInterface } from '../nodeDefinition'
 import { MembershipRole } from '../types'
 
@@ -28,6 +28,12 @@ export const ProjectMembershipType = new GraphQLObjectType({
             type: new GraphQLNonNull(ProjectType),
             sqlJoin: (membershipTable, projectTable) =>
                 `${membershipTable}.projectId = ${projectTable}.id`
+        },
+        transactions: {
+            type: new GraphQLNonNull(TransactionConnection),
+            sqlJoin: (membershipTable, transactionTable) =>
+                `(${membershipTable}.projectId = ${transactionTable}.project AND ${membershipTable}.userId = ${transactionTable}.recipientId)`,
+            resolve: (root, args) => connectionFromArray(root.transactions, args)
         }
     })
 })
