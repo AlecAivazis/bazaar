@@ -4,11 +4,11 @@ import * as React from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 import { Title, Text, IconCheckCircle, Button } from 'quark-web'
 // local imports
-import type { NewProjectRow_repo } from './__generated__/NewProjectRow_repo.graphql'
+import type { ManageProjectsRow_repo } from './__generated__/ManageProjectsRow_repo.graphql'
 import styles from './styles'
 
 type Props = {
-    repo: NewProjectRow_repo,
+    repo: ManageProjectsRow_repo,
     first: boolean,
     last: boolean
 }
@@ -28,7 +28,7 @@ const ConnectCTA = () => (
     </Button>
 )
 
-const NewProjectRow = ({ repo, first }: Props) => (
+const ManageProjectsRow = ({ repo, first }: Props) => (
     <div style={first ? styles.firstRepoRow : styles.repoRow}>
         <Title style={{ display: 'flex', alignItems: 'center', fontWeight: '100' }}>
             {repo.owner.login} / {repo.name}
@@ -38,9 +38,9 @@ const NewProjectRow = ({ repo, first }: Props) => (
 )
 
 export default createFragmentContainer(
-    NewProjectRow,
+    ManageProjectsRow,
     graphql`
-        fragment NewProjectRow_repo on Repository {
+        fragment ManageProjectsRow_repo on Repository {
             name
             owner {
                 login

@@ -6,7 +6,7 @@ import { View } from 'react-native-web'
 // local imports
 import styles from './styles'
 import AppBar from './AppBar'
-import { ProjectList, ProjectDetails, Funds, Settings, Graphiql, NewProject } from '..'
+import { ProjectList, ProjectDetails, Funds, Settings, Graphiql, ManageProjects } from '..'
 
 const Root = ({ githubToken }) => (
     <App style={styles.container}>
@@ -18,7 +18,7 @@ const Root = ({ githubToken }) => (
                     exact
                     render={matchProps => <Redirect to={`/projects${matchProps.location.search}`} />}
                 />
-                <Route path="/projects/new" component={NewProject} />
+                <Route path="/projects/manage" component={ManageProjects} />
                 <Route path="/projects" component={ProjectList} />
                 <Route path="/funds" component={Funds} />
                 <Route path="/settings" component={Settings} />

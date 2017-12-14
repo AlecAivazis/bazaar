@@ -5,30 +5,30 @@ import { graphql } from 'react-relay'
 import { H1, Subtitle } from 'quark-web'
 // local imports
 import { QueryRenderer } from '../../components'
-import NewProjectRow from './NewProjectRow'
-import type { NewProjectQueryResponse } from './__generated__/NewProjectQuery.graphql'
+import ManageProjectsRow from './ManageProjectsRow'
+import type { ManageProjectsQueryResponse } from './__generated__/ManageProjectsQuery.graphql'
 import styles from './styles'
 
-const NewProjectView = () => (
+const ManageProjectsView = () => (
     <QueryRenderer
         query={graphql`
-            query NewProjectQuery {
+            query ManageProjectsQuery {
                 viewer {
                     repositories(first: 15, orderBy: { field: UPDATED_AT, direction: DESC }) {
                         edges {
                             node {
-                                ...NewProjectRow_repo
+                                ...ManageProjectsRow_repo
                             }
                         }
                     }
                 }
             }
         `}
-        render={({ viewer: { repositories: { edges } } }: NewProjectQueryResponse) => (
+        render={({ viewer: { repositories: { edges } } }: ManageProjectsQueryResponse) => (
             <div style={styles.container}>
-                <H1 style={styles.header}>New Project</H1>
+                <H1 style={styles.header}>Manage Projects</H1>
                 <Subtitle style={styles.description}>
-                    Select a project to begin collecting money for the hard work that’s taking place!
+                    Connect a project to begin collecting money for the hard work that’s taking place!
                 </Subtitle>
                 {edges &&
                     edges.map((edge, i) => {
@@ -38,11 +38,11 @@ const NewProjectView = () => (
                         }
 
                         // render the project row
-                        return <NewProjectRow repo={edge.node} first={i === 0} last={i === edges.length - 1} />
+                        return <ManageProjectsRow repo={edge.node} first={i === 0} last={i === edges.length - 1} />
                     })}
             </div>
         )}
     />
 )
 
-export default NewProjectView
+export default ManageProjectsView
