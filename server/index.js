@@ -28,7 +28,7 @@ app.use(
 app.get('/oauth', (req, res) =>
     // to kick off the oauth flow, redirect the user to GitHub's authorize endpoint
     res.redirect(
-        `https://github.com/login/oauth/authorize?scope=user:email&client_id=${
+        `https://github.com/login/oauth/authorize?scope=user:email,public_repo&client_id=${
             process.env.GITHUB_CLIENT_ID
         }`
     )

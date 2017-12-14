@@ -5,6 +5,7 @@
 /client/node_modules
 /client/schema.json
 /client/.env
+/client/build
 /server/node_modules
 /server/.env
 /server/dev.sqlite3

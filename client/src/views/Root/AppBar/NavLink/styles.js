@@ -1,6 +1,3 @@
-// external imports
-import { grey5 } from 'quark-core/styles'
-
 const container = {
     display: 'flex',
     flexDirection: 'column',

@@ -3,6 +3,7 @@ import React from 'react'
 import { View } from 'react-native-web'
 import { graphql } from 'react-relay'
 import { PrimaryButton, H1 } from 'quark-web'
+import { Link } from 'react-router-dom'
 // local imports
 import { QueryRenderer } from '../../components'
 import styles from './styles'
@@ -12,7 +13,9 @@ const ProjectList = props => (
     <View style={styles.container}>
         <View style={styles.header}>
             <H1>My Projects</H1>
-            <PrimaryButton>Add Project</PrimaryButton>
+            <Link to="/projects/new">
+                <PrimaryButton>Add Project</PrimaryButton>
+            </Link>
         </View>
         <View style={styles.content}>
             <QueryRenderer

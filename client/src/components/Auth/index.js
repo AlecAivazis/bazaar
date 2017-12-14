@@ -5,14 +5,14 @@ import querystring from 'query-string'
 import { withRouter } from 'react-router-dom'
 
 type Props = {
-    children: () => React.Element<*>
+    children: (?string) => React.Element<*>
 }
 
 type State = {
     accessToken: ?string
 }
 
-class Auth extends React.Component<Props> {
+class Auth extends React.Component<Props, State> {
     state = {
         accessToken: null
     }

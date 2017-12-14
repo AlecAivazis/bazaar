@@ -15,8 +15,7 @@ export default {
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        paddingTop: 16,
-        paddingBottom: 16
+        marginTop: 24
     },
     avatarContainer: {
         display: 'flex',

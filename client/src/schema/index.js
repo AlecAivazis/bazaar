@@ -7,15 +7,19 @@ import createServerSchema from './server'
 // the type extensions to link schema together
 const linkTypes = `
 extend type Project {
-  repository: Repository
+    repository: Repository
 }
 
 extend type BazrUser {
-  profile: User
+    profile: User
 }
 
 extend type User {
     bazrUser: BazrUser
+}
+
+extend type Repository {
+    bazrProject: Project
 }
 `
 
@@ -58,6 +62,21 @@ export default async function createSchema(githubToken) {
                     resolve: (parent, args, context, info) => {
                         // return the repository designated by the ID
                         return mergeInfo.delegate('query', 'bazrUser', { accountName: parent.login }, context, info)
+                    }
+                }
+            },
+            Repository: {
+                bazrProject: {
+                    fragment: `fragment RepositoryBazrProject on Repository { name owner { login } }`,
+                    resolve: (parent, args, context, info) => {
+                        // return the repository designated by the ID
+                        return mergeInfo.delegate(
+                            'query',
+                            'project',
+                            { repoID: `${parent.owner.login}/${parent.name}` },
+                            context,
+                            info
+                        )
                     }
                 }
             }

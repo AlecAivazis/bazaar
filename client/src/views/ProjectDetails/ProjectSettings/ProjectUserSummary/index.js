@@ -61,7 +61,7 @@ const ProjectUserSummary = ({ project, lastElementStyle, relay }: Props) => {
             return (
                 <View key={user.id} style={{ ...styles.userRow, ...extraStyle }}>
                     <View style={styles.avatarContainer}>
-                        <img src={avatarUrl} style={styles.avatar} />
+                        <img alt="avatar" src={avatarUrl} style={styles.avatar} />
                     </View>
                     <View>
                         <Text>{name}</Text>
