@@ -16,6 +16,9 @@ export const schema = makeExecutableSchema({
       }
     `,
     resolvers: {
+        Query: {
+            bazrClientVersion: () => 1
+        },
         Mutation: {
             connectProject: (_, { input: { owner, name } }) => {
                 console.log('connecting project', owner, name)
