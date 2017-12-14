@@ -3,6 +3,7 @@ import { mergeSchemas } from 'graphql-tools'
 // local imports
 import createGHSchema from './github'
 import createServerSchema from './server'
+import * as mutations from './mutations'
 
 // the type extensions to link schema together
 const linkTypes = `
@@ -30,7 +31,7 @@ export default async function createSchema(githubToken) {
 
     // merge the two
     return mergeSchemas({
-        schemas: [...remoteSchemas, linkTypes],
+        schemas: [...remoteSchemas, mutations.schema, linkTypes],
         // prefer local types over remote ones
         onTypeConflict: (leftType, rightType) => leftType,
         // implement the links between types

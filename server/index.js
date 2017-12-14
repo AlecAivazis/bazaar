@@ -11,6 +11,9 @@ import schema from './schema'
 // load environment variables
 configEnv()
 
+// the github oauth scopes that we care about
+const scopes = ['user:email', 'public_repo']
+
 // an express app to use
 const app = express()
 
@@ -28,7 +31,7 @@ app.use(
 app.get('/oauth', (req, res) =>
     // to kick off the oauth flow, redirect the user to GitHub's authorize endpoint
     res.redirect(
-        `https://github.com/login/oauth/authorize?scope=user:email,public_repo&client_id=${
+        `https://github.com/login/oauth/authorize?scope=${scopes.join(',')}&client_id=${
             process.env.GITHUB_CLIENT_ID
         }`
     )

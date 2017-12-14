@@ -17,6 +17,7 @@ const ManageProjectsView = () => (
                     repositories(first: 15, orderBy: { field: UPDATED_AT, direction: DESC }) {
                         edges {
                             node {
+                                id
                                 ...ManageProjectsRow_repo
                             }
                         }
@@ -38,7 +39,14 @@ const ManageProjectsView = () => (
                         }
 
                         // render the project row
-                        return <ManageProjectsRow repo={edge.node} first={i === 0} last={i === edges.length - 1} />
+                        return (
+                            <ManageProjectsRow
+                                key={edge.node.id}
+                                repo={edge.node}
+                                first={i === 0}
+                                last={i === edges.length - 1}
+                            />
+                        )
                     })}
             </div>
         )}

@@ -6,6 +6,7 @@ import { Title, Text, IconCheckCircle, Button } from 'quark-web'
 // local imports
 import type { ManageProjectsRow_repo } from './__generated__/ManageProjectsRow_repo.graphql'
 import styles from './styles'
+import { connectProject } from '../../mutations'
 
 type Props = {
     repo: ManageProjectsRow_repo,
@@ -22,18 +23,31 @@ const ConnectedIndicator = () => (
 )
 
 // the cta to connect the project to bazr
-const ConnectCTA = () => (
-    <Button size="small" style={{ minWidth: 90 }}>
+const ConnectCTA = ({ repo, environment }: { environment: RelayEnvironment, repo: ManageProjectsRow_repo }) => (
+    <Button
+        size="small"
+        style={{ minWidth: 90 }}
+        onClick={() =>
+            connectProject({
+                environment,
+                input: {
+                    name: repo.name,
+                    owner: repo.owner.login
+                },
+                onCompleted: () => console.log('connected!')
+            })
+        }
+    >
         connect
     </Button>
 )
 
-const ManageProjectsRow = ({ repo, first }: Props) => (
+const ManageProjectsRow = ({ repo, first, relay }: Props) => (
     <div style={first ? styles.firstRepoRow : styles.repoRow}>
         <Title style={{ display: 'flex', alignItems: 'center', fontWeight: '100' }}>
             {repo.owner.login} / {repo.name}
         </Title>
-        {repo.bazrProject ? <ConnectedIndicator /> : <ConnectCTA />}
+        {repo.bazrProject ? <ConnectedIndicator /> : <ConnectCTA environment={relay.environment} repo={repo} />}
     </div>
 )
 

@@ -5,8 +5,6 @@ import * as Relay from 'react-relay'
 export default (mutation: any) => ({
     environment,
     input,
-    onCompleted,
-    onError,
     ...rest
 }: {
     environment: Relay.Environment,
