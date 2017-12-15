@@ -2,11 +2,12 @@
 // external imports
 import * as React from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
-import { Title, Text, IconCheckCircle, Button } from 'quark-web'
+import { Title, Text, IconCheckCircle } from 'quark-web'
+import PropTypes from 'prop-types'
 // local imports
+import ConnectCTA from './ConnectCTA'
 import type { ManageProjectsRow_repo } from './__generated__/ManageProjectsRow_repo.graphql'
 import styles from './styles'
-import { connectProject } from '../../mutations'
 
 type Props = {
     repo: ManageProjectsRow_repo,
@@ -14,42 +15,34 @@ type Props = {
     last: boolean
 }
 
+type ContextTypes = {
+    accessToken: ?string
+}
+
 // the connected indicator
-const ConnectedIndicator = () => (
+export const ConnectedIndicator = () => (
     <div style={{ display: 'flex', color: '#58AD66', flexDirection: 'row', alignItems: 'center' }}>
         <IconCheckCircle />
         <Text style={{ marginLeft: 4, color: '#58AD66' }}>connected</Text>
     </div>
 )
 
-// the cta to connect the project to bazr
-const ConnectCTA = ({ repo, environment }: { environment: RelayEnvironment, repo: ManageProjectsRow_repo }) => (
-    <Button
-        size="small"
-        style={{ minWidth: 90 }}
-        onClick={() =>
-            connectProject({
-                environment,
-                input: {
-                    name: repo.name,
-                    owner: repo.owner.login
-                },
-                onCompleted: () => console.log('connected!')
-            })
-        }
-    >
-        connect
-    </Button>
-)
-
-const ManageProjectsRow = ({ repo, first, relay }: Props) => (
+const ManageProjectsRow = ({ repo, first, relay }: Props, { accessToken }: ContextTypes) => (
     <div style={first ? styles.firstRepoRow : styles.repoRow}>
         <Title style={{ display: 'flex', alignItems: 'center', fontWeight: '100' }}>
             {repo.owner.login} / {repo.name}
         </Title>
-        {repo.bazrProject ? <ConnectedIndicator /> : <ConnectCTA environment={relay.environment} repo={repo} />}
+        {repo.bazrProject ? (
+            <ConnectedIndicator />
+        ) : (
+            <ConnectCTA environment={relay.environment} repo={repo} accessToken={accessToken} />
+        )}
     </div>
 )
+
+ManageProjectsRow.contextTypes = {
+    accessToken: PropTypes.string
+}
 
 export default createFragmentContainer(
     ManageProjectsRow,

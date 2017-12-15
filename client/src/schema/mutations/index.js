@@ -1,4 +1,7 @@
+// external imports
 import { makeExecutableSchema } from 'graphql-tools'
+// local imports
+import connectProject from './connectProject'
 
 export const schema = makeExecutableSchema({
     typeDefs: `
@@ -8,7 +11,8 @@ export const schema = makeExecutableSchema({
 
       input ConnectProjectInput {
         owner: String!,
-        name: String!
+        name: String!,
+        accessToken: String!
       }
 
       type Mutation {
@@ -20,10 +24,7 @@ export const schema = makeExecutableSchema({
             bazrClientVersion: () => 1
         },
         Mutation: {
-            connectProject: (_, { input: { owner, name } }) => {
-                console.log('connecting project', owner, name)
-                return false
-            }
+            connectProject
         }
     }
 })

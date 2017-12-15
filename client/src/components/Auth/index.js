@@ -3,6 +3,7 @@
 import * as React from 'react'
 import querystring from 'query-string'
 import { withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 type Props = {
     children: (?string) => React.Element<*>
@@ -15,6 +16,14 @@ type State = {
 class Auth extends React.Component<Props, State> {
     state = {
         accessToken: null
+    }
+
+    static childContextTypes = {
+        accessToken: PropTypes.string
+    }
+
+    getChildContext() {
+        return this.state
     }
 
     constructor(...args) {

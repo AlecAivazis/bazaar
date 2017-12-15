@@ -55,6 +55,9 @@ export const ProjectType = new GraphQLObjectType({
     })
 })
 
-export const { connectionType: ProjectConnection } = connectionDefinitions({
+export const {
+    connectionType: ProjectConnection,
+    edgeType: ProjectEdgeType
+} = connectionDefinitions({
     nodeType: ProjectType
 })
