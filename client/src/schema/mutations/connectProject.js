@@ -2,6 +2,8 @@
 
 // the function to create the git hook
 const createGithubHook = async ({ owner, name, accessToken }) => {
+    // the hostname of the url that recieves the webhook
+    const webhookHost = process.env.GITHUB_WEBHOOK_HOST || 'http://example.com'
     // create the bazr git hook
     const response = await fetch(`https://api.github.com/repos/${owner}/${name}/hooks?access_token=${accessToken}`, {
         method: 'POST',
@@ -13,7 +15,8 @@ const createGithubHook = async ({ owner, name, accessToken }) => {
             active: true,
             events: ['push', 'pull_request'],
             config: {
-                url: 'http://example.com/webhook',
+                // default to a no-op web hook
+                url: `${webhookHost}/webhook`,
                 content_type: 'json'
             }
         })
