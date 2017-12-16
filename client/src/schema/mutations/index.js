@@ -2,6 +2,7 @@
 import { makeExecutableSchema } from 'graphql-tools'
 // local imports
 import connectProject from './connectProject'
+import deleteProject from './deleteProject'
 
 export const schema = makeExecutableSchema({
     typeDefs: `
@@ -15,8 +16,15 @@ export const schema = makeExecutableSchema({
         accessToken: String!
       }
 
+      input DeleteBazrProjectInput {
+        owner: String!,
+        name: String!,
+        accessToken: String!
+      }
+
       type Mutation {
         connectProject(input: ConnectProjectInput!): Boolean
+        deleteProject(input: DeleteBazrProjectInput!): Boolean
       }
     `,
     resolvers: {
@@ -24,7 +32,8 @@ export const schema = makeExecutableSchema({
             bazrClientVersion: () => 1
         },
         Mutation: {
-            connectProject
+            connectProject,
+            deleteProject
         }
     }
 })

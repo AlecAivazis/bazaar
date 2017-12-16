@@ -22,10 +22,15 @@
         }
     },
     "babel": {
-        "presets": ["babel-preset-env", "stage-0"]
+        "presets": [
+            "babel-preset-env",
+            "stage-0"
+        ]
     },
     "jest": {
-        "setupFiles": ["<rootDir>/scripts/init-enzyme.js"]
+        "setupFiles": [
+            "<rootDir>/scripts/init-enzyme.js"
+        ]
     },
     "dependencies": {
         "@babel/polyfill": "^7.0.0-beta.34",
@@ -42,6 +47,7 @@
         "enzyme-adapter-react-16": "^1.1.0",
         "flow-bin": "^0.59.0",
         "flow-typed": "^2.2.3",
+        "github-api": "^3.0.0",
         "graphiql": "^0.11.10",
         "graphql-cli": "^1.1.0",
         "graphql-tools": "^2.7.2",
@@ -58,7 +64,8 @@
         "react-scripts": "1.0.17",
         "react-sparklines": "^1.7.0",
         "relay-compiler": "^1.4.1",
-        "tinycolor2": "^1.4.1"
+        "tinycolor2": "^1.4.1",
+        "url-parse": "^1.2.0"
     },
     "prettier": {
         "tabWidth": 4,
