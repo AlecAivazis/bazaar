@@ -27,7 +27,7 @@ const ManageProjectsView = () => (
         `}
         render={({ viewer: { repositories: { edges } } }: ManageProjectsQueryResponse) => (
             <div style={styles.container}>
-                <H1 style={styles.header}>Manage Projects</H1>
+                <H1 style={styles.header}>Register a Project</H1>
                 <Subtitle style={styles.description}>
                     Connect a project to begin collecting money for the hard work that’s taking place!
                 </Subtitle>

@@ -18,7 +18,7 @@ const Root = ({ githubToken }) => (
                     exact
                     render={matchProps => <Redirect to={`/projects${matchProps.location.search}`} />}
                 />
-                <Route path="/projects/manage" component={ManageProjects} />
+                <Route path="/projects/register" component={ManageProjects} />
                 <Route path="/projects" component={ProjectList} />
                 <Route path="/funds" component={Funds} />
                 <Route path="/settings" component={Settings} />

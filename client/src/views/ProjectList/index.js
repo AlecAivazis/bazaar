@@ -13,8 +13,8 @@ const ProjectList = props => (
     <View style={styles.container}>
         <View style={styles.header}>
             <H1>My Projects</H1>
-            <Link to="/projects/manage" style={{ width: 160 }}>
-                <PrimaryButton>Manage Projects</PrimaryButton>
+            <Link to="/projects/register" style={{ width: 160 }}>
+                <PrimaryButton>Register a Project</PrimaryButton>
             </Link>
         </View>
         <View style={styles.content}>
