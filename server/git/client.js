@@ -54,6 +54,8 @@ export default class GithubRepoClient {
             body: JSON.stringify(config)
         })
 
+    fork = () => this._request('forks', { method: 'POST' })
+
     _request = async (url, { method = 'GET', headers = {}, ...config } = {}) => {
         // the owner and name of the repo
         const response = await fetch(

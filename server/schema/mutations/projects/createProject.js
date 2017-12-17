@@ -6,6 +6,7 @@ import joinMonster from 'join-monster'
 // local imports
 import { ProjectType } from '../../objectTypes'
 import database from '../../../database'
+import { createProjectFork } from '../../../git/welcome'
 
 export default mutationWithClientMutationId({
     name: 'CreateProject',
@@ -30,6 +31,11 @@ export default mutationWithClientMutationId({
     }),
     mutateAndGetPayload: async ({ repoID }) => {
         const projectsCreated = await database('projects').insert({ repoID })
+
+        // pull out the owner and repo from the repoID
+        const [owner, repo] = repoID.split('/')
+        // fork the repository
+        await createProjectFork({ owner, repo })
 
         // we're done so leave behind the information we need to query for the membership we just modified
         return {

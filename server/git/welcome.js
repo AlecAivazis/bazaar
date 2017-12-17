@@ -17,7 +17,13 @@ import fetch from 'isomorphic-fetch'
 // local imports
 import GithubRepo from './client'
 
-export const createFork = async () => {}
+export const createProjectFork = async ({ owner, repo }) => {
+    // create a github client pointing to the repo
+    const client = new GithubRepo(owner, repo)
+
+    // fork the remote repo
+    await client.fork()
+}
 
 export const createAndSendUpdate = async fork => {
     // point the client to the appropriate repo
