@@ -1,6 +1,3 @@
-// external imports
-import Github from 'github-api'
-
 // the hostname of the url that recieves the webhook
 const webhookHost = process.env.GITHUB_WEBHOOK_HOST || 'http://example.com'
 
@@ -34,16 +31,10 @@ export const createWebhook = async ({ owner, name, accessToken }) => {
 }
 
 export const deleteWebHook = async ({ owner, name, accessToken }) => {
-    // create a new github client with the provided token
-    const client = new Github({
-        token: accessToken
-    })
-
-    // get a reference to the repo
-    const repo = client.getRepo(owner, name)
-
     // get the list of hooks
-    const { data: hooks } = await repo.listHooks()
+    const hooks = await (await fetch(
+        `https://api.github.com/repos/${owner}/${name}/hooks?access_token=${accessToken}`
+    )).json()
 
     // find the hooks that are based off of the current hook url
     const targets = hooks.filter(({ config: { url } }) => {

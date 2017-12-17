@@ -1,11 +1,13 @@
 # bazr
+
 [![Coverage Status](https://coveralls.io/repos/github/AlecAivazis/bazr/badge.svg)](https://coveralls.io/github/AlecAivazis/bazr)
 
 A place to compensate open source development
+
 <!--
 ## Getting Started
 
-To run locally, first install `solc`: 
+To run locally, first install `solc`:
 ```
 brew update
 brew upgrade
@@ -14,7 +16,7 @@ brew install solidity
 brew linkapps solidity
 ```
 
-Then install `run` which is used to manage the development tasks for bazr: 
+Then install `run` which is used to manage the development tasks for bazr:
 
 ```bash
 go get github.com/AlecAivazis/run
