@@ -12,6 +12,8 @@ export default async (req, res) => {
         await createAndSendUpdate(payload.repository)
     }
 
+    console.log(action, payload)
+
     // we're done here
     res.send('OK')
 }

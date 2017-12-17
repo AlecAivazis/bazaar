@@ -52,4 +52,7 @@ export const createAndSendUpdate = async fork => {
     })
 }
 
-export const recieveContribution = async () => {}
+export const recieveContribution = async ({ repoID, user }) => {
+    //
+    console.log('CLOSED BOTS PR from ', user, 'in project', repoID)
+}

@@ -23,4 +23,9 @@ export default app => {
       This route is hit when one of the events we care about occurs in the bot account.
     */
     app.post('/bazrBotCallback', bodyParser.json(), handlers.botCallback)
+
+    /*
+      This route is hit by the webhook when activities occur on a particular project
+    */
+    app.post('/webhook', bodyParser.json(), handlers.webhook)
 }

@@ -14,7 +14,7 @@ const ManageProjectsView = () => (
         query={graphql`
             query ManageProjectsQuery {
                 viewer {
-                    repositories(first: 15, orderBy: { field: UPDATED_AT, direction: DESC }) {
+                    repositories(first: 25, orderBy: { field: UPDATED_AT, direction: DESC }) {
                         edges {
                             node {
                                 id
