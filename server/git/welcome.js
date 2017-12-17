@@ -10,10 +10,40 @@
 
     3. When the user merges this PR, they will get their first contribution adding the project
        to the user's project list view
-
 */
+
+// external imports
+import fetch from 'isomorphic-fetch'
+// local imports
+import GithubRepo from './client'
+
 export const createFork = async () => {}
 
-export const createAndSendUpdate = async () => {}
+export const createAndSendUpdate = async fork => {
+    // point the client to the appropriate repo
+    const repo = new GithubRepo(fork.owner.login, fork.name)
+
+    // get the sha of the readme
+    const [{ content, sha, path }, parent] = await Promise.all([
+        await repo.readme,
+        await repo.parent
+    ])
+
+    // update the README file in the fork with the new contents
+    await repo.updateFile({
+        path,
+        message: 'Updated readme',
+        sha,
+        content: Buffer.from('Hello World').toString('base64')
+    })
+
+    // submit a pr on the parent
+    await parent.submitPR({
+        title: 'Welcome to bazr',
+        body: 'Hopefully this PR is useful to you',
+        head: `${fork.owner.login}:master`,
+        base: 'master'
+    })
+}
 
 export const recieveContribution = async () => {}
