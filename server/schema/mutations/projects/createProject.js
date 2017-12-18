@@ -30,11 +30,13 @@ export default mutationWithClientMutationId({
         }
     }),
     mutateAndGetPayload: async ({ repoID }) => {
+        // create the project with the matching repoID
         const projectsCreated = await database('projects').insert({ repoID })
 
         // pull out the owner and repo from the repoID
         const [owner, repo] = repoID.split('/')
-        // fork the repository
+
+        // fork the repository to kick off the welcome PR workflow
         await createProjectFork({ owner, repo })
 
         // we're done so leave behind the information we need to query for the membership we just modified

@@ -87,7 +87,7 @@ export const recieveContribution = async ({ repoID, user }) => {
             recipientId: userId,
             project: projectId,
             amount: 0,
-            fund: 1 // TODO: figure out what fund to put here (null or an ever-present?)
+            fund: -1
         })
     }
 
