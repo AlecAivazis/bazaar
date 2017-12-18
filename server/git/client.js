@@ -78,22 +78,21 @@ export default class GithubRepoClient {
         // github doesn't allow trailing / so we can only include it if url is truthy
         const tail = url ? `/${url}` : ''
 
-        console.log(
-            'hitting github api',
-            `https://api.github.com/repos/${this._owner}/` + `${this._repo}${tail}`
-        )
+        // compute the target url on github
+        const githubURL = `https://api.github.com/repos/${this._owner}/` + `${this._repo}${tail}`
+
+        // log the integration
+        console.log('hitting github api', githubURL)
+
         // the owner and name of the repo
-        const response = await fetch(
-            `https://api.github.com/repos/${this._owner}/` + `${this._repo}${tail}`,
-            {
-                method,
-                headers: {
-                    ...headers,
-                    Authorization: `token ${this._token}`
-                },
-                ...config
-            }
-        )
+        const response = await fetch(githubURL, {
+            method,
+            headers: {
+                ...headers,
+                Authorization: `token ${this._token}`
+            },
+            ...config
+        })
 
         // if we weren't successful
         if (String(response.status)[0] !== '2') {
