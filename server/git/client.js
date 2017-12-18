@@ -16,10 +16,9 @@ export default class GithubRepoClient {
     }
 
     get parent() {
-        return this._graphqlRequest(
+        return this.query(
             `
-            query {
-                repository(owner: "${this._owner}", name:"${this._repo}") {
+                ... on Repository {
                     isFork
                     parent {
                         name
@@ -28,16 +27,15 @@ export default class GithubRepoClient {
                         }
                     }
                 }
-            }
-        `
-        ).then(async ({ data: { repository } }) => {
+            `
+        ).then(async ({ isFork, parent }) => {
             // if there is no parent
-            if (!repository.isFork) {
+            if (!isFork) {
                 return null
             }
 
             // return a repo client with the
-            return new GithubRepoClient(repository.parent.owner.login, repository.parent.name)
+            return new GithubRepoClient(parent.owner.login, parent.name)
         })
     }
 
@@ -54,12 +52,39 @@ export default class GithubRepoClient {
             body: JSON.stringify(config)
         })
 
+    query = query =>
+        this._graphqlRequest(
+            `
+            query {
+                repository(owner: "${this._owner}", name:"${this._repo}") {
+                    ${query}
+                }
+            }
+        `
+        ).then(async data => {
+            return data.repository
+        })
+
     fork = () => this._request('forks', { method: 'POST' })
 
+    delete = () => this._request('', { method: 'DELETE' })
+
     _request = async (url, { method = 'GET', headers = {}, ...config } = {}) => {
+        // make this a no-op in a test env
+        if (process.env.NODE_ENV === 'test') {
+            return
+        }
+
+        // github doesn't allow trailing / so we can only include it if url is truthy
+        const tail = url ? `/${url}` : ''
+
+        console.log(
+            'hitting github api',
+            `https://api.github.com/repos/${this._owner}/` + `${this._repo}${tail}`
+        )
         // the owner and name of the repo
         const response = await fetch(
-            `https://api.github.com/repos/${this._owner}/` + `${this._repo}/${url}`,
+            `https://api.github.com/repos/${this._owner}/` + `${this._repo}${tail}`,
             {
                 method,
                 headers: {
@@ -81,6 +106,11 @@ export default class GithubRepoClient {
     }
 
     _graphqlRequest = async query => {
+        // make this a no-op in a test env
+        if (process.env.NODE_ENV === 'test') {
+            return
+        }
+
         // send the graphql query
         const response = await fetch('https://api.github.com/graphql', {
             method: 'POST',
@@ -91,6 +121,6 @@ export default class GithubRepoClient {
         })
 
         // parse ther response as json
-        return await response.json()
+        return (await response.json()).data
     }
 }

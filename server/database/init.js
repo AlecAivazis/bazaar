@@ -8,10 +8,16 @@ export async function initDb() {
     await seed(database, Promise)
 }
 
+export async function migrateDb() {
+    await up(database, Promise)
+}
+
 export async function cleanDb() {
     await Promise.all([
         database.schema.dropTable('projects'),
+        database.schema.dropTable('users'),
         database.schema.dropTable('transactions'),
-        database.schema.dropTable('funds')
+        database.schema.dropTable('funds'),
+        database.schema.dropTable('project_membership')
     ])
 }

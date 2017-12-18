@@ -6,13 +6,12 @@ export default async (req, res) => {
     const { action, ...payload } = req.body
     // if we just created a fork of repository
     if (action === 'created' && payload.repository.fork) {
+        console.log('encountered bot fork')
         // we can assume that we created this fork as part of the welcome flow
         // so we ned to update the contents of the remote repo and submit a PR
         // with the differences
         await createAndSendUpdate(payload.repository)
     }
-
-    console.log(action, payload)
 
     // we're done here
     res.send('OK')

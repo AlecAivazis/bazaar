@@ -16,6 +16,7 @@
 import fetch from 'isomorphic-fetch'
 // local imports
 import GithubRepo from './client'
+import database from '../database'
 
 export const createProjectFork = async ({ owner, repo }) => {
     // create a github client pointing to the repo
@@ -30,10 +31,7 @@ export const createAndSendUpdate = async fork => {
     const repo = new GithubRepo(fork.owner.login, fork.name)
 
     // get the sha of the readme
-    const [{ content, sha, path }, parent] = await Promise.all([
-        await repo.readme,
-        await repo.parent
-    ])
+    const [{ content, sha, path }, parent] = await Promise.all([repo.readme, repo.parent])
 
     // update the README file in the fork with the new contents
     await repo.updateFile({
@@ -53,6 +51,36 @@ export const createAndSendUpdate = async fork => {
 }
 
 export const recieveContribution = async ({ repoID, user }) => {
-    //
-    console.log('CLOSED BOTS PR from ', user, 'in project', repoID)
+    // look for the list of users with that name
+    const existingUsers = await database('users').where({ accountName: user })
+
+    // the id of the target user
+    let userId
+
+    // check if this is the first time we've encountered this user
+    if (existingUsers.length === 0) {
+        // if so, we need to create a user record
+        userId = (await database('users').insert({ accountName: user }))[0]
+        // we know this user
+    } else {
+        // use the correct id
+        userId = existingUsers[0].id
+    }
+
+    // if we recognize the project
+    const projects = await database('projects').where({ repoID })
+    if (projects.length === 1) {
+        // add a transaction between the user and the project
+        await database('transactions').insert({
+            recipientId: userId,
+            project: projects[0].id,
+            amount: 0,
+            fund: 1
+        })
+    }
+
+    // create a client pointing to the bot's fork
+    const forkRepo = new GithubRepo('bazr-bot', repoID.split('/')[1])
+    // delete the bot's fork of the target project
+    await forkRepo.delete()
 }

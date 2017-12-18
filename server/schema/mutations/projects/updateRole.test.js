@@ -7,10 +7,10 @@ import schema from '../..'
 
 describe('API', () => {
     describe('Project', () => {
-        beforeEach(initDb)
-        afterEach(cleanDb)
-
         describe('Update Role', () => {
+            beforeEach(initDb)
+            afterEach(cleanDb)
+
             test('can update a user role', async () => {
                 // look for the project with id 1
                 const result = await graphql(
