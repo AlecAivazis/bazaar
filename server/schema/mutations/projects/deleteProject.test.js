@@ -6,13 +6,13 @@ import database, { initDb, cleanDb } from '../../../database'
 import schema from '../..'
 
 describe('API', () => {
-    describe('Project', () => {
+    describe('Mutations', () => {
         beforeEach(initDb)
         afterEach(cleanDb)
 
-        describe('Update Role', () => {
-            test('can update a user role', async () => {
-                // look for the project with id 1
+        describe('Delete Project', () => {
+            test('can delete a project', async () => {
+                // delete the project known to exist in the database
                 const result = await graphql(
                     schema,
                     `

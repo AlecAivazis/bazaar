@@ -6,13 +6,13 @@ import database, { initDb, cleanDb } from '../../../database'
 import schema from '../..'
 
 describe('API', () => {
-    describe('Project', () => {
+    describe('Mutations', () => {
         beforeEach(initDb)
         afterEach(cleanDb)
 
-        describe('Update Role', () => {
-            test('can update a user role', async () => {
-                // look for the project with id 1
+        describe('CreateProject', () => {
+            test('can create a project', async () => {
+                // create a project with a known repoID
                 const result = await graphql(
                     schema,
                     `
