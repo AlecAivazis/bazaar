@@ -53,9 +53,7 @@ describe('Git Integration', () => {
                 expect(transactions[0].amount).toEqual(0)
             })
 
-            test("closes the bot's fork of the parent repo", async () => {
-                // mock the github client
-            })
+            test("closes the bot's fork of the parent repo")
         })
     })
 })
