@@ -5,7 +5,7 @@ import { mount } from 'enzyme'
 // local imports
 import AppBar from './.'
 
-test('highlights the fund link when on /funds', async () => {
+test('highlights the fund link when on /funds', () => {
     // mount the app bar on /fund
     const wrapper = mount(
         <MemoryRouter initialEntries={['/funds']}>
@@ -24,7 +24,26 @@ test('highlights the fund link when on /funds', async () => {
     expect(wrapper.find('NavLink[match=false]')).toHaveLength(2)
 })
 
-test('highlights the projects link when on /projects', async () => {
+test('highlights the fund link when on a fund subview', () => {
+    // mount the app bar on /fund
+    const wrapper = mount(
+        <MemoryRouter initialEntries={['/funds/foo']}>
+            <AppBar />
+        </MemoryRouter>
+    )
+
+    // find the link that points to this page
+    const link = wrapper.find('NavLink[to="/funds"]')
+    // make sure we found it
+    expect(link).toHaveLength(1)
+    // make sure its highlighted
+    expect(link.props().match).toBeTruthy()
+
+    // make sure its the only one highlighted
+    expect(wrapper.find('NavLink[match=false]')).toHaveLength(2)
+})
+
+test('highlights the projects link when on /projects', () => {
     // mount the app bar on /projects
     const wrapper = mount(
         <MemoryRouter initialEntries={['/projects']}>
@@ -44,7 +63,7 @@ test('highlights the projects link when on /projects', async () => {
     expect(wrapper.find('NavLink[match=false]')).toHaveLength(2)
 })
 
-test('highlights the settings link when on /settings', async () => {
+test('highlights the settings link when on /settings', () => {
     // mount the app bar on /settings
     const wrapper = mount(
         <MemoryRouter initialEntries={['/settings']}>
@@ -64,7 +83,7 @@ test('highlights the settings link when on /settings', async () => {
     expect(wrapper.find('NavLink[match=false]')).toHaveLength(2)
 })
 
-test('highlights the projects link when on a specific project', async () => {
+test('highlights the projects link when on a specific project', () => {
     // mount the app bar on a repo page
     const wrapper = mount(
         <MemoryRouter initialEntries={['/AlecAivazis/survey']}>

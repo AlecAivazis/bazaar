@@ -12,10 +12,10 @@ const AppBar = ({ location: { pathname } }) => {
     // we need to compute which button to highlight, default to the projects
     const view =
         {
-            '/funds': 'funds',
-            '/settings': 'settings'
+            funds: 'funds',
+            settings: 'settings'
             // default to the projects view
-        }[pathname] || 'projects'
+        }[pathname.split('/')[1]] || 'projects'
 
     return (
         <View style={styles.container}>
