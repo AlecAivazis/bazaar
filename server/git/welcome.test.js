@@ -53,6 +53,18 @@ describe('Git Integration', () => {
                 expect(transactions[0].amount).toEqual(0)
             })
 
+            test('creates a project membership entry for the user', async () => {
+                // create the project
+                await database('projects').insert({ repoID: 'AlecAivazis/survey' })
+
+                // mock a transaction recieved
+                await recieveContribution({ repoID: 'AlecAivazis/survey', user: 'AlecAivazis' })
+
+                expect(
+                    await database('project_membership').where({ userId: 1, projectId: 1 })
+                ).toHaveLength(1)
+            })
+
             test("closes the bot's fork of the parent repo")
         })
     })

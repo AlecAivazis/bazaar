@@ -21,7 +21,6 @@ export const ProjectMembershipType = new GraphQLObjectType({
             ...globalIdField('ProjectMembership', obj => `${obj.projectId}:${obj.userId}`),
             sqlDeps: ['projectId', 'userId']
         },
-        role: { type: new GraphQLNonNull(MembershipRole) },
         user: {
             type: new GraphQLNonNull(UserType),
             sqlJoin: (membershipTable, userTable) => `${membershipTable}.userId = ${userTable}.id`,

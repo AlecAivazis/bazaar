@@ -57,6 +57,8 @@ export const recieveContribution = async ({ repoID, user }) => {
     // the id of the target user
     let userId
 
+    // TODO: wrap all of these inserts in a transaction
+
     // check if this is the first time we've encountered this user
     if (existingUsers.length === 0) {
         // if so, we need to create a user record
@@ -70,10 +72,20 @@ export const recieveContribution = async ({ repoID, user }) => {
     // if we recognize the project
     const projects = await database('projects').where({ repoID })
     if (projects.length === 1) {
+        // the id of the project
+        const projectId = projects[0].id
+
+        // look for a membership that already exists
+        const memberships = await database('project_membership').where({ userId, projectId })
+        if (memberships.length === 0) {
+            // add a membership entry
+            await database('project_membership').insert({ userId, projectId })
+        }
+
         // add a transaction between the user and the project
         await database('transactions').insert({
             recipientId: userId,
-            project: projects[0].id,
+            project: projectId,
             amount: 0,
             fund: 1 // TODO: figure out what fund to put here (null or an ever-present?)
         })

@@ -88,18 +88,15 @@ exports.seed = function(knex, Promise) {
                     return knex('project_membership').insert([
                         {
                             projectId: 1,
-                            userId: 1,
-                            role: 'admin'
+                            userId: 1
                         },
                         {
                             projectId: 1,
-                            userId: 2,
-                            role: 'admin'
+                            userId: 2
                         },
                         {
                             projectId: 2,
-                            userId: 1,
-                            role: 'admin'
+                            userId: 1
                         }
                     ])
                 })

@@ -46,40 +46,6 @@ describe('API', () => {
             ])
         })
 
-        test('can compute the role of a user within a project', async () => {
-            // find the total earned
-            const result = await graphql(
-                schema,
-                `
-                    query {
-                        node(id: "${toGlobalId('Project', 1)}") {
-                            ... on Project {
-                                contributors {
-                                    edges {
-                                        node {
-                                            role
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                `
-            )
-
-            // make sure nothing went wrong
-            expect(result.errors).toBeUndefined()
-
-            // make sure we got some sort of list back
-            expect(result.data.node.contributors.edges).toBeTruthy()
-
-            // make sure we computed the right total earned
-            expect(result.data.node.contributors.edges.map(({ node }) => node.role)).toEqual([
-                'ADMIN',
-                'ADMIN'
-            ])
-        })
-
         test('can count the number of contributors', async () => {
             // find the number of contributors
             const result = await graphql(
