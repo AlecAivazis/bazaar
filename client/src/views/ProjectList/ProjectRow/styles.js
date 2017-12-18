@@ -1,21 +1,6 @@
-import { grey4, grey2, grey1 } from 'quark-core/styles'
-
-const container = {
-    display: 'flex',
-    flexDirection: 'row',
-    height: 100,
-    borderTopWidth: 1,
-    borderColor: grey2,
-    padding: 18,
-    cursor: 'pointer'
-}
+import { grey4 } from 'quark-core/styles'
 
 export default {
-    container,
-    containerHover: {
-        ...container,
-        backgroundColor: grey1
-    },
     infoContainer: {
         display: 'flex',
         flexGrow: 1,

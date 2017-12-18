@@ -34,11 +34,7 @@ const ProjectList = props => (
                 render={({ projects }) => {
                     // we are done loading
                     return projects.edges.map(({ node: project }, i) => (
-                        <ProjectRow
-                            project={project}
-                            key={project.repoID}
-                            style={i === projects.edges.length - 1 && styles.lastRow}
-                        />
+                        <ProjectRow project={project} key={project.repoID} last={i === projects.edges.length - 1} />
                     ))
                 }}
             />

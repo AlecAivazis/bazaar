@@ -11,9 +11,9 @@ import { Title, Text } from 'quark-web'
 // local imports
 import type { ProjectRow_project } from './__generated__/ProjectRow_project.graphql.js'
 import styles from './styles'
-import { Sparkline, RepositoryOpenIssues } from '../../../components'
+import { Sparkline, RepositoryOpenIssues, ListRow } from '../../../components'
 
-const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: any }) => {
+const ProjectRow = ({ project, style, last }: { project: ProjectRow_project, style: any, last: boolean }) => {
     // guards
     if (!project.transactions || !project.transactions.edges) {
         throw new Error('Could not find transactions associated with this project.')
@@ -53,44 +53,35 @@ const ProjectRow = ({ project, style }: { project: ProjectRow_project, style: an
             : null
 
     return (
-        <BooleanState>
-            {({ state, set }) => (
-                <Link to={`/${project.repoID}`}>
-                    <View
-                        style={[state ? styles.containerHover : styles.container, style]}
-                        onMouseEnter={() => set(true)}
-                        onMouseLeave={() => set(false)}
-                    >
-                        <View style={styles.infoContainer}>
-                            <Title style={styles.title}>
-                                {project.repository
-                                    ? `${project.repository.owner.login} / ${project.repository.name}`
-                                    : 'repository not found'}
-                            </Title>
-                            <View style={styles.statContainer}>
-                                <Text style={styles.stat}>{project.totalEarned} Ξ earned</Text>
-                                <Text style={styles.stat}>
-                                    <RepositoryOpenIssues repository={project.repository}>
-                                        {openIssues => `${openIssues} open issues`}
-                                    </RepositoryOpenIssues>
-                                </Text>
-                                <Text style={styles.stat}>
-                                    {project.contributors.count} contributor{(project.contributors.count || 0) > 1 &&
-                                        's'}
-                                </Text>
-                            </View>
-                        </View>
-                        <Sparkline
-                            data={sparklineData.length > 0 ? sparklineData : [1, 1]}
-                            style={{ width: 285 }}
-                            color={color}
-                            width={285}
-                            height={44}
-                        />
+        <Link to={`/${project.repoID}`}>
+            <ListRow style={style} last={last}>
+                <View style={styles.infoContainer}>
+                    <Title style={styles.title}>
+                        {project.repository
+                            ? `${project.repository.owner.login} / ${project.repository.name}`
+                            : 'repository not found'}
+                    </Title>
+                    <View style={styles.statContainer}>
+                        <Text style={styles.stat}>{project.totalEarned} Ξ earned</Text>
+                        <Text style={styles.stat}>
+                            <RepositoryOpenIssues repository={project.repository}>
+                                {openIssues => `${openIssues} open issues`}
+                            </RepositoryOpenIssues>
+                        </Text>
+                        <Text style={styles.stat}>
+                            {project.contributors.count} contributor{(project.contributors.count || 0) > 1 && 's'}
+                        </Text>
                     </View>
-                </Link>
-            )}
-        </BooleanState>
+                </View>
+                <Sparkline
+                    data={sparklineData.length > 0 ? sparklineData : [1, 1]}
+                    style={{ width: 285 }}
+                    color={color}
+                    width={285}
+                    height={44}
+                />
+            </ListRow>
+        </Link>
     )
 }
 
