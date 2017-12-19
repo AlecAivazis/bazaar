@@ -1,6 +1,6 @@
 import { createAndSendUpdate } from '../welcome'
 
-// this handler is called when one of the intended
+// this handler is called when one of the intended events is triggered
 export default async (req, res) => {
     // grab the action out of the payload
     const { action, ...payload } = req.body

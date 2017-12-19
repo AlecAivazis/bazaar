@@ -3,7 +3,7 @@ import { GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLString, GraphQL
 import { connectionDefinitions, globalIdField } from 'graphql-relay'
 // local imports
 import { Fund, ProjectType, UserType } from '.'
-import { nodeInterface } from '../nodeDefinition'
+import { nodeInterface } from '../interfaces'
 
 const TransactionType = new GraphQLObjectType({
     name: 'Transaction',

@@ -8,7 +8,7 @@ import {
 } from 'graphql-relay'
 // local imports
 import { Fund, ProjectType, UserType, TransactionConnection } from '.'
-import { nodeInterface } from '../nodeDefinition'
+import { nodeInterface } from '../interfaces'
 import { MembershipRole } from '../types'
 
 export const ProjectMembershipType = new GraphQLObjectType({

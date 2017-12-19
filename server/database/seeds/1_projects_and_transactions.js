@@ -17,8 +17,8 @@ exports.seed = function(knex, Promise) {
             .del()
             .then(function() {
                 return knex('funds').insert([
-                    { id: 1, name: "Bill Gate's fund" },
-                    { id: 2, name: 'Another Awesome Fund' }
+                    { id: 1, name: "Bill Gate's fund", address: '123' },
+                    { id: 2, name: 'Another Awesome Fund', address: '234' }
                 ])
             }),
         knex('users')

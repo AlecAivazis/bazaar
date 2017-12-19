@@ -31,8 +31,8 @@ exports.up = function(knex, Promise) {
             table.foreign('project').references('projects.id')
 
             // fund foreign key
-            table.integer('fund').unsigned()
-            table.foreign('fund').references('funds.id')
+            // NOTE: allow fund reference to go negative since -1 represents transactions from bazr-bot
+            table.integer('fund')
         }),
 
         // fund table

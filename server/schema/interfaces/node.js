@@ -2,7 +2,7 @@
 import joinMonster from 'join-monster'
 import { nodeDefinitions, fromGlobalId } from 'graphql-relay'
 // local imports
-import db from '../database'
+import db from '../../database'
 
 export const { nodeInterface, nodeField } = nodeDefinitions(
     (globalId, context, resolveInfo) => {

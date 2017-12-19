@@ -1,8 +1,9 @@
 // external imports
 import { GraphQLObjectType, GraphQLString, GraphQLNonNull, GraphQLInt } from 'graphql'
-import { globalIdField, connectionDefinitions } from 'graphql-relay'
+import { globalIdField, connectionDefinitions, connectionArgs } from 'graphql-relay'
 // local imports
-import { nodeInterface } from '../nodeDefinition'
+import { nodeInterface } from '../interfaces'
+import { FundConnection } from '.'
 
 export const UserType = new GraphQLObjectType({
     name: 'BazrUser',
@@ -14,7 +15,11 @@ export const UserType = new GraphQLObjectType({
             ...globalIdField(),
             sqlDeps: ['id']
         },
-        accountName: { type: new GraphQLNonNull(GraphQLString) }
+        accountName: { type: new GraphQLNonNull(GraphQLString) },
+        funds: {
+            type: new GraphQLNonNull(FundConnection),
+            args: connectionArgs
+        }
     })
 })
 

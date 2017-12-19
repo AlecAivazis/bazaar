@@ -1,10 +1,10 @@
 // external imports
 import { GraphQLObjectType, GraphQLString, GraphQLNonNull } from 'graphql'
-import { globalIdField } from 'graphql-relay'
+import { globalIdField, connectionDefinitions } from 'graphql-relay'
 // local imports
-import { nodeInterface } from '../nodeDefinition'
+import { nodeInterface } from '../interfaces'
 
-export default new GraphQLObjectType({
+export const Fund = new GraphQLObjectType({
     name: 'Fund',
     interfaces: [nodeInterface],
     sqlTable: 'funds',
@@ -17,4 +17,8 @@ export default new GraphQLObjectType({
         name: { type: new GraphQLNonNull(GraphQLString) },
         address: { type: new GraphQLNonNull(GraphQLString) }
     })
+})
+
+export const { connectionType: FundConnection, edgeType: FundEdge } = connectionDefinitions({
+    nodeType: Fund
 })

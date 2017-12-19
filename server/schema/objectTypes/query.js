@@ -7,7 +7,8 @@ import { Project } from '.'
 import db from '../../database'
 import { ProjectType, ProjectConnection } from './project'
 import { UserType } from './user'
-import { nodeField } from '../nodeDefinition'
+import { nodeField } from '../interfaces'
+import { Fund } from './fund'
 
 export default new GraphQLObjectType({
     name: 'BazrAPI',
@@ -49,6 +50,10 @@ export default new GraphQLObjectType({
             resolve: (_, args, __, resolveInfo) => {
                 return joinMonster(resolveInfo, {}, db.raw)
             }
+        },
+        funds: {
+            type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(Fund))),
+            resolve: (_, args, __, resolveInfo) => joinMonster(resolveInfo, {}, db.raw)
         },
         node: nodeField
     })

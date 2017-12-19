@@ -8,7 +8,7 @@ import {
 } from 'graphql-relay'
 // local imports
 import { TransactionConnection, UserConnection, ProjectMembershipConnection } from '.'
-import { nodeInterface } from '../nodeDefinition'
+import { nodeInterface } from '../interfaces'
 import database from '../../database'
 
 export const ProjectType = new GraphQLObjectType({
