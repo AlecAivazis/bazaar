@@ -15,11 +15,7 @@ export const UserType = new GraphQLObjectType({
             ...globalIdField(),
             sqlDeps: ['id']
         },
-        accountName: { type: new GraphQLNonNull(GraphQLString) },
-        funds: {
-            type: new GraphQLNonNull(FundConnection),
-            args: connectionArgs
-        }
+        accountName: { type: new GraphQLNonNull(GraphQLString) }
     })
 })
 
