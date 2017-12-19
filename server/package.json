@@ -7,8 +7,9 @@
         "test": "NODE_ENV=test jest",
         "test:watch": "npm run test -- --watch",
         "test:coverage": "npm run test -- --coverage",
-        "test:coverage:report": "npm run test:coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
-        "start": "babel-node index.js",
+        "test:coverage:report":
+            "npm run test:coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+        "start": "babel-node src/index.js",
         "__internal__knex": "knex --knexfile database/knexfile.js",
         "db:migrate": "npm run __internal__knex -- migrate:latest",
         "db:seed": "npm run __internal__knex -- seed:run",
@@ -26,9 +27,7 @@
         "trailing-comma": true
     },
     "jest": {
-        "testMatch": [
-            "**/*test.js?(x)"
-        ]
+        "testMatch": ["**/*test.js?(x)"]
     },
     "dependencies": {
         "apollo-fetch": "^0.6.0",
