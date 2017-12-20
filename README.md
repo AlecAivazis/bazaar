@@ -1,5 +1,7 @@
 # bazr
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/AlecAivazis/bazr.svg)](https://greenkeeper.io/)
+
 [![Coverage Status](https://coveralls.io/repos/github/AlecAivazis/bazr/badge.svg)](https://coveralls.io/github/AlecAivazis/bazr)
 
 A place to compensate open source development
