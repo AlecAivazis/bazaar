@@ -10,8 +10,8 @@ node_js:
 # setup yarn
 cache:
   directories:
-    - server/node_modules
+    - node_modules
 
 # command to run tests
 script:
-  - cd server && npm i && npm run test:coverage:report
+  - npm i && npm run test:coverage:report

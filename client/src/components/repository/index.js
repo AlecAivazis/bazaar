@@ -1,1 +1,0 @@
-export RepositoryOpenIssues from './OpenIssues'
