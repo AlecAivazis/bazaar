@@ -10,6 +10,11 @@ export default makeExecutableSchema({
     typeDefs: `
         scalar BigNumber
 
+        input DepositEtherInput {
+            address: String!
+            amount: BigNumber!
+        }
+
         type FundContract {
             balance: BigNumber!
             address: String!
@@ -17,6 +22,10 @@ export default makeExecutableSchema({
 
         type Query {
             fundContract(address: String!): FundContract
+        }
+
+        type Mutation {
+            depositEther(input: DepositEtherInput!): Boolean!
         }
     `,
     resolvers: {
@@ -42,15 +51,38 @@ export default makeExecutableSchema({
                 }
             }
         },
+        Mutation: {
+            depositEther: (_, { input: { address: fundAddress, amount } }) =>
+                new Promise((resolve, reject) => {
+                    // the acount of the user
+                    const userAddress = window.web3.eth.accounts[0]
+                    // the amount we are sending in wei
+                    const transactionAmount = window.web3.toWei(amount, 'ether')
+
+                    // send the amount the user designated
+                    window.web3.eth.sendTransaction(
+                        {
+                            from: userAddress,
+                            to: fundAddress,
+                            value: transactionAmount
+                        },
+                        (err, data) => {
+                            if (err) {
+                                reject(err)
+                            } else {
+                                resolve(true)
+                            }
+                        }
+                    )
+                })
+        },
         BigNumber: new GraphQLScalarType({
             name: 'BigNumber',
             serialize: value => value,
             parseValue: value => {
-                console.log(value)
                 return new BigNumber(value)
             },
             parseLiteral(ast) {
-                console.log(ast)
                 if (ast.kind === Kind.INT || ast.kind === Kind.STRING) {
                     return new BigNumber(ast.value)
                 }

@@ -2,36 +2,54 @@
 import * as React from 'react'
 import { View } from 'react-native-web'
 import { Link } from 'react-router-dom'
-import { H1, PrimaryButton } from 'quark-web'
+import { H1, PrimaryButton, BooleanState } from 'quark-web'
 import PropTypes from 'prop-types'
 import { graphql } from 'react-relay'
 // local imports
 import styles from './styles'
-import { createFund } from '../../mutations'
-import { QueryRenderer } from '../../components'
+import { QueryRenderer } from '~/client/components'
+import { CreateFundOverlay } from '~/client/overlays'
 import FundListRow from './FundListRow'
 
 const FundList = (_, { environment }) => (
-    <React.Fragment>
-        <View style={styles.header}>
-            <H1>My Funds</H1>
-            <Link to="/funds/new" style={{ width: 160 }}>
-                <PrimaryButton onClick={environment && (() => createFund({ environment, input: { name: 'foo' } }))}>
-                    Create a Fund
-                </PrimaryButton>
-            </Link>
-        </View>
-        <QueryRenderer
-            query={graphql`
-                query FundListQuery {
-                    funds {
-                        ...FundListRow_fund
-                    }
-                }
-            `}
-            render={({ funds }) => funds.map((fund, i) => <FundListRow fund={fund} last={i === funds.length - 1} />)}
-        />
-    </React.Fragment>
+    <BooleanState>
+        {({ state, toggle }) => (
+            <React.Fragment>
+                <View style={styles.header}>
+                    <H1>My Funds</H1>
+                    <PrimaryButton onClick={toggle}>Create a Fund</PrimaryButton>
+                </View>
+                <QueryRenderer
+                    query={graphql`
+                        query FundListQuery {
+                            viewer {
+                                funds(first: 100) @connection(key: "FundList_funds", filters: []) {
+                                    edges {
+                                        node {
+                                            address
+                                            ...FundListRow_fund
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    `}
+                    render={({ viewer }) => (
+                        <React.Fragment>
+                            <CreateFundOverlay visible={state} toggle={toggle} />
+                            {viewer.funds.edges.map(({ node: fund }, i) => (
+                                <FundListRow
+                                    fund={fund}
+                                    key={fund.address}
+                                    last={i === viewer.funds.edges.length - 1}
+                                />
+                            ))}
+                        </React.Fragment>
+                    )}
+                />
+            </React.Fragment>
+        )}
+    </BooleanState>
 )
 
 FundList.contextTypes = {

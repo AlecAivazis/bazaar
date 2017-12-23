@@ -8,7 +8,7 @@ import browserEnv from 'browser-env'
 browserEnv()
 
 async function build() {
-    const createSchema = require('../src/client').default
+    const createSchema = require('../client/schema').default
 
     // load the environment
     config()

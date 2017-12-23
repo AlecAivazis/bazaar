@@ -30,19 +30,21 @@ const ProjectDangerZone = ({ project, relay, history }: Props, { accessToken }) 
             <WarningButton
                 size="small"
                 style={styles.button}
-                onClick={() =>
-                    deleteProject({
-                        environment: relay.environment,
-                        input: { owner, name, accessToken },
-                        onCompleted: (data, errs) => {
-                            if (!errs) {
-                                return history.push('/')
-                            }
+                onClick={async () => {
+                    try {
+                        // try to delete the project
+                        await deleteProject({
+                            environment: relay.environment,
+                            input: { owner, name, accessToken }
+                        })
 
-                            console.error(errs[0])
-                        }
-                    })
-                }
+                        // if we were successful, redirect the user to the project list
+                        history.push('/')
+                    } catch (errs) {
+                        // if something went wrong tell the user
+                        console.error(errs[0])
+                    }
+                }}
             >
                 Delete Project
             </WarningButton>

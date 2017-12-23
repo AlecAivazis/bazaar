@@ -5,9 +5,12 @@ import { graphql } from 'react-relay'
 import mutationFromQuery from './mutationFromQuery'
 
 export default mutationFromQuery(graphql`
-    mutation CreateFundMutation($input: CreateClientFundInput!) {
-        createFund(input: $input) {
-            id
+    mutation CreateFundMutation($name: String!) {
+        createFund(name: $name) {
+            node {
+                id
+                address
+            }
         }
     }
 `)

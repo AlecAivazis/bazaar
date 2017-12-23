@@ -45,7 +45,11 @@ describe('API', () => {
                 `
                     query {
                         funds {
-                            address
+                            edges {
+                                node {
+                                    address
+                                }
+                            }
                         }
                     }
                 `
@@ -54,7 +58,7 @@ describe('API', () => {
             // make sure nothing went wrong
             expect(result.errors).toBeUndefined()
 
-            expect(result.data.funds.map(({ address }) => address).sort()).toEqual(['123', '234'])
+            expect(result.data.funds.edges.map(({ node: { address } }) => address).sort()).toEqual(['123', '234'])
         })
     })
 })

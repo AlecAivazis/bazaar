@@ -6,9 +6,9 @@ import { View } from 'react-native-web'
 import styles from './styles'
 
 const NavLink = ({ to, match, ...unused }) => (
-    <View style={match ? styles.active : styles.inactive}>
-        <Link to={to} {...unused} />
-    </View>
+    <Link to={to}>
+        <View style={match ? styles.active : styles.inactive} {...unused} />
+    </Link>
 )
 
 export default NavLink

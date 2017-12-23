@@ -1,9 +1,9 @@
 // external imports
 import { GraphQLObjectType, GraphQLList, GraphQLString, GraphQLID, GraphQLNonNull } from 'graphql'
 import joinMonster from 'join-monster'
-import { connectionFromArray, connectionArgs } from 'graphql-relay'
+import { connectionFromArray, connectionFromPromisedArray, connectionArgs } from 'graphql-relay'
 // local imports
-import { Project } from '.'
+import { Project, FundConnection } from '.'
 import db from '../../database'
 import { ProjectType, ProjectConnection } from './project'
 import { UserType } from './user'
@@ -52,8 +52,9 @@ export default new GraphQLObjectType({
             }
         },
         funds: {
-            type: new GraphQLNonNull(new GraphQLList(new GraphQLNonNull(Fund))),
-            resolve: (_, args, __, resolveInfo) => joinMonster(resolveInfo, {}, db.raw)
+            type: new GraphQLNonNull(FundConnection),
+            resolve: async (_, args, __, resolveInfo) =>
+                connectionFromPromisedArray(joinMonster(resolveInfo, {}, db.raw), args)
         },
         node: nodeField
     })

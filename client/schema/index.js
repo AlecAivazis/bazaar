@@ -5,7 +5,7 @@ import createGHSchema from './github'
 import createServerSchema from './server'
 import blockchainSchema from './blockchain'
 import mutations from './mutations'
-import createFundMutation from './mutations/createFund'
+import createFundMutation from './blockchain/createFund'
 
 // the type extensions to link schema together
 const linkTypes = `
@@ -19,6 +19,7 @@ extend type BazrUser {
 
 extend type User {
     bazrUser: BazrUser
+    funds(first: Int, last:Int): FundConnection!
 }
 
 extend type Repository {
@@ -26,12 +27,8 @@ extend type Repository {
 }
 
 
-input CreateClientFundInput {
-    name: String!
-}
-
 extend type Mutation {
-    createFund(input: CreateClientFundInput!): Fund!
+    createFund(name: String!): FundEdge!
 }
 
 extend type Fund {
@@ -78,6 +75,13 @@ export default async function createSchema(githubToken) {
                     resolve: (parent, args, context, info) => {
                         // return the repository designated by the ID
                         return mergeInfo.delegate('query', 'bazrUser', { accountName: parent.login }, context, info)
+                    }
+                },
+                funds: {
+                    fragment: `fragment UserFunds on User { login }`,
+                    resolve: (parent, args, context, info) => {
+                        // return the repository designated by the ID
+                        return mergeInfo.delegate('query', 'funds', args, context, info)
                     }
                 }
             },

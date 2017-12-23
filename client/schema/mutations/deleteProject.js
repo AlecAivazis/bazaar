@@ -1,6 +1,6 @@
 // @flow
 // local imports
-import * as Github from '../../git'
+import * as Github from '~/client/git'
 
 export const deleteProjectRecord = ({ owner, name }) =>
     new Promise(async (resolve, reject) => {

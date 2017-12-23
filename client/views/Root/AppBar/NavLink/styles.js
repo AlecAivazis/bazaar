@@ -3,8 +3,8 @@ const container = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 8,
-    paddingBottom: 8
+    paddingTop: 12,
+    paddingBottom: 12
 }
 
 export default {

@@ -21,7 +21,6 @@ import database from '../database'
 export const createProjectFork = async ({ owner, repo }) => {
     // create a github client pointing to the repo
     const client = new GithubRepo(owner, repo)
-
     // fork the remote repo
     await client.fork()
 }
