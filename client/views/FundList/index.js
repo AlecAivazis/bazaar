@@ -17,12 +17,15 @@ const FundList = (_, { environment }) => (
             <React.Fragment>
                 <View style={styles.header}>
                     <H1>My Funds</H1>
-                    <PrimaryButton onClick={toggle}>Create a Fund</PrimaryButton>
+                    <PrimaryButton disabled={!environment} onPress={toggle}>
+                        Create a Fund
+                    </PrimaryButton>
                 </View>
                 <QueryRenderer
                     query={graphql`
                         query FundListQuery {
                             viewer {
+                                ...CreateFundOverlay_viewer
                                 funds(first: 100) @connection(key: "FundList_funds", filters: []) {
                                     edges {
                                         node {
@@ -36,14 +39,17 @@ const FundList = (_, { environment }) => (
                     `}
                     render={({ viewer }) => (
                         <React.Fragment>
-                            <CreateFundOverlay visible={state} toggle={toggle} />
-                            {viewer.funds.edges.map(({ node: fund }, i) => (
-                                <FundListRow
-                                    fund={fund}
-                                    key={fund.address}
-                                    last={i === viewer.funds.edges.length - 1}
-                                />
-                            ))}
+                            <CreateFundOverlay viewer={viewer} visible={state} toggle={toggle} />
+                            {viewer.funds.edges.map(
+                                ({ node: fund }, i) =>
+                                    fund && (
+                                        <FundListRow
+                                            fund={fund}
+                                            key={fund.address}
+                                            last={i === viewer.funds.edges.length - 1}
+                                        />
+                                    )
+                            )}
                         </React.Fragment>
                     )}
                 />

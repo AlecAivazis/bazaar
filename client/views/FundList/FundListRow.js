@@ -5,6 +5,7 @@ import { graphql, createFragmentContainer } from 'react-relay'
 import { H2, Subtitle, IconStar } from 'quark-web'
 import { View } from 'react-native-web'
 import { Link } from 'react-router-dom'
+import web3 from 'web3'
 // local imports
 import { ListRow } from '../../components'
 import styles from './styles'
@@ -36,7 +37,7 @@ const FundListRow = ({ fund, last }: Props) => (
                     </Subtitle>
                 </View>
                 <Subtitle style={styles.stat}>
-                    Ether Remaining: {window.web3.fromWei(fund.contract.balance, 'ether').toString()}
+                    Ether Remaining: {web3.utils.fromWei(fund.contract.balance, 'ether').toString()}
                 </Subtitle>
             </View>
         </ListRow>

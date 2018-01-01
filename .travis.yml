@@ -5,13 +5,19 @@ dist: trusty
 # language setup
 language: node_js
 node_js:
-  - "6"
+  - "9"
 
 # setup yarn
 cache:
   directories:
     - node_modules
 
+# install dependencies
+install:
+  - npm i -g truffle
+  - npm i
+
 # command to run tests
 script:
-  - npm i && npm run test:coverage:report
+  - npm run contracts:test
+  - npm run test:coverage:report

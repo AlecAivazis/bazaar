@@ -8,10 +8,10 @@ import PropTypes from 'prop-types'
 import ConnectCTA from './ConnectCTA'
 import type { ManageProjectsRow_repo } from './__generated__/ManageProjectsRow_repo.graphql'
 import styles from './styles'
+import { ListRow } from '~/client/components'
 
 type Props = {
     repo: ManageProjectsRow_repo,
-    first: boolean,
     last: boolean
 }
 
@@ -27,8 +27,8 @@ export const ConnectedIndicator = () => (
     </div>
 )
 
-const ManageProjectsRow = ({ repo, first, relay }: Props, { accessToken }: ContextTypes) => (
-    <div style={first ? styles.firstRepoRow : styles.repoRow}>
+const ManageProjectsRow = ({ repo, last, relay }: Props, { accessToken }: ContextTypes) => (
+    <ListRow last={last} hoverStyle={false} style={styles.repoRow}>
         <Title style={{ display: 'flex', alignItems: 'center', fontWeight: '100' }}>
             {repo.owner.login} / {repo.name}
         </Title>
@@ -37,7 +37,7 @@ const ManageProjectsRow = ({ repo, first, relay }: Props, { accessToken }: Conte
         ) : (
             <ConnectCTA environment={relay.environment} repo={repo} accessToken={accessToken} />
         )}
-    </div>
+    </ListRow>
 )
 
 ManageProjectsRow.contextTypes = {

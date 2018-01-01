@@ -10,7 +10,7 @@ import { Title, Text } from 'quark-web'
 // local imports
 import type { ProjectRow_project } from './__generated__/ProjectRow_project.graphql.js'
 import styles from './styles'
-import { Sparkline, RepositoryOpenIssues, ListRow } from '../../../components'
+import { Sparkline, RepositoryOpenIssues, ListRow } from '~/client/components'
 
 const ProjectRow = ({ project, style, last }: { project: ProjectRow_project, style: any, last: boolean }) => {
     // guards

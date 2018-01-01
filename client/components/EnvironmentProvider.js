@@ -33,7 +33,18 @@ class EnvironmentProvider extends React.Component<Props, State> {
         // load the client's schema
         const schema = await createSchema(this.props.githubToken)
 
-        const fetchQuery = async (operation, variables) => await graphql(schema, operation.text, null, null, variables)
+        const fetchQuery = async (operation, variables) => {
+            // perform the query
+            const response = await graphql(schema, operation.text, null, null, variables)
+
+            // if there are errors
+            if (response.errors) {
+                throw new Error(response.errors)
+            }
+
+            // return the valid response
+            return response
+        }
 
         // create an environment stored in state
         this.setState({

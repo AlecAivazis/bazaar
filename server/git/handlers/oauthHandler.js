@@ -32,10 +32,15 @@ export default async (req, res) => {
         // try to parse the response as a query string
         const { access_token: token } = querystring.parse(body)
 
+        // if we dont have an access token from github
+        if (!token) {
+            throw new Error('Could not find access token in github response.')
+        }
+
         // redirect the user back to the frontend with the access token as a param
         return res.redirect(`http://localhost:3000/?token=${token}`)
     } catch (err) {
         // if we couldn't parse it as json
-        return res.status(500).send(body)
+        return res.status(500).send(err)
     }
 }

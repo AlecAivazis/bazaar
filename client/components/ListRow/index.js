@@ -7,27 +7,27 @@ import { BooleanState } from 'quark-web'
 import styles from './styles'
 
 type Props = {
-    enableHoverStyle?: boolean,
+    hoverStyle?: boolean,
     last?: boolean,
     style?: { [x: string]: any }
 }
 
-const ListRow = ({ enableHoverStyle = true, style, last, ...unused }: Props) => (
+const ListRow = ({ hoverStyle = {}, style, last, ...unused }: Props) => (
     <BooleanState>
         {({ state, set }) => {
             // the base element style
             const baseStyle = { ...(last ? styles.lastStyle : styles.container) }
 
             // if the mouse is over the element
-            if (state) {
-                Object.assign(baseStyle, styles.hover)
+            if (state && hoverStyle) {
+                Object.assign(baseStyle, styles.hover, hoverStyle)
             }
 
             return (
                 <View
                     style={[baseStyle, style]}
-                    onMouseEnter={enableHoverStyle ? () => set(true) : null}
-                    onMouseLeave={enableHoverStyle ? () => set(false) : null}
+                    onMouseEnter={hoverStyle ? () => set(true) : null}
+                    onMouseLeave={hoverStyle ? () => set(false) : null}
                     {...unused}
                 />
             )

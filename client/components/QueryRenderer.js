@@ -11,7 +11,7 @@ const QR = ({ render, ...props }, { environment }) =>
         <QueryRenderer
             {...props}
             environment={environment}
-            render={({ error, props: result }) => {
+            render={({ error, props: result, ...rest }) => {
                 // if there is an error
                 if (error) {
                     throw new Error(error)

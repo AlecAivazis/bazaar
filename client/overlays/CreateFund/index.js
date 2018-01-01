@@ -2,32 +2,27 @@
 // external imports
 import * as React from 'react'
 import { View } from 'react-native-web'
-import { H1, Label, Text, SecondaryButton, PrimaryButton, Form } from 'quark-web'
-import { Overlay } from '~/client/quark'
+import { H1, Input, Label, Text, SecondaryButton, PrimaryButton, Form, Overlay, GetTheme } from 'quark-web'
 import PropTypes from 'prop-types'
 import { ConnectionHandler } from 'relay-runtime'
+import { createFragmentContainer, graphql } from 'react-relay'
+import { withRouter } from 'react-router-dom'
 // local imports
 import styles from './styles'
-import { createFund } from '~/client/mutations'
-import GetNameError from './GetNameError'
-import CollectDepositError from './CollectDepositError'
-import GetName from './GetName'
-import CollectDeposit from './CollectDeposit'
-import Finalize from './Finalize'
+import { createFund, depositEther } from '~/client/mutations'
 
 type Props = {
     toggle: boolean
 }
 
 type State = {
-    step: 'getName' | 'collectDeposit' | 'completed',
-    error: boolean,
-    fund: ?{ [key: string]: string },
-    deposit: ?number
+    error: boolean
 }
 
 class CreateFundOverlay extends React.Component<Props, State> {
-    state = { step: 'getName' }
+    state = {
+        error: false
+    }
 
     static contextTypes = {
         environment: PropTypes.any
@@ -36,20 +31,8 @@ class CreateFundOverlay extends React.Component<Props, State> {
     componentWillReceiveProps(nextProps) {
         // if we are toggling
         if (nextProps.visible !== this.props.visible) {
-            this.setState({ step: 'getName', error: false })
+            this.setState({ error: false })
         }
-    }
-
-    _next = () => {
-        const step = do {
-            if (this.state.step === 'getName') {
-                ;('collectDeposit')
-            } else {
-                ;('completed')
-            }
-        }
-
-        this.setState({ step, error: false })
     }
 
     _toggleError = () => this.setState(state => ({ error: !state.error }))
@@ -62,53 +45,104 @@ class CreateFundOverlay extends React.Component<Props, State> {
             // try to deploy a fund with the given name
             var { createFund: { node: fund } } = await createFund({
                 environment,
-                variables: { name }
+                input: { name, deposit }
             })
         } catch (error) {
-            this.setState({ error: true })
-            return console.error('error creating fund', error)
+            return this.setState({ error })
         }
 
-        // make an initial deposit
-        this.setState({
-            fund,
-            deposit,
-            step: 'collectDeposit'
-        })
+        // try {
+        //     // deposit the designated amount of ether in the contract
+        //     await depositEther({
+        //         environment,
+        //         input: {
+        //             address: fund.address,
+        //             amount: deposit
+        //         }
+        //     })
+        // } catch (error) {
+        //     return this.setState({ error })
+        // }
+
+        this.props.history.push(`/funds/${fund.address}`)
     }
+
+    _error = () => (
+        <React.Fragment>
+            <Text>Something went wrong while creating fund:</Text>
+            <GetTheme>
+                {({ lightRed }) => (
+                    <View style={{ marginTop: 12 }}>
+                        <Text style={{ color: lightRed }}>{this.state.error.message}</Text>
+                    </View>
+                )}
+            </GetTheme>
+            <View style={styles.footer}>
+                <SecondaryButton onPress={this.props.toggle}>Cancel</SecondaryButton>
+                <PrimaryButton onPress={this._toggleError}>Try Again</PrimaryButton>
+            </View>
+        </React.Fragment>
+    )
 
     render = () => {
         const { toggle, visible } = this.props
         return (
             <Overlay toggle={toggle} visible={visible}>
                 <H1 style={styles.header}>Create a Fund</H1>
-                {
-                    do {
-                        if (this.state.step === 'getName') {
-                            if (this.state.error) {
-                                ;<GetNameError toggle={this.props.toggle} toggleError={this._toggleError} />
-                            } else {
-                                ;<GetName toggle={this.props.toggle} submit={this._submit} />
-                            }
-                        } else if (this.state.step === 'collectDeposit') {
-                            if (this.state.error) {
-                                ;<CollectDepositError next={this._next} toggleError={this._toggleError} />
-                            } else {
-                                ;<CollectDeposit
-                                    next={this._next}
-                                    toggleError={this._toggleError}
-                                    fund={this.state.fund}
-                                    deposit={this.state.deposit}
-                                />
-                            }
-                        } else {
-                            ;<Finalize fund={this.state.fund} />
-                        }
-                    }
-                }
+
+                {this.state.error ? (
+                    <this._error />
+                ) : (
+                    <Form
+                        initialData={{ name: '' }}
+                        validate={{
+                            name: val => ((val && val.length) > 0 ? null : 'name is required'),
+                            deposit: val => ((val && val.length) > 0 ? null : 'deposit is required')
+                        }}
+                    >
+                        {({ getValue, setValue, getError, hasErrors }) => (
+                            <React.Fragment>
+                                <Label value="Name" style={styles.input} error={getError('name')}>
+                                    <Input
+                                        error={getError('name')}
+                                        value={getValue('name')}
+                                        onChange={name => setValue({ name })}
+                                    />
+                                </Label>
+                                <Label value="Initial Deposit" error={getError('name')}>
+                                    <Input
+                                        error={getError('deposit')}
+                                        value={getValue('deposit')}
+                                        onChange={deposit => setValue({ deposit })}
+                                    />
+                                </Label>
+                                <View style={styles.footer}>
+                                    <SecondaryButton onPress={toggle}>Cancel</SecondaryButton>
+                                    <PrimaryButton
+                                        style={styles.submitButton}
+                                        disabled={hasErrors}
+                                        onPress={this._submit({
+                                            name: getValue('name'),
+                                            deposit: getValue('deposit')
+                                        })}
+                                    >
+                                        Deposit Ether
+                                    </PrimaryButton>
+                                </View>
+                            </React.Fragment>
+                        )}
+                    </Form>
+                )}
             </Overlay>
         )
     }
 }
 
-export default CreateFundOverlay
+export default createFragmentContainer(
+    withRouter(CreateFundOverlay),
+    graphql`
+        fragment CreateFundOverlay_viewer on User {
+            id
+        }
+    `
+)

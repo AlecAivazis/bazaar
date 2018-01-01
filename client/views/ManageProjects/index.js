@@ -39,7 +39,7 @@ const ManageProjectsView = () => (
                         }
 
                         // render the project row
-                        return <ManageProjectsRow key={edge.node.id} repo={edge.node} first={i === 0} />
+                        return <ManageProjectsRow key={edge.node.id} repo={edge.node} last={i === edges.length - 1} />
                     })}
             </div>
         )}

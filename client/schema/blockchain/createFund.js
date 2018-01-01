@@ -1,47 +1,41 @@
 // external imports
 import { offsetToCursor } from 'graphql-relay'
 // local improts
-import { Fund } from '~/client/contracts'
-import { queryServer } from '~/client/utils'
+import { Fund, FundArtifact } from '~/contracts'
+import { queryServer, promisify } from '~/client/schema/utils'
 
-const deployFund = name =>
-    new Promise((resolve, reject) => {
-        // deploy a fund using the clients eth integration
-        Fund.new(
-            {
-                from: window.web3.eth.accounts[0]
-            },
-            (err, data) => {
-                // make sure nothing went wrong
-                if (err) {
-                    return reject(err)
-                }
-                // if the transaction was rejected
-                if (!data) {
-                    resolve()
-                }
-                const { address, transactionHash } = data
+const deployFund = async (name, value = 0) => {
+    // grab the user's account
+    const [from] = await web3.eth.getAccounts()
 
-                // when the contract doesn't have an address (normalizes: https://github.com/MetaMask/metamask-extension/issues/2426)
-                if (!err && !address) {
-                    // wait for the transaction receipt
-                    window.web3.eth.getTransactionReceipt(transactionHash, (err, { contractAddress: address }) => {
-                        // make sure nothing went wrong
-                        if (err) {
-                            return reject(err)
-                        }
+    // deploy a fund with the specified deposit and get the hash of the transaction
+    const txHash = await new Promise((resolve, reject) =>
+        Fund.deploy({
+            arguments: [process.env.SERVER_BLOCKCHAIN_ADDRESS],
+            data: FundArtifact.bytecode
+        })
+            .send({
+                value: web3.utils.toWei(value.toString(), 'ether'),
+                from
+            })
+            .on('transactionHash', resolve)
+            .on('error', reject)
+    )
 
-                        // we're done here
-                        return resolve(address)
-                    })
-                }
-            }
-        )
-    })
+    console.log('deployed fund. txHash:', txHash)
 
-export default async (_, { name }) => {
+    // if something went wrong (the user cancelled for example)
+    if (!txHash) {
+        throw new Error('A silent error occured (no transaction hash was returned).')
+    }
+
+    // return the address
+    return txHash
+}
+
+export default async (_, { input: { name, deposit } }) => {
     // create the fund contract
-    const address = await deployFund(name)
+    const address = await deployFund(name, deposit)
 
     // create the corresponding fund on the server
     const { CreateFund: { fund: { id } } } = await queryServer(`

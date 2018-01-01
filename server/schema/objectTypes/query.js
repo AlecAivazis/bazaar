@@ -56,6 +56,18 @@ export default new GraphQLObjectType({
             resolve: async (_, args, __, resolveInfo) =>
                 connectionFromPromisedArray(joinMonster(resolveInfo, {}, db.raw), args)
         },
+        fund: {
+            type: Fund,
+            args: {
+                address: {
+                    type: new GraphQLNonNull(GraphQLString)
+                }
+            },
+            where: (table, args, context) => `${table}.address = "${args.address}"`,
+            resolve: (_, args, __, resolveInfo) => {
+                return joinMonster(resolveInfo, {}, db.raw)
+            }
+        },
         node: nodeField
     })
 })

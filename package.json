@@ -10,12 +10,15 @@
         "__internal__truffle": "cd contracts && truffle ",
         "contracts:compile": "npm run __internal__truffle -- compile",
         "contracts:build": "npm run __internal__truffle -- build",
+        "contracts:test": "npm run __internal__truffle -- test",
         "relay": "relay-compiler --src ./client --schema schema.json",
         "relay:watch": "npm run relay -- --watch",
         "test": "jest",
         "test:coverage": "npm run test -- --coverage",
-        "test:coverage:report": "npm run test:coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+        "test:coverage:report":
+            "npm run test:coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
         "test:watch": "npm run test -- --watch",
+        "mist": "open -a /Applications/Mist.app --args --rpc http://localhost:8545",
         "__internal__knex": "knex --knexfile server/database/knexfile.js",
         "db:migrate": "npm run __internal__knex -- migrate:latest",
         "db:seed": "npm run __internal__knex -- seed:run",
@@ -29,12 +32,8 @@
         "trailing-comma": true
     },
     "jest": {
-        "setupFiles": [
-            "<rootDir>/scripts/init-enzyme.js"
-        ],
-        "testMatch": [
-            "**/*test.js?(x)"
-        ]
+        "setupFiles": ["<rootDir>/scripts/init-enzyme.js"],
+        "testMatch": ["**/*test.js?(x)"]
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
@@ -67,10 +66,12 @@
         "browser-env": "^3.2.4",
         "color": "^2.0.1",
         "dotenv": "^4.0.0",
+        "ethjs": "^0.3.1",
         "express": "^4.16.2",
         "graphiql": "^0.11.10",
         "graphql": "^0.12.3",
         "graphql-cli": "^2.1.0",
+        "graphql-subscriptions": "^0.5.6",
         "graphql-tools": "^2.7.2",
         "isomorphic-fetch": "^2.2.1",
         "join-monster": "^2.0.15",
@@ -82,6 +83,7 @@
         "query-string": "^5.0.1",
         "react": "^16.2.0",
         "react-dom": "^16.0.0",
+        "react-functional": "^2.0.0",
         "react-native-web": "^0.2.1",
         "react-relay": "^1.4.1",
         "react-router-dom": "^4.2.2",
@@ -89,7 +91,9 @@
         "react-sparklines": "^1.7.0",
         "regenerator-runtime": "^0.11.0",
         "sqlite": "^2.8.0",
+        "subscriptions-transport-ws": "^0.9.4",
         "tinycolor2": "^1.4.1",
-        "url-parse": "^1.2.0"
+        "url-parse": "^1.2.0",
+        "web3": "^1.0.0-beta.27"
     }
 }

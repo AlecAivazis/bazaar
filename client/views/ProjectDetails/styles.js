@@ -1,4 +1,4 @@
-import { primaryColor } from '../../styles/colors'
+import { primaryColor } from '~/client/styles'
 
 export default {
     header: {

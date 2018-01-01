@@ -39,6 +39,24 @@ describe('API', () => {
             expect(result.data.node.name).toEqual('fund1')
         })
 
+        test('can locate by address', async () => {
+            const result = await graphql(
+                schema,
+                `
+                    query {
+                        fund(address: "123") {
+                            id
+                        }
+                    }
+                `
+            )
+
+            // make sure nothing went wrong
+            expect(result.errors).toBeUndefined()
+            // make sure we got the right project
+            expect(result.data.fund.id).toEqual(toGlobalId('Fund', 1))
+        })
+
         test('can find the list of funds registered in the network', async () => {
             const result = await graphql(
                 schema,

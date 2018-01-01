@@ -3,25 +3,23 @@ var webpack = require('webpack')
 var HtmlWebpackPlugin = require('html-webpack-plugin')
 var dotenv = require('dotenv')
 
+// load environment variables
 dotenv.config()
 
+// In order to avoid publishing an avalanche of versions of quark, alias the packages
+// to their location locally
+// the directory pointing to quark
+const quarkDir = path.resolve(__dirname, '..', 'quark')
+const quarkWeb = path.join(quarkDir, 'packages', 'quark-web', 'build')
+const quarkCore = path.join(quarkDir, 'packages', 'quark-web', 'build')
+
 module.exports = {
-    devtool: 'cheap-module-eval-source-map',
     entry: './client/index.js',
     output: {
         path: path.join(__dirname, 'dist'),
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: '/'
     },
-    plugins: [
-        new HtmlWebpackPlugin({
-            template: './client/index.html'
-        }),
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV)
-            }
-        })
-    ],
     module: {
         rules: [
             {
@@ -35,6 +33,31 @@ module.exports = {
             }
         ]
     },
+    resolve: {
+        alias: {
+            'quark-web': path.join(quarkDir, 'packages', 'quark-web', 'build'),
+            'quark-core': path.join(quarkDir, 'packages', 'quark-core', 'build'),
+            react: path.join(__dirname, 'node_modules', 'react')
+        }
+    },
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: './client/index.html'
+        }),
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                SERVER_BLOCKCHAIN_ADDRESS: JSON.stringify(process.env.SERVER_BLOCKCHAIN_ADDRESS)
+            }
+        }),
+        // *sigh*... remove the annoying .flow warnings
+        // FROM: https://github.com/graphql/graphql-language-service/issues/128
+        new webpack.ContextReplacementPlugin(
+            /graphql-language-service-interface[\\/]dist$/,
+            new RegExp(`^\\./.*\\.js$`)
+        )
+    ],
+    devtool: 'source-map',
     devServer: {
         port: 3000,
         historyApiFallback: true,

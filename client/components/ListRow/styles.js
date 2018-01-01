@@ -7,16 +7,18 @@ const container = {
     borderTopWidth: 1,
     borderColor: grey2,
     padding: 18,
-    cursor: 'pointer'
+    flexShrink: 0
 }
 
 export default {
     container,
     hover: {
-        backgroundColor: grey1
+        backgroundColor: grey1,
+        cursor: 'pointer'
     },
     lastStyle: {
         ...container,
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
+        marginBottom: 48
     }
 }

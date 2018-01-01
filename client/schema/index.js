@@ -26,13 +26,30 @@ extend type Repository {
     bazrProject: Project
 }
 
+input CreateFundContractInput {
+    name: String!
+    deposit: BigNumber
+}
 
 extend type Mutation {
-    createFund(name: String!): FundEdge!
+    createFund(input: CreateFundContractInput!): FundEdge!
 }
 
 extend type Fund {
     contract: FundContract!
+}
+
+extend type FundContract {
+    fund: Fund
+}
+
+extend type ContractWithdrawl {
+    user: BazrUser
+    project: Project
+}
+
+extend type ContractDeposit {
+    user: BazrUser
 }
 `
 
@@ -107,6 +124,32 @@ export default async function createSchema(githubToken) {
                         // return the repository designated by the ID
                         return mergeInfo.delegate('query', 'fundContract', { address: parent.address }, context, info)
                     }
+                }
+            },
+            FundContract: {
+                fund: {
+                    fragment: `fragment FundContractFund on FundContract { address } `,
+                    resolve: (parent, args, context, info) =>
+                        mergeInfo.delegate('query', 'fund', { address: parent.address }, context, info)
+                }
+            },
+            ContractWithdrawl: {
+                user: {
+                    fragment: `fragment ContractWithdrawlUser on ContractWithdrawl { userAddress }`,
+                    resolve: (parent, args, context, info) =>
+                        mergeInfo.delegate('query', 'user', { login: parent.userAddress }, context, info)
+                },
+                project: {
+                    fragment: `fragment ContractWidthdrawlProject on ContractWithdrawl { projectName }`,
+                    resolve: (parent, args, context, info) =>
+                        mergeInfo.delegate('query', 'project', { name: parent.projectName }, context, info)
+                }
+            },
+            ContractDeposit: {
+                user: {
+                    fragment: `fragment ContractDepositUser on ContractDeposit { userAddress }`,
+                    resolve: (parent, args, context, info) =>
+                        mergeInfo.delegate('query', 'bazrUser', { address: parent.userAddress }, context, info)
                 }
             },
             Mutation: {
