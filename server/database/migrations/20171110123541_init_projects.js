@@ -16,7 +16,8 @@ exports.up = function(knex, Promise) {
         // user table
         knex.schema.createTableIfNotExists('users', function(table) {
             table.increments()
-            table.string('accountName')
+            table.string('accountName').notNullable()
+            table.string('walletAddress')
         }),
 
         // transaction table

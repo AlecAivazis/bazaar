@@ -1,4 +1,4 @@
-import { grey5 } from 'quark-core/styles'
+import { grey5 } from 'quark-web/styles'
 
 export default {
     container: {
@@ -20,6 +20,18 @@ export default {
     icon: {
         height: 24,
         width: 24,
+        color: grey5
+    },
+    avatar: {
+        height: 40,
+        width: 40,
+        borderRadius: '50%'
+    },
+    lowerIcons: {
+        marginBottom: 20
+    },
+    avatarContainer: {
+        width: '100%',
         color: grey5
     }
 }

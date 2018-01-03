@@ -3,7 +3,7 @@ import React from 'react'
 import { MemoryRouter } from 'react-router-dom'
 import { mount } from 'enzyme'
 // local imports
-import AppBar from './.'
+import AppBar from '.'
 
 test('highlights the fund link when on /funds', () => {
     // mount the app bar on /fund
@@ -63,16 +63,16 @@ test('highlights the projects link when on /projects', () => {
     expect(wrapper.find('NavLink[match=false]')).toHaveLength(2)
 })
 
-test('highlights the settings link when on /settings', () => {
-    // mount the app bar on /settings
+test('highlights the profile link when on /profile', () => {
+    // mount the app bar on /profile
     const wrapper = mount(
-        <MemoryRouter initialEntries={['/settings']}>
+        <MemoryRouter initialEntries={['/profile']}>
             <AppBar />
         </MemoryRouter>
     )
 
     // find the link that points to this page
-    const link = wrapper.find('NavLink[to="/settings"]')
+    const link = wrapper.find('NavLink[to="/profile"]')
 
     // make sure we found it
     expect(link).toHaveLength(1)

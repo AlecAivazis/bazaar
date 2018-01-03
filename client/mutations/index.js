@@ -1,5 +1,6 @@
 // @flow
-export { default as connectProject } from './ConnectProjectMutation'
-export { default as deleteProject } from './DeleteProject'
-export { default as createFund } from './CreateFund'
-export { default as depositEther } from './DepositEther'
+export connectProject from './ConnectProjectMutation'
+export deleteProject from './DeleteProject'
+export createFund from './CreateFund'
+export depositEther from './DepositEther'
+export updateUser from './UpdateUser'

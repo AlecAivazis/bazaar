@@ -7,11 +7,6 @@ language: node_js
 node_js:
   - "9"
 
-# setup yarn
-cache:
-  directories:
-    - node_modules
-
 # install dependencies
 install:
   - npm i -g truffle
@@ -19,5 +14,6 @@ install:
 
 # command to run tests
 script:
+  - npm run contracts:compile
   - npm run contracts:test
   - npm run test:coverage:report

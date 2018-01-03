@@ -1,7 +1,7 @@
 export { default as Root } from './Root'
 export { default as ProjectList } from './ProjectList'
 export ProjectDetails from './ProjectDetails'
-export Settings from './Settings'
+export MyProfile from './MyProfile'
 export FundList from './FundList'
 export Graphiql from './Graphiql'
 export ManageProjects from './ManageProjects'

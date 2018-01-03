@@ -7,7 +7,7 @@ import { View } from 'react-native-web'
 import './reset.css'
 import styles from './styles'
 import AppBar from './AppBar'
-import { ProjectList, ProjectDetails, FundList, FundDetail, Settings, Graphiql, ManageProjects } from '..'
+import { ProjectList, ProjectDetails, FundList, FundDetail, MyProfile, Graphiql, ManageProjects } from '..'
 
 const Root = ({ githubToken }) => (
     <App style={styles.container}>
@@ -23,7 +23,7 @@ const Root = ({ githubToken }) => (
                 <Route exact path="/projects" component={ProjectList} />
                 <Route path="/funds/:address" component={FundDetail} />
                 <Route exact path="/funds" component={FundList} />
-                <Route path="/settings" component={Settings} />
+                <Route path="/profile" component={MyProfile} />
                 <Route path="/:owner/:name" component={ProjectDetails} />
                 <Route path="/graphiql" render={() => <Graphiql githubToken={githubToken} />} />
             </Switch>

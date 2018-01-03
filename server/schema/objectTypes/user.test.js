@@ -11,7 +11,7 @@ describe('API', () => {
             await migrateDb()
 
             // create some data to test with
-            await database('users').insert({ accountName: 'AlecAivazis' })
+            await database('users').insert({ accountName: 'AlecAivazis', walletAddress: '1234' })
         })
         afterEach(cleanDb)
 
@@ -53,6 +53,25 @@ describe('API', () => {
             expect(result.errors).toBeUndefined()
             // make sure we found the right transaction
             expect(result.data.node.accountName).toEqual('AlecAivazis')
+        })
+
+        test('can find user by wallet address', async () => {
+            // find the user with the corresponding address
+            const result = await graphql(
+                schema,
+                `
+                    query {
+                        bazrUser(walletAddress: "1234") {
+                            accountName
+                        }
+                    }
+                `
+            )
+
+            // make sure there aren't any errors
+            expect(result.errors).toBeUndefined()
+            // make sure we found the right transaction
+            expect(result.data.bazrUser.accountName).toEqual('AlecAivazis')
         })
     })
 })

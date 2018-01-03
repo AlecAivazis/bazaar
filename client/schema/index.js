@@ -79,8 +79,9 @@ export default async function createSchema(githubToken) {
             },
             BazrUser: {
                 profile: {
-                    fragment: 'fragment BazrUserProfile on BazrUesr { accountName }',
+                    fragment: 'fragment BazrUserProfile on BazrUser { accountName }',
                     resolve: (parent, args, context, info) => {
+                        console.log(parent.accountName)
                         // return the repository designated by the ID
                         return mergeInfo.delegate('query', 'user', { login: parent.accountName }, context, info)
                     }
@@ -137,7 +138,7 @@ export default async function createSchema(githubToken) {
                 user: {
                     fragment: `fragment ContractWithdrawlUser on ContractWithdrawl { userAddress }`,
                     resolve: (parent, args, context, info) =>
-                        mergeInfo.delegate('query', 'user', { login: parent.userAddress }, context, info)
+                        mergeInfo.delegate('query', 'bazrUser', { walletAddress: parent.userAddress }, context, info)
                 },
                 project: {
                     fragment: `fragment ContractWidthdrawlProject on ContractWithdrawl { projectName }`,
@@ -149,7 +150,7 @@ export default async function createSchema(githubToken) {
                 user: {
                     fragment: `fragment ContractDepositUser on ContractDeposit { userAddress }`,
                     resolve: (parent, args, context, info) =>
-                        mergeInfo.delegate('query', 'bazrUser', { address: parent.userAddress }, context, info)
+                        mergeInfo.delegate('query', 'bazrUser', { walletAddress: parent.userAddress }, context, info)
                 }
             },
             Mutation: {

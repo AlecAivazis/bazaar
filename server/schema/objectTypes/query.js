@@ -43,10 +43,20 @@ export default new GraphQLObjectType({
             type: UserType,
             args: {
                 accountName: {
-                    type: new GraphQLNonNull(GraphQLString)
+                    type: GraphQLString
+                },
+                walletAddress: {
+                    type: GraphQLString
                 }
             },
-            where: (table, args, context) => `${table}.accountName = "${args.accountName}"`,
+            where: (table, args, context) =>
+                do {
+                    if (args.accountName) {
+                        ;`${table}.accountName = "${args.accountName}"`
+                    } else if (args.walletAddress) {
+                        ;`${table}.walletAddress = "${args.walletAddress}"`
+                    }
+                },
             resolve: (_, args, __, resolveInfo) => {
                 return joinMonster(resolveInfo, {}, db.raw)
             }
