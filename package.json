@@ -79,7 +79,7 @@
         "knex": "^0.14.0",
         "moment": "^2.19.2",
         "prop-types": "^15.6.0",
-        "quark-web": "0.1.0-beta.3",
+        "quark-web": "0.1.0-beta.5",
         "query-string": "^5.0.1",
         "react": "^16.2.0",
         "react-dom": "^16.0.0",
