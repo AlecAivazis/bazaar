@@ -35,8 +35,8 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'quark-web': path.join(quarkDir, 'packages', 'quark-web', 'build'),
-            'quark-core': path.join(quarkDir, 'packages', 'quark-core', 'build'),
+            'quark-web': path.join(quarkWeb, 'build'),
+            'quark-core': path.join(quarkCore, 'build'),
             react: path.join(__dirname, 'node_modules', 'react')
         }
     },
@@ -45,11 +45,13 @@ module.exports = {
             template: './client/index.html'
         }),
         new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-                SERVER_BLOCKCHAIN_ADDRESS: JSON.stringify(process.env.SERVER_BLOCKCHAIN_ADDRESS),
-                GITHUB_WEBHOOK_HOST: JSON.stringify(process.env.GITHUB_WEBHOOK_HOST)
-            }
+            'process.env': Object.keys(process.env).reduce(
+                (prev, key) => ({
+                    ...prev,
+                    [key]: JSON.stringify(process.env[key])
+                }),
+                {}
+            )
         }),
         // *sigh*... remove the annoying .flow warnings
         // FROM: https://github.com/graphql/graphql-language-service/issues/128
