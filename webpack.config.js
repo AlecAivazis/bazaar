@@ -47,7 +47,8 @@ module.exports = {
         new webpack.DefinePlugin({
             'process.env': {
                 NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-                SERVER_BLOCKCHAIN_ADDRESS: JSON.stringify(process.env.SERVER_BLOCKCHAIN_ADDRESS)
+                SERVER_BLOCKCHAIN_ADDRESS: JSON.stringify(process.env.SERVER_BLOCKCHAIN_ADDRESS),
+                GITHUB_WEBHOOK_HOST: JSON.stringify(process.env.GITHUB_WEBHOOK_HOST)
             }
         }),
         // *sigh*... remove the annoying .flow warnings

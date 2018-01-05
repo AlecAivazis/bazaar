@@ -11,17 +11,13 @@ import { Fund } from '~/contracts'
 import { promisify, sleep } from '~/client/schema/utils'
 
 // track if we are listening to a fund
-const watchingFund = {}
-const pubsub = new PubSub()
-
-const NEW_CONTRACT_TRANSACTION = 'new_contract_transaction'
-
-// function intervalFunc() {
+// const watchingFund = {}
+// const pubsub = new PubSub()
+// const NEW_CONTRACT_TRANSACTION = 'new_contract_transaction'
+// setInterval(() => {
 //     console.log('publishing')
 //     pubsub.publish(NEW_CONTRACT_TRANSACTION, {})
-// }
-
-// setInterval(intervalFunc, 1500)
+// }, 1500)
 
 export default makeExecutableSchema({
     typeDefs: `
