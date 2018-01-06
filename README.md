@@ -62,7 +62,7 @@ The client and server tests are written using [jest](https://facebook.github.io/
 npm run test
 ```
 
-The contract tests are written using [truffle]'s flavor of mocha. To run them, execute the following command in your terminal
+The contract tests are written using [truffle's flavor](http://truffleframework.com/docs/getting_started/javascript-tests) of mocha. To run them, execute the following command in your terminal
 
 ```bash
 npm run contracts:test
