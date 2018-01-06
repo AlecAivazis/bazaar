@@ -17,8 +17,9 @@ as fully function. To set these variables, create a file named `.env` in the roo
 | GITHUB_BOT_ACCESS_TOKEN      | Perform GitHub actions as the bazr-bot account                                   |                                                                               |
 | GITHUB_OAUTH_CLIENT_ID       | Part of the oauth flow                                                           |                                                                               |
 | GITHUB_OAUTH_CLIENT_SECRET   | Part of the oauth flow                                                           |                                                                               |
-| SERVER_BLOCKCHAIN_ADDRESS    | Identifies the server's blockchain account to limit management of deployed funds | Grab this from Ganache                                                        |
 | GITHUB_WEBHOOK_HOST          | The URL that the client should use when registering webhooks                     | For ease, [ngrok](https://ngrok.com/) is recommended when developping locally |
+| SERVER_BLOCKCHAIN_ADDRESS    | Identifies the server's blockchain account to limit management of deployed funds | Grab this from Ganache                                                        |
+
 
 ### Running the application
 
