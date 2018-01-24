@@ -6,13 +6,6 @@ var dotenv = require('dotenv')
 // load environment variables
 dotenv.config()
 
-// In order to avoid publishing an avalanche of versions of quark, alias the packages
-// to their location locally
-// the directory pointing to quark
-const quarkDir = path.resolve(__dirname, '..', 'quark')
-const quarkWeb = path.join(quarkDir, 'packages', 'quark-web', 'build')
-const quarkCore = path.join(quarkDir, 'packages', 'quark-web', 'build')
-
 module.exports = {
     entry: './client/index.js',
     output: {
@@ -33,25 +26,16 @@ module.exports = {
             }
         ]
     },
-    resolve: {
-        alias: {
-            'quark-web': path.join(quarkWeb, 'build'),
-            'quark-core': path.join(quarkCore, 'build'),
-            react: path.join(__dirname, 'node_modules', 'react')
-        }
-    },
     plugins: [
         new HtmlWebpackPlugin({
             template: './client/index.html'
         }),
         new webpack.DefinePlugin({
-            'process.env': Object.keys(process.env).reduce(
-                (prev, key) => ({
-                    ...prev,
-                    [key]: JSON.stringify(process.env[key])
-                }),
-                {}
-            )
+            'process.env': {
+                NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+                SERVER_BLOCKCHAIN_ADDRESS: JSON.stringify(process.env.SERVER_BLOCKCHAIN_ADDRESS),
+                GITHUB_WEBHOOK_HOST: JSON.stringify(process.env.GITHUB_WEBHOOK_HOST)
+            }
         }),
         // *sigh*... remove the annoying .flow warnings
         // FROM: https://github.com/graphql/graphql-language-service/issues/128

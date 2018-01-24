@@ -27,7 +27,7 @@ const FundedProjects = ({ contract }) => {
 export default createFragmentContainer(
     FundedProjects,
     graphql`
-        fragment ContractFundedProjects_contract on FundContract {
+        fragment ContractFundedProjects_contract on MinedFundContract {
             transactions {
                 __typename
                 ... on ContractWithdrawl {

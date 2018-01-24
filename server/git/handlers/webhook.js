@@ -1,21 +1,26 @@
 import { recieveContribution } from '../welcome'
+import mergedContribution from './contribution'
 
 export default async (req, res) => {
     // the action of the event
-    const { action, ...payload } = req.body
+    const { action, pull_request, repository } = req.body
 
-    // if the event represents a closed PR from the bot
+    // if we are looking at a merged PR
     if (
-        action === 'closed' &&
-        payload.pull_request.merged_by &&
-        payload.pull_request.user.login === 'bazr-bot'
+        req.headers['x-github-event'] === 'pull_request' && // a pull request
+        action === 'closed' && // was closed
+        pull_request.merged // and merged (or squashed...)
     ) {
-        // pass the project and user information to associate
-        await recieveContribution({
-            repoID: payload.repository.full_name,
-            user: payload.pull_request.merged_by.login
-        })
+        // if the event represents the welcome PR
+        if (pull_request.user.login === 'bazr-bot') {
+            // pass the project and user information to utility
+            await recieveContribution({ pull_request })
+        } else {
+            // otherwise the closed PR represents a contribution to the project
+            mergedContribution({ pull_request })
+        }
     }
+
     // we're done here
     return res.send('OK')
 }

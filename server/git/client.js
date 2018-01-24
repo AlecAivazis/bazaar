@@ -9,6 +9,8 @@ export default class GithubRepoClient {
         this._token = accessToken || process.env.GITHUB_BOT_ACCESS_TOKEN
         this._owner = owner
         this._repo = repo
+        this._queries = []
+        this._mocks = {}
     }
 
     get readme() {
@@ -52,8 +54,23 @@ export default class GithubRepoClient {
             body: JSON.stringify(config)
         })
 
-    query = query =>
-        this._graphqlRequest(
+    mockQuery = ({ query, value }) => {
+        this._mocks[this._mockKeyForQuery(query)] = value
+    }
+
+    query = async query => {
+        // track the query
+        this._queries.push(query)
+
+        // dry
+        const mockKey = this._mockKeyForQuery(query)
+        // if we have mock data for the query
+        if (this._mocks[mockKey]) {
+            // return the value
+            return this._mocks[mockKey]
+        }
+
+        const data = await this._graphqlRequest(
             `
             query {
                 repository(owner: "${this._owner}", name:"${this._repo}") {
@@ -61,13 +78,19 @@ export default class GithubRepoClient {
                 }
             }
         `
-        ).then(async data => {
-            return data.repository
-        })
+        )
+        if (!data) {
+            throw new Error('did not get response for query ' + mockKey)
+        }
+
+        return data.repository
+    }
 
     fork = () => this._request('forks', { method: 'POST' })
 
     delete = () => this._request('', { method: 'DELETE' })
+
+    _mockKeyForQuery = query => query.trim().replace(/\s\s+/g, ' ')
 
     _request = async (url, { method = 'GET', headers = {}, ...config } = {}) => {
         // make this a no-op in a test env

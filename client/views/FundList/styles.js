@@ -19,8 +19,7 @@ export default {
     fundName: {
         display: 'flex',
         flexDirection: 'row',
-        alignItems: 'flex-end',
-        fontSize: 20
+        alignItems: 'flex-end'
     },
     address: {
         marginLeft: 12,

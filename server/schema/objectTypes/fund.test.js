@@ -25,7 +25,7 @@ describe('API', () => {
                 `
                     query {
                         node(id: "${toGlobalId('Fund', 1)}") {
-                            ... on Fund {
+                            ... on MinedFundContract {
                                 name
                             }
                         }

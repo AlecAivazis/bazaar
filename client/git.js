@@ -12,7 +12,7 @@ export const createWebhook = async ({ owner, name, accessToken }) => {
         body: JSON.stringify({
             name: 'web',
             active: true,
-            events: ['push', 'pull_request'],
+            events: ['push', 'pull_request', 'issues'],
             config: {
                 // default to a no-op web hook
                 url: `${webhookHost}/webhook`,

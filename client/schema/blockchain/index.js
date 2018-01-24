@@ -46,11 +46,18 @@ export default makeExecutableSchema({
 
         union ContractTransaction = ContractWithdrawl | ContractDeposit
 
-        type FundContract {
+        type PendingFundContract {
+            createdBy: String!
+        }
+
+        type MinedFundContract {
             balance: BigNumber!
             address: String!
             transactions: [ContractTransaction!]!
+            createdBy: String!
         }
+
+        union FundContract = PendingFundContract | MinedFundContract
 
         type Query {
             fundContract(address: String!): FundContract
@@ -65,7 +72,7 @@ export default makeExecutableSchema({
         }
     `,
     resolvers: {
-        FundContract: {
+        MinedFundContract: {
             balance: fund => window.web3.eth.getBalance(fund.options.address),
             address: fund => fund.options.address,
             transactions: async fund => {
@@ -89,6 +96,14 @@ export default makeExecutableSchema({
                         time
                     })
                 )
+            },
+            createdBy: async fund => {
+                return fund.__transactionHash
+            }
+        },
+        PendingFundContract: {
+            createdBy: async fund => {
+                return fund.__transactionHash
             }
         },
         ContractTransaction: {
@@ -101,13 +116,32 @@ export default makeExecutableSchema({
                 }
             }
         },
+        FundContract: {
+            __resolveType: async (obj, context, info) => {
+                return obj.__typename
+            }
+        },
         Query: {
-            fundContract: (_, { address }) => {
-                // update the fund's address
+            fundContract: async (_, { address }) => {
+                console.log(address)
+                try {
+                    // grab the contract address from the transaction hash
+                    var { contractAddress } = await window.web3.eth.getTransactionReceipt(address)
+                } catch (err) {
+                    console.error(err)
+                    return { __typename: 'PendingFundContract', __transactionHash: address }
+                }
+
+                // instantiate an instance of the abstract fund
                 const fund = Fund.clone()
-                fund.options.address = address
+                fund.options.address = contractAddress
                 fund.setProvider(window.web3.eth.currentProvider)
-                // get the contract at the specified address
+
+                // add the graphql resolver meta data
+                fund.__typename = 'MinedFundContract'
+                fund.__transactionHash = address
+
+                // return the fund instance to the union type
                 return fund
             }
         },
@@ -141,11 +175,6 @@ export default makeExecutableSchema({
         },
         Subscription: {
             fundTransaction: {
-                resolve: fundTransaction => {
-                    return {
-                        fundTransaction
-                    }
-                },
                 subscribe: () => pubsub.asyncIterator(NEW_CONTRACT_TRANSACTION)
             }
         },

@@ -1,4 +1,4 @@
-import { grey3 } from 'quark-core/styles'
+import { grey3 } from 'quark-web/styles'
 
 export default {
     header: {

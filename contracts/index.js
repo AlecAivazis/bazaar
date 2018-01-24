@@ -6,7 +6,7 @@ import _FundArtifact from './build/Fund.json'
 export let Fund
 export let FundArtifact
 
-if (window.web3) {
+if (typeof window !== 'undefined' && window.web3) {
     // figure out if there is an injected environment
     const provider = web3.currentProvider || new Web3.providers.HttpProvider('http://localhost:8545')
 

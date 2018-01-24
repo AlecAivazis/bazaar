@@ -4,7 +4,8 @@ import { createAndSendUpdate } from '../welcome'
 export default async (req, res) => {
     // grab the action out of the payload
     const { action, ...payload } = req.body
-    // if we just created a fork of repository
+
+    // if we just created a fork of repository in the bot account
     if (action === 'created' && payload.repository.fork) {
         // we can assume that we created this fork as part of the welcome flow
         // so we ned to update the contents of the remote repo and submit a PR

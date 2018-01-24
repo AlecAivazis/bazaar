@@ -17,37 +17,44 @@ const FundDetail = ({ match: { params: { address } } }, { environment }) => (
         query={graphql`
             query FundDetailQuery($address: String!) {
                 contract: fundContract(address: $address) {
-                    address
-                    fund {
-                        name
-                        ...DepositEtherOverlay_fund
+                    __typename
+                    ... on MinedFundContract {
+                        address
+                        fund {
+                            name
+                            ...DepositEtherOverlay_fund
+                        }
+                        ...TransactionTimeline_contract
+                        ...ContractFundedProjects_contract
                     }
-                    ...TransactionTimeline_contract
-                    ...ContractFundedProjects_contract
                 }
             }
         `}
         variables={{ address }}
-        render={({ contract }) => (
-            <BooleanState>
-                {({ state, toggle }) => (
-                    <React.Fragment>
-                        <DepositEtherOverlay visible={state} toggle={toggle} fund={contract.fund} />
-                        <FlexRow justifyContent="space-between" style={styles.header}>
-                            <FlexRow alignItems="flex-end">
-                                <H1 style={styles.name}>{contract.fund.name}</H1>
-                                <Text style={styles.address}>{contract.address}</Text>
+        render={({ contract }) =>
+            contract.__typename !== 'MinedFundContract' ? (
+                'fund not mined yet'
+            ) : (
+                <BooleanState>
+                    {({ state, toggle }) => (
+                        <React.Fragment>
+                            <DepositEtherOverlay visible={state} toggle={toggle} fund={contract.fund} />
+                            <FlexRow justifyContent="space-between" style={styles.header}>
+                                <FlexRow alignItems="flex-end">
+                                    <H1 style={styles.name}>{contract.fund.name}</H1>
+                                    <Text style={styles.address}>{contract.address}</Text>
+                                </FlexRow>
+                                <PrimaryButton disabled={!environment} onPress={toggle}>
+                                    Deposit Ether
+                                </PrimaryButton>
                             </FlexRow>
-                            <PrimaryButton disabled={!environment} onPress={toggle}>
-                                Deposit Ether
-                            </PrimaryButton>
-                        </FlexRow>
-                        <Timeline contract={contract} style={{ marginBottom: 28 }} />
-                        <FundedProjects contract={contract} />
-                    </React.Fragment>
-                )}
-            </BooleanState>
-        )}
+                            <Timeline contract={contract} style={{ marginBottom: 28 }} />
+                            <FundedProjects contract={contract} />
+                        </React.Fragment>
+                    )}
+                </BooleanState>
+            )
+        }
     />
 )
 

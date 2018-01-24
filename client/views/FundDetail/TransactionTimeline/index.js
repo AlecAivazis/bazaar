@@ -59,7 +59,7 @@ const TransactionTimeline = ({ contract, style }) => {
 export default createFragmentContainer(
     TransactionTimeline,
     graphql`
-        fragment TransactionTimeline_contract on FundContract {
+        fragment TransactionTimeline_contract on MinedFundContract {
             balance
             transactions {
                 __typename

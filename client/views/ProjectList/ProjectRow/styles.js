@@ -1,4 +1,4 @@
-import { grey4 } from 'quark-core/styles'
+import { grey4 } from 'quark-web/styles'
 
 export default {
     infoContainer: {

@@ -39,7 +39,7 @@ extend type Fund {
     contract: FundContract!
 }
 
-extend type FundContract {
+extend type MinedFundContract {
     fund: Fund
 }
 
@@ -120,18 +120,22 @@ export default async function createSchema(githubToken) {
             },
             Fund: {
                 contract: {
-                    fragment: 'fragment FundContract on Fund { address }',
+                    fragment: 'fragment MinedFundContract on MinedFundContract { address }',
                     resolve: (parent, args, context, info) => {
                         // return the repository designated by the ID
                         return mergeInfo.delegate('query', 'fundContract', { address: parent.address }, context, info)
                     }
                 }
             },
-            FundContract: {
+            MinedFundContract: {
                 fund: {
-                    fragment: `fragment FundContractFund on FundContract { address } `,
-                    resolve: (parent, args, context, info) =>
-                        mergeInfo.delegate('query', 'fund', { address: parent.address }, context, info)
+                    fragment: `fragment MinedFundContractFund on FundContract { createdBy } `,
+                    resolve: async (parent, args, context, info) => {
+                        // we need to find the address for the transaction that made the contract
+                        console.log(parent)
+
+                        return mergeInfo.delegate('query', 'fund', { address: parent.createdBy }, context, info)
+                    }
                 }
             },
             ContractWithdrawl: {

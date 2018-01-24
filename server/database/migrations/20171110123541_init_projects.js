@@ -5,6 +5,7 @@ exports.up = function(knex, Promise) {
             table.increments()
             table.string('repoID')
             table.unique('repoID')
+            table.timestamps()
         }),
 
         // project membership table
@@ -26,10 +27,15 @@ exports.up = function(knex, Promise) {
             table.float('amount')
             table.string('recipientId').references('users.id')
             table.timestamp('created_at').defaultTo(knex.fn.now())
+            table.integer('issueNumber')
+            table.string('transactionHash')
 
             // project foreign key
             table.integer('project').unsigned()
             table.foreign('project').references('projects.id')
+
+            // used to prevent replay attacks
+            table.integer('batchNumber')
 
             // fund foreign key
             // NOTE: allow fund reference to go negative since -1 represents transactions from bazr-bot
@@ -41,6 +47,15 @@ exports.up = function(knex, Promise) {
             table.increments()
             table.string('name')
             table.string('address')
+        }),
+
+        // fund constraints
+        knex.schema.createTableIfNotExists('constraints', function(table) {
+            table.increments()
+            table.enum('field', ['stars', 'language'])
+            table.enum('bound', ['lessThan', 'greaterThan', 'equals'])
+            table.string('value')
+            table.string('fundId').references('funds.id')
         })
     ])
 }
