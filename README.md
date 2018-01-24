@@ -11,15 +11,17 @@ A place to compensate open source development
 `BazR` requires a few environment variables to develop locally as well
 as fully function. To set these variables, create a file named `.env` in the root of the project with the following values. Variables with \* next to the name are only needed during development.
 
-| Env Var                      | Purpose                                                                          | Notes                                                                         |
-|------------------------------|----------------------------------------------------------------------------------|-------------------------------------------------------------------------------|
-| GITHUB_SCHEMA_CLIENT_TOKEN * | Introspect the GitHub public API                                                 | This can be from your personal account                                        |
-| GITHUB_BOT_ACCESS_TOKEN      | Perform GitHub actions as the bazr-bot account                                   |                                                                               |
-| GITHUB_OAUTH_CLIENT_ID       | Part of the oauth flow                                                           |                                                                               |
-| GITHUB_OAUTH_CLIENT_SECRET   | Part of the oauth flow                                                           |                                                                               |
-| GITHUB_WEBHOOK_HOST          | The URL that the client should use when registering webhooks                     | For ease, [ngrok](https://ngrok.com/) is recommended when developping locally |
-| SERVER_BLOCKCHAIN_ADDRESS    | Identifies the server's blockchain account to limit management of deployed funds | Grab this from Ganache                                                        |
-
+| Env Var                       | Purpose                                                                          | Notes                                                                         |
+| ----------------------------- | -------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| GITHUB_SCHEMA_CLIENT_TOKEN \* | Introspect the GitHub public API                                                 | This can be from your personal account                                        |
+| GITHUB_BOT_ACCESS_TOKEN       | Perform GitHub actions as the bazr-bot account                                   |                                                                               |
+| GITHUB_OAUTH_CLIENT_ID        | Part of the oauth flow                                                           |                                                                               |
+| GITHUB_OAUTH_CLIENT_SECRET    | Part of the oauth flow                                                           |                                                                               |
+| SERVER_BLOCKCHAIN_ADDRESS     | Identifies the server's blockchain account to limit management of deployed funds |                                                                               |
+| GITHUB_WEBHOOK_HOST           | The URL that the client should use when registering webhooks                     | For ease, [ngrok](https://ngrok.com/) is recommended when developping locally |
+| ETHEREUM_NETWORK              | The public Ethereum network the server should connect to                         |                                                                               |
+| INFURA_ACCESS_TOKEN           | An access token for the server to talk to [infura.io](www.infura.io)             |                                                                               |
+| SERVER_BLOCKCHAIN_PRIVATE_KEY | The private key for the server, used when signing transactions offline           |                                                                               |
 
 ### Running the application
 
