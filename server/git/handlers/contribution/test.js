@@ -63,14 +63,16 @@ describe('Merged Contributions', () => {
             {
                 pull_request: {
                     merged: true,
-                    repo: {
+                    repository: {
                         default_branch: 'master'
                     },
                     base: {
                         ref: 'master'
                     },
-                    user: {
-                        login: 'asdf'
+                    head: {
+                        user: {
+                            login: 'asdf'
+                        }
                     },
                     body: 'fixes #1'
                 }
@@ -153,14 +155,16 @@ describe('Merged Contributions', () => {
             {
                 pull_request: {
                     merged: true,
-                    repo: {
+                    repository: {
                         default_branch: 'master'
                     },
                     base: {
                         ref: 'master'
                     },
-                    user: {
-                        login: 'asdf2'
+                    head: {
+                        user: {
+                            login: 'asdf2'
+                        }
                     },
                     body: 'fixes #1'
                 }

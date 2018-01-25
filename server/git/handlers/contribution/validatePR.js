@@ -3,4 +3,4 @@ export default pull_request =>
     // if it was merged (not closed)
     pull_request.merged &&
     // and targets the default branch of the repo
-    pull_request.base.ref === pull_request.repo.default_branch
+    pull_request.base.ref === pull_request.repository.default_branch

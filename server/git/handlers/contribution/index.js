@@ -18,7 +18,7 @@ export default async ({ pull_request }, { repo } = {}) => {
     }
 
     // look up row of the contributor
-    const contributor = pull_request.user.login
+    const contributor = pull_request.head.user.login
 
     // TODO: wrap all of these in a transaction
 
@@ -43,7 +43,7 @@ export default async ({ pull_request }, { repo } = {}) => {
 
     // make sure we only reward verified/valid issues designated by the pull request body
     const [issues, project, projectRepository] = await _filterIssues({
-        repo: repo || new GithubRepo(pull_request.repo.owner.login, pull_request.repo.name),
+        repo: repo || new GithubRepo(pull_request.head.repo.owner.login, pull_request.head.repo.name),
         issues: _issuesInPR(pull_request.body)
     })
 
