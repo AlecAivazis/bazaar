@@ -51,6 +51,7 @@ export default async (req, res) => {
 
         // parse ther response as json
         const { data: { viewer: { login } } } = response
+        console.log(login)
 
         // if we have never seen this account name before
         if ((await database('users').where({ accountName: login })).length === 0) {

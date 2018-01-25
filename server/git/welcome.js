@@ -67,7 +67,7 @@ export const recieveContribution = async ({ repoID, user }) => {
         // use the correct id
         userId = existingUsers[0].id
     }
-
+    console.log('received contribution to', repoID)
     // if we recognize the project
     const projects = await database('projects').where({ repoID })
     if (projects.length === 1) {

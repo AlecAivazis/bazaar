@@ -38,6 +38,8 @@ export default async ({ from, to, projectName, amount }) => {
     // sign the transaction with the server's private key
     const signedTx = tx.sign(Buffer.from(process.env.SERVER_BLOCKCHAIN_PRIVATE_KEY, 'hex'))
 
+    const value = await client.eth.sendRawTransaction(signedTx)
+    console.log(value)
     // send the raw transaction to the client and return it's transaction hash
-    return await client.eth.sendRawTransaction(signedTx)
+    return value
 }
