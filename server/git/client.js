@@ -70,7 +70,7 @@ export default class GithubRepoClient {
             return this._mocks[mockKey]
         }
 
-        const data = await this._graphqlRequest(
+        const { data, errors } = await this._graphqlRequest(
             `
             query {
                 repository(owner: "${this._owner}", name:"${this._repo}") {
@@ -79,10 +79,12 @@ export default class GithubRepoClient {
             }
         `
         )
+        if (errors) {
+            throw errors[0].message
+        }
         if (!data) {
             throw new Error('did not get response for query ' + mockKey)
         }
-
         return data.repository
     }
 
@@ -143,6 +145,6 @@ export default class GithubRepoClient {
         })
 
         // parse ther response as json
-        return (await response.json()).data
+        return await response.json()
     }
 }

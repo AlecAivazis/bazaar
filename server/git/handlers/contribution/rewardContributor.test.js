@@ -10,7 +10,7 @@ afterEach(cleanDb)
 const issueComments = { comments: { edges: [{ node: { reactions: { totalCount: 3 } } }] } }
 
 const _mockRepo = {
-    languages: [{ node: { name: 'JavaScript' } }],
+    languages: { edges: [{ node: { name: 'JavaScript' } }] },
     stargazers: {
         totalCount: 1
     }

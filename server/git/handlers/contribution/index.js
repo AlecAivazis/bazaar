@@ -25,7 +25,7 @@ export default async ({ pull_request }, { repo } = {}) => {
     // look for the list of users with that name
     const existingUsers = await database('users')
         .where({ accountName: contributor })
-        .select('id', 'walletAddress')
+        .select('id', 'walletAddress', 'accountName')
     // the id of the target user
     let user
 

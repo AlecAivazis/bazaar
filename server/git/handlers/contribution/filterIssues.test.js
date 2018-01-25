@@ -52,11 +52,13 @@ test('filters out issues that were closed before the project was created', async
             totalCount
         }
         languages(first:1, orderBy:{field:SIZE, direction:DESC}) {
-            node {
-                name
+            edges {
+                node {
+                    name
+                }
             }
         }`,
-        value: { stargazers: { totalCount: 1 }, languages: [{ node: { name: 'JavaScript' } }] }
+        value: { stargazers: { totalCount: 1 }, languages: { edges: [{ node: { name: 'JavaScript' } }] } }
     })
 
     const [issues, project, projectRepo] = await filterIssues({
@@ -129,12 +131,14 @@ test('filters out issues older than the project', async () => {
                 totalCount
             }
             languages(first:1, orderBy:{field:SIZE, direction:DESC}) {
-                node {
-                    name
+                edges {
+                    node {
+                        name
+                    }
                 }
             }
         `,
-        value: { stargazers: { totalCount: 1 }, languages: [{ node: { name: 'JavaScript' } }] }
+        value: { stargazers: { totalCount: 1 }, languages: { edges: [{ node: { name: 'JavaScript' } }] } }
     })
 
     const [issues, project, projectRepo] = await filterIssues({
@@ -208,12 +212,14 @@ test('allows issues closed after the project was created', async () => {
                 totalCount
             }
             languages(first:1, orderBy:{field:SIZE, direction:DESC}) {
+             edges {
                 node {
                     name
                 }
             }
+            }
         `,
-        value: { stargazers: { totalCount: 1 }, languages: [{ node: { name: 'JavaScript' } }] }
+        value: { stargazers: { totalCount: 1 }, languages: { edges: [{ node: { name: 'JavaScript' } }] } }
     })
 
     const [issues, project, projectRepo] = await filterIssues({

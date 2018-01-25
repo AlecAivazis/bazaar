@@ -31,7 +31,7 @@ export default mutationWithClientMutationId({
     }),
     mutateAndGetPayload: async ({ repoID }) => {
         // create the project with the matching repoID
-        const projectsCreated = await database('projects').insert({ repoID })
+        const projectsCreated = await database('projects').insert({ repoID, created_at: new Date() })
 
         // pull out the owner and repo from the repoID
         const [owner, repo] = repoID.split('/')

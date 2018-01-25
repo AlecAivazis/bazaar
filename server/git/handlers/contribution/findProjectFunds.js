@@ -14,7 +14,9 @@ type LanguageSpec = {
 }
 
 export type ProjectCriteriaProfile = {
-    languages: LanguageSpec[],
+    languages: {
+        edges: LanguageSpec[]
+    },
     stargazers: {
         totalCount: number
     }
@@ -24,7 +26,7 @@ export default async (project: ProjectCriteriaProfile, amount: number): Funding[
     // find all registered constraints that satisfy the project
     const constraints = await database('constraints')
         .select('fundId')
-        .where({ field: 'language', bound: 'equals', value: project.languages[0].node.name })
+        .where({ field: 'language', bound: 'equals', value: project.languages.edges[0].node.name })
         .orWhere(function() {
             this.where({ field: 'stars', bound: 'lessThan' }).andWhere('value', '>', project.stargazers.totalCount)
         })

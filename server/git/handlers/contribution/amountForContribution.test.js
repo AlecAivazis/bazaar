@@ -18,5 +18,17 @@ test('computes the correct amount for a simple contribution', () => {
     }
 
     // check that we base the value on the number of votes
-    expect(amountForContribution(issue)).toEqual(0.03)
+    expect(amountForContribution(issue)).toEqual(0.04)
+})
+
+test('has a base cost for a contribution', () => {
+    // an issue to test against
+    const issue = {
+        comments: {
+            edges: []
+        }
+    }
+
+    // check that we base the value on the number of votes
+    expect(amountForContribution(issue)).toEqual(0.01)
 })

@@ -29,13 +29,15 @@ test('can find funds that specify a language criteria', async () => {
 
     // the project we are funding
     const project = {
-        languages: [
-            {
-                node: {
-                    name: 'JavaScript'
+        languages: {
+            edges: [
+                {
+                    node: {
+                        name: 'JavaScript'
+                    }
                 }
-            }
-        ],
+            ]
+        },
         stargazers: {
             totalCount: 10
         }
@@ -62,13 +64,15 @@ test('can find funds that set a minimum star criteria', async () => {
 
     // the project we are funding
     const project = {
-        languages: [
-            {
-                node: {
-                    name: 'JavaScript'
+        languages: {
+            edges: [
+                {
+                    node: {
+                        name: 'JavaScript'
+                    }
                 }
-            }
-        ],
+            ]
+        },
         stargazers: {
             totalCount: 10
         }
@@ -93,13 +97,15 @@ test('can find funds that set a maximum star criteria', async () => {
 
     // the project we are funding
     const project = {
-        languages: [
-            {
-                node: {
-                    name: 'JavaScript'
+        languages: {
+            edges: [
+                {
+                    node: {
+                        name: 'JavaScript'
+                    }
                 }
-            }
-        ],
+            ]
+        },
         stargazers: {
             totalCount: 10
         }
@@ -134,13 +140,15 @@ test('splits withdrawl across all matches', async () => {
 
     // the project we are funding
     const project = {
-        languages: [
-            {
-                node: {
-                    name: 'JavaScript'
+        languages: {
+            edges: [
+                {
+                    node: {
+                        name: 'JavaScript'
+                    }
                 }
-            }
-        ],
+            ]
+        },
         stargazers: {
             totalCount: 10
         }

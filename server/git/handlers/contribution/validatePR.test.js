@@ -5,10 +5,10 @@ test('is not valid if PR was closed', async () => {
     expect(
         validatePR({
             merged: false,
-            repository: {
-                default_branch: 'master'
-            },
             base: {
+                repo: {
+                    default_branch: 'master'
+                },
                 ref: 'foo'
             },
             head: {
@@ -25,10 +25,10 @@ test('is valid if PR targetted default branch', async () => {
     expect(
         validatePR({
             merged: true,
-            repository: {
-                default_branch: 'master'
-            },
             base: {
+                repo: {
+                    default_branch: 'master'
+                },
                 ref: 'master'
             },
             head: {
@@ -45,10 +45,10 @@ test('does not reward contributor if PR targetted a non-default branch', async (
     expect(
         validatePR({
             merged: true,
-            repository: {
-                default_branch: 'master'
-            },
             base: {
+                repo: {
+                    default_branch: 'master'
+                },
                 ref: 'foo'
             },
             head: {

@@ -52,21 +52,23 @@ describe('Merged Contributions', () => {
                 totalCount
             }
             languages(first:1, orderBy:{field:SIZE, direction:DESC}) {
-                node {
-                    name
+                edges {
+                    node {
+                        name
+                    }
                 }
             }`,
-            value: { stargazers: { totalCount: 1 }, languages: [{ node: { name: 'JavaScript' } }] }
+            value: { stargazers: { totalCount: 1 }, languages: { edges: [{ node: { name: 'JavaScript' } }] } }
         })
 
         await recieveContribution(
             {
                 pull_request: {
                     merged: true,
-                    repository: {
-                        default_branch: 'master'
-                    },
                     base: {
+                        repo: {
+                            default_branch: 'master'
+                        },
                         ref: 'master'
                     },
                     head: {
@@ -144,21 +146,23 @@ describe('Merged Contributions', () => {
                 totalCount
             }
             languages(first:1, orderBy:{field:SIZE, direction:DESC}) {
-                node {
+                edges {
+                    node {
                     name
                 }
+            }
             }`,
-            value: { stargazers: { totalCount: 1 }, languages: [{ node: { name: 'JavaScript' } }] }
+            value: { stargazers: { totalCount: 1 }, languages: { edges: [{ node: { name: 'JavaScript' } }] } }
         })
 
         await recieveContribution(
             {
                 pull_request: {
                     merged: true,
-                    repository: {
-                        default_branch: 'master'
-                    },
                     base: {
+                        repo: {
+                            default_branch: 'master'
+                        },
                         ref: 'master'
                     },
                     head: {

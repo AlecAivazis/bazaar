@@ -6,6 +6,7 @@ import { Fund } from '~/contracts'
 import { transferFunds } from '~/server/blockchain'
 
 export default async ({ project, issues, user, repo }) => {
+    console.log(`reward ${user.accountName} for contribution to ${project.repoID}: ${JSON.stringify(issues)}`)
     // check if the user is not already a member of the project
     if (
         (await database('project_membership')
@@ -15,9 +16,9 @@ export default async ({ project, issues, user, repo }) => {
         // create an entry in the membership table
         await database('project_membership').insert({ userId: user.id, projectId: project.id })
     }
-
     // for each issue we care about
     for (const issue of issues) {
+        console.log(`looking for rewards for issue #${issue.number}`)
         // look for a transaction record for this issue
         const txBatchCount = (await database('transactions')
             .where({
@@ -29,10 +30,12 @@ export default async ({ project, issues, user, repo }) => {
         if (txBatchCount === 0) {
             // compute the amount this contribution is worth
             const contributionAmount = amountForContribution(issue)
+            console.log(`first time seeing issue #${issue.number}, worth ${contributionAmount}`)
 
             // TODO: turn this into a batch insert
             // for each piece of funding we could find
             for (const { fund, amount } of await findProjectFunds(repo, contributionAmount)) {
+                console.log('transaction from ', fund.address)
                 // create a transaction for the transfer (if possible)
                 const transactionHash =
                     // if we have an address for the user
