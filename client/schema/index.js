@@ -28,7 +28,8 @@ extend type Repository {
 
 input CreateFundContractInput {
     name: String!
-    deposit: BigNumber
+    deposit: BigNumber,
+    constraints: FundConstraintsInput
 }
 
 extend type Mutation {
@@ -81,7 +82,6 @@ export default async function createSchema(githubToken) {
                 profile: {
                     fragment: 'fragment BazrUserProfile on BazrUser { accountName }',
                     resolve: (parent, args, context, info) => {
-                        console.log(parent.accountName)
                         // return the repository designated by the ID
                         return mergeInfo.delegate('query', 'user', { login: parent.accountName }, context, info)
                     }
@@ -130,12 +130,9 @@ export default async function createSchema(githubToken) {
             MinedFundContract: {
                 fund: {
                     fragment: `fragment MinedFundContractFund on FundContract { createdBy } `,
-                    resolve: async (parent, args, context, info) => {
+                    resolve: async (parent, args, context, info) =>
                         // we need to find the address for the transaction that made the contract
-                        console.log(parent)
-
-                        return mergeInfo.delegate('query', 'fund', { address: parent.createdBy }, context, info)
-                    }
+                        mergeInfo.delegate('query', 'fund', { address: parent.createdBy }, context, info)
                 }
             },
             ContractWithdrawl: {

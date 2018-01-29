@@ -11,6 +11,7 @@ export default async (req, res) => {
         action === 'closed' && // was closed
         pull_request.merged // and merged (or squashed...)
     ) {
+        console.log('PR closed')
         // if the event represents the welcome PR
         if (pull_request.user.login === 'bazr-bot') {
             const { repo, user } = pull_request.base

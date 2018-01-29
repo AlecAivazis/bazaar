@@ -15,8 +15,7 @@
         "relay:watch": "npm run relay -- --watch",
         "test": "jest",
         "test:coverage": "npm run test -- --coverage",
-        "test:coverage:report":
-            "npm run test:coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
+        "test:coverage:report": "npm run test:coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js",
         "test:watch": "npm run test -- --watch",
         "mist": "open -a /Applications/Mist.app --args --rpc http://localhost:8545",
         "__internal__knex": "knex --knexfile server/database/knexfile.js",
@@ -32,8 +31,12 @@
         "trailing-comma": true
     },
     "jest": {
-        "setupFiles": ["<rootDir>/scripts/init-enzyme.js"],
-        "testMatch": ["**/*test.js?(x)"]
+        "setupFiles": [
+            "<rootDir>/scripts/init-enzyme.js"
+        ],
+        "testMatch": [
+            "**/*test.js?(x)"
+        ]
     },
     "devDependencies": {
         "babel-cli": "^6.26.0",
@@ -81,7 +84,7 @@
         "knex": "^0.14.0",
         "moment": "^2.19.2",
         "prop-types": "^15.6.0",
-        "quark-web": "0.1.0-beta.19",
+        "quark-web": "0.1.0-beta.22",
         "query-string": "^5.0.1",
         "react": "^16.2.0",
         "react-dom": "^16.0.0",

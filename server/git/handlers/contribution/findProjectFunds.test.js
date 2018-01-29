@@ -164,3 +164,31 @@ test('splits withdrawl across all matches', async () => {
 })
 
 test('handles funds that cannot fully support the project')
+
+test('does not barf when repos have no registered language', async () => {
+    // create a fund
+    const [fund1] = await database('funds').insert({ name: 'My Funda', address: '1234', id: 10 })
+    // add a language contraint to the fund
+    await database('constraints').insert({
+        fundId: fund1,
+        field: 'language',
+        bound: 'equals',
+        value: 'JavaScript'
+    })
+
+    // the project we are funding
+    const project = {
+        languages: {
+            edges: []
+        },
+        stargazers: {
+            totalCount: 0
+        }
+    }
+
+    // the amount we want to fund the project
+    const amount = 1
+
+    // make sure we eidn't get any funds back
+    expect(await findProjectFunds(project, amount)).toEqual([])
+})

@@ -17,7 +17,6 @@ type Props = {
 }
 
 const FundListRow = ({ fund, last }: Props) => {
-    console.log(fund.contract.__typename === 'MinedContractFund')
     return fund.contract.__typename === 'PendingContractFund' ? (
         'Contract not mined'
     ) : (

@@ -33,14 +33,15 @@ const deployFund = async (name, value = 0) => {
     return txHash
 }
 
-export default async (_, { input: { name, deposit } }) => {
+export default async (_, { input: { name, deposit, constraints } }) => {
     // create the fund contract
     const address = await deployFund(name, deposit)
+    const constraintInput = JSON.stringify(constraints).replace(/\"([^(\")"]+)\":/g, '$1:')
 
     // create the corresponding fund on the server
     const { CreateFund: { fund: { id } } } = await queryServer(`
         mutation {
-            CreateFund(input: { name: "${name}", address: "${address}"}) {
+            CreateFund(input: { name: "${name}", address: "${address}", constraints: ${constraintInput}}) {
                 fund {
                     id
                 }

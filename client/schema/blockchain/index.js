@@ -123,7 +123,6 @@ export default makeExecutableSchema({
         },
         Query: {
             fundContract: async (_, { address }) => {
-                console.log(address)
                 try {
                     // grab the contract address from the transaction hash
                     var { contractAddress } = await window.web3.eth.getTransactionReceipt(address)

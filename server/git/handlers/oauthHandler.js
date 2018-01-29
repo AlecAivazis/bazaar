@@ -51,11 +51,9 @@ export default async (req, res) => {
 
         // parse ther response as json
         const { data: { viewer: { login } } } = response
-        console.log(login)
 
         // if we have never seen this account name before
         if ((await database('users').where({ accountName: login })).length === 0) {
-            console.log('updating user table')
             // create an entry in our database with the user
             await database('users').insert({ accountName: login })
         }

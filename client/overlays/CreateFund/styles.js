@@ -3,7 +3,6 @@ export default {
         marginBottom: 20
     },
     footer: {
-        marginTop: 20,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'flex-end'
