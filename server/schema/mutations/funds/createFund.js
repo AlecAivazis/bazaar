@@ -41,13 +41,50 @@ export default mutationWithClientMutationId({
         }
     }),
     mutateAndGetPayload: async ({ name, address, constraints }) => {
-        console.log(constraints)
         // create the project with the matching repoID
-        const fundsCreated = await database('funds').insert({ name, address })
+        const [fundId] = await database('funds').insert({ name, address })
+        // if we have to supply constraints to the fund
+        if (constraints) {
+            // the rows to add to the constraint database
+            const rows = []
+
+            // if we have to supply a language constraint
+            if (constraints.language) {
+                rows.push({
+                    field: 'language',
+                    bound: 'equals',
+                    value: constraints.language,
+                    fundId
+                })
+            }
+
+            // if we have to supply a minimum star constraint
+            if (constraints.minStars) {
+                rows.push({
+                    field: 'stars',
+                    bound: 'greaterThan',
+                    value: constraints.minStars,
+                    fundId
+                })
+            }
+
+            // if we have to supply a maximum star constraint
+            if (constraints.maxStars) {
+                rows.push({
+                    field: 'stars',
+                    bound: 'lessThan',
+                    value: constraints.maxStars,
+                    fundId
+                })
+            }
+
+            // add the constraints
+            await database.batchInsert('constraints', rows, 3)
+        }
 
         // we're done so leave behind the information we need to query for the membership we just modified
         return {
-            __fundId: fundsCreated[0]
+            __fundId: fundId
         }
     }
 })

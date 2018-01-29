@@ -83,18 +83,18 @@ test('can create a fund with constraints', async () => {
     expect(
         (await database('constraints')
             .where({ field: 'language', bound: 'equals', value: 'JavaScript', fundId: fund.id })
-            .count())['count(*)']
+            .count())[0]['count(*)']
     ).toEqual(1)
 
     expect(
         (await database('constraints')
             .where({ field: 'stars', bound: 'lessThan', value: '10', fundId: fund.id })
-            .count())['count(*)']
+            .count())[0]['count(*)']
     ).toEqual(1)
 
     expect(
         (await database('constraints')
             .where({ field: 'stars', bound: 'greaterThan', value: '1', fundId: fund.id })
-            .count())['count(*)']
+            .count())[0]['count(*)']
     ).toEqual(1)
 })

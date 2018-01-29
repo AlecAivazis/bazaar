@@ -120,7 +120,7 @@ class CreateFundOverlay extends React.Component<Props, State> {
                                     />
                                 </Label>
                                 <Label
-                                    value="Only Fund Project Primarily Written In"
+                                    value="Only Fund Projects Primarily Written In"
                                     style={styles.input}
                                     error={getError('language')}
                                 >
