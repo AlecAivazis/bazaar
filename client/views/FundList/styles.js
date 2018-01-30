@@ -29,11 +29,23 @@ export default {
     stat: {
         fontSize: 14,
         color: grey4,
+        display: 'inline-flex'
+    },
+    constrainContainer: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    star: {
+        marginLeft: 2,
+        fontSize: 14,
+        color: grey4,
         display: 'flex'
     },
-    starContainer: {
+    separator: {
+        fontSize: 14,
+        color: grey4,
         display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center'
+        marginLeft: 4,
+        marginRight: 4
     }
 }

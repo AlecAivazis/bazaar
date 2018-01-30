@@ -2,7 +2,7 @@
 // external imports
 import * as React from 'react'
 import { graphql, createFragmentContainer } from 'react-relay'
-import { Title, Subtitle, IconStar } from 'quark-web'
+import { Title, Subtitle } from 'quark-web'
 import { View } from 'react-native-web'
 import { Link } from 'react-router-dom'
 import web3 from 'web3'
@@ -10,6 +10,7 @@ import web3 from 'web3'
 import { ListRow } from '../../components'
 import styles from './styles'
 import FundListRow_fund from './__generated__/FundListRow_fund.graphql'
+import ConstraintSummary from './FundConstraintSummary'
 
 type Props = {
     fund: FundListRow_fund,
@@ -27,17 +28,8 @@ const FundListRow = ({ fund, last }: Props) => {
                     <Subtitle style={styles.address}>{fund.contract.address}</Subtitle>
                 </Title>
                 <View style={styles.statsRow}>
-                    <View style={styles.starContainer}>
-                        <Subtitle style={styles.stat}>Javascript &middot; more than 100</Subtitle>
-                        <Subtitle style={{ ...styles.stat, marginLeft: 2 }}>
-                            {' '}
-                            <IconStar />
-                        </Subtitle>
-                        <Subtitle style={{ ...styles.stat, marginLeft: 2 }}>&middot; less than 500</Subtitle>
-                        <Subtitle style={{ ...styles.stat, marginLeft: 2 }}>
-                            {' '}
-                            <IconStar />
-                        </Subtitle>
+                    <View style={styles.constrainContainer}>
+                        <ConstraintSummary fund={fund} />
                     </View>
                     <Subtitle style={styles.stat}>
                         Ether Remaining: {web3.utils.fromWei(fund.contract.balance, 'ether').toString()}
@@ -53,6 +45,7 @@ export default createFragmentContainer(
     graphql`
         fragment FundListRow_fund on Fund {
             name
+            ...FundConstraintSummary_fund
             contract {
                 __typename
                 ... on MinedFundContract {
