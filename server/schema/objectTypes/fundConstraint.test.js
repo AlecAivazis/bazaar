@@ -21,6 +21,7 @@ test('can find the constraints attached with a particular fund', async () => {
         ],
         3
     )
+
     // get the constraints for the fund we just made
     const { data, errors } = await graphql(
         schema,
@@ -28,6 +29,7 @@ test('can find the constraints attached with a particular fund', async () => {
           {
             node(id: "${toGlobalId('Fund', fundId)}") {
               ... on Fund {
+                name
                 constraints {
                   edges {
                     node {
@@ -61,7 +63,7 @@ test('can find the constraints attached with a particular fund', async () => {
         {
             node: {
                 bound: 'LESS_THAN',
-                value: '1'
+                value: '100'
             }
         },
         {

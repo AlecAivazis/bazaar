@@ -10,8 +10,8 @@ const StarConstraint = new GraphQLObjectType({
             type: new GraphQLEnumType({
                 name: 'StarConstraintDirection',
                 values: {
-                    GREATER_THAN: { value: 0 },
-                    LESS_THAN: { value: 1 }
+                    GREATER_THAN: { value: 'greaterThan' },
+                    LESS_THAN: { value: 'lessThan' }
                 }
             })
         }
@@ -30,7 +30,10 @@ export const FundConstraint = new GraphQLUnionType({
     types: [StarConstraint, LanguageConstraint],
     sqlTable: 'constraints',
     uniqueKey: 'id',
-    resolveType: root => (root.field === 'star' ? 'StarConstraint' : 'LanguageConstraint')
+    alwaysFetch: 'field',
+    resolveType: root => {
+        return root.field === 'stars' ? 'StarConstraint' : 'LanguageConstraint'
+    }
 })
 
 export const { edgeType: FundConstraintEdge, connectionType: FundConstraintConnection } = connectionDefinitions({

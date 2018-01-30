@@ -1,6 +1,6 @@
 // external imports
 import { GraphQLObjectType, GraphQLString, GraphQLNonNull } from 'graphql'
-import { globalIdField, connectionDefinitions } from 'graphql-relay'
+import { globalIdField, connectionDefinitions, connectionFromArray, connectionArgs } from 'graphql-relay'
 // local imports
 import { nodeInterface } from '../interfaces'
 import { FundConstraintConnection } from '.'
@@ -19,7 +19,14 @@ export const Fund = new GraphQLObjectType({
         address: { type: new GraphQLNonNull(GraphQLString) },
         constraints: {
             type: FundConstraintConnection,
-            sqlJoin: (fundTable, constraintTable) => `${constraintTable}.fundId = ${fundTable}.id`
+            sqlJoin: (fundTable, constraintTable) => `${constraintTable}.fundId = ${fundTable}.id`,
+            args: connectionArgs,
+            resolve: (root, args) => {
+                // turn the list into a connection
+                const connection = connectionFromArray(root.constraints, args)
+                // return the final connection
+                return connection
+            }
         }
     })
 })
