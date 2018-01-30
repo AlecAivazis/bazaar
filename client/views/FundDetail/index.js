@@ -20,10 +20,11 @@ const FundDetail = ({ match: { params: { address } } }, { environment }) => (
                     __typename
                     ... on MinedFundContract {
                         address
+                        ...DepositEtherOverlay_fund
                         fund {
                             name
-                            ...DepositEtherOverlay_fund
                         }
+
                         ...TransactionTimeline_contract
                         ...ContractFundedProjects_contract
                     }
@@ -38,7 +39,7 @@ const FundDetail = ({ match: { params: { address } } }, { environment }) => (
                 <BooleanState>
                     {({ state, toggle }) => (
                         <React.Fragment>
-                            <DepositEtherOverlay visible={state} toggle={toggle} fund={contract.fund} />
+                            <DepositEtherOverlay visible={state} toggle={toggle} fund={contract} />
                             <FlexRow justifyContent="space-between" style={styles.header}>
                                 <FlexRow alignItems="flex-end">
                                     <H1 style={styles.name}>{contract.fund.name}</H1>

@@ -51,7 +51,7 @@ const DepositEtherOverlay = ({ visible, toggle, fund, relay }: Props) => (
 export default createFragmentContainer(
     DepositEtherOverlay,
     graphql`
-        fragment DepositEtherOverlay_fund on Fund {
+        fragment DepositEtherOverlay_fund on MinedFundContract {
             address
         }
     `

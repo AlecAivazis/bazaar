@@ -33,11 +33,15 @@ const ProjectUserSummary = ({ project, lastElementStyle, relay }: Props) => {
                 return null
             }
 
+            console.log(edge)
+
             // check if we need to add extra styling
             const extraStyle = i === project.members.edges.length - 1 ? lastElementStyle : {}
 
             // grab the user and their from the node
             const { user, firstTransaction, lastTransaction, totalAmountEarned } = edge.node
+
+            console.log(firstTransaction, lastTransaction)
 
             // the date the first transaction occured
             const firstStamp = moment(firstTransaction.edges[0].node.created_at)

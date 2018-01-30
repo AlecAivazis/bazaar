@@ -1,11 +1,6 @@
 // external imports
 import { GraphQLObjectType, GraphQLFloat, GraphQLNonNull, GraphQLString, GraphQLInt } from 'graphql'
-import {
-    connectionDefinitions,
-    globalIdField,
-    connectionFromArray,
-    connectionArgs
-} from 'graphql-relay'
+import { connectionDefinitions, globalIdField, connectionFromArray, connectionArgs } from 'graphql-relay'
 // local imports
 import { Fund, ProjectType, UserType, TransactionConnection } from '.'
 import { nodeInterface } from '../interfaces'
@@ -30,8 +25,7 @@ export const ProjectMembershipType = new GraphQLObjectType({
         },
         project: {
             type: new GraphQLNonNull(ProjectType),
-            sqlJoin: (membershipTable, projectTable) =>
-                `${membershipTable}.projectId = ${projectTable}.id`
+            sqlJoin: (membershipTable, projectTable) => `${membershipTable}.projectId = ${projectTable}.id`
         },
         transactions: {
             type: new GraphQLNonNull(TransactionConnection),
@@ -43,6 +37,7 @@ export const ProjectMembershipType = new GraphQLObjectType({
         totalAmountEarned: {
             type: new GraphQLNonNull(GraphQLInt),
             description: 'The total amount of ethereum earned over the lifetime of this project',
+            resolve: root => root.totalAmountEarned || 0,
             sqlExpr: membershipTable =>
                 `(SELECT sum(amount) FROM transactions WHERE project = ${membershipTable}.projectId AND recipientId = ${membershipTable}.userId)`
         }
