@@ -1,6 +1,7 @@
 // external imports
 import Web3 from 'web3'
 import Tx from 'ethereumjs-tx'
+import BigNumber from 'bignumber.js'
 // local imports
 import { Fund } from '~/contracts'
 
@@ -26,20 +27,31 @@ export default async ({ from, to, projectName, amount }) => {
     // the method we are going to call
     const method = fund.methods.transferReward(to, projectName, Web3.utils.toWei(amount, 'ether'))
 
-    // the transaction we are going to sign offline
-    const tx = new Tx({
+    const txData = {
         nonce: await web3.eth.getTransactionCount(process.env.SERVER_BLOCKCHAIN_ADDRESS),
         to: from,
         data: method.encodeABI(),
         gasPrice: await web3.eth.getGasPrice(),
-        gasLimit: (await method.estimateGas()).mul('1.2')
-    })
+        gasLimit: new BigNumber(
+            await method.estimateGas({
+                from: process.env.SERVER_BLOCKCHAIN_ADDRESS,
+                to: from
+            })
+        )
+            .mul('1.2')
+            .toString()
+    }
+
+    // the transaction we are going to sign offline
+    const tx = new Tx(txData)
 
     // sign the transaction with the server's private key
-    const signedTx = tx.sign(Buffer.from(process.env.SERVER_BLOCKCHAIN_PRIVATE_KEY, 'hex'))
+    tx.sign(Buffer.from(process.env.SERVER_BLOCKCHAIN_PRIVATE_KEY, 'hex'))
+    const serializedTx = tx.serialize()
 
-    const value = await client.eth.sendRawTransaction(signedTx)
-    console.log(value)
+    // send the signed transaction and hold onto the receipt hash
+    const value = await web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'))
+
     // send the raw transaction to the client and return it's transaction hash
     return value
 }

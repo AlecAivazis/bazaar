@@ -1,3 +1,5 @@
+// external imports
+import Web3 from 'web3'
 // local imports
 import database from '~/server/database'
 import findProjectFunds from './findProjectFunds'
@@ -6,7 +8,6 @@ import { Fund } from '~/contracts'
 import { transferFunds } from '~/server/blockchain'
 
 export default async ({ project, issues, user, repo }) => {
-    console.log(`reward ${user.accountName} for contribution to ${project.repoID}: ${JSON.stringify(issues)}`)
     // check if the user is not already a member of the project
     if (
         (await database('project_membership')
@@ -18,7 +19,6 @@ export default async ({ project, issues, user, repo }) => {
     }
     // for each issue we care about
     for (const issue of issues) {
-        console.log(`looking for rewards for issue #${issue.number}`)
         // look for a transaction record for this issue
         const txBatchCount = (await database('transactions')
             .where({
@@ -30,25 +30,35 @@ export default async ({ project, issues, user, repo }) => {
         if (txBatchCount === 0) {
             // compute the amount this contribution is worth
             const contributionAmount = amountForContribution(issue)
-            console.log(`first time seeing issue #${issue.number}, worth ${contributionAmount}`)
 
             // TODO: turn this into a batch insert
             // for each piece of funding we could find
             for (const { fund, amount } of await findProjectFunds(repo, contributionAmount)) {
-                console.log('transaction from ', fund.address)
-                // create a transaction for the transfer (if possible)
-                const transactionHash =
-                    // if we have an address for the user
-                    user.walletAddress && process.env.NODE_ENV !== 'test'
-                        ? // transfer funds to the user
-                          await transferFunds({
-                              from: fund.address,
-                              to: user.walletAddress,
-                              amount,
-                              projectName: project.repoID
-                          })
-                        : // don't initiate a transfer, we'll deal with it later when we have an address for them
-                          null
+                let transactionHash = null
+                if (user.walletAddress && process.env.NODE_ENV !== 'test') {
+                    // create a web3 instance attached to the fund's provider
+                    const web3 = new Web3()
+                    web3.setProvider(Fund.currentProvider)
+
+                    // figure out the actual contract address
+                    const { contractAddress } = await web3.eth.getTransactionReceipt(fund.address)
+
+                    // try to transfer the funds from the fund to the user
+                    try {
+                        transactionHash = await transferFunds({
+                            from: contractAddress,
+                            to: user.walletAddress,
+                            amount: amount.toString(),
+                            projectName: project.repoID
+                        })
+                    } catch (err) {
+                        console.error('Ran into error when signing transaction.', err.message)
+                    }
+                } else {
+                    console.log('received contribution from user without wallet', user.accountName)
+                }
+
+                console.log(transactionHash)
 
                 // record a transaction for this contribution
                 await database('transactions').insert({
@@ -62,6 +72,8 @@ export default async ({ project, issues, user, repo }) => {
                     transactionHash
                 })
             }
+        } else {
+            console.log(`${issue.number} was already credited`)
         }
     }
 }

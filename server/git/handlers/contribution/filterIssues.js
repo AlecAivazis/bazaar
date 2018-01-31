@@ -8,7 +8,6 @@ export default async ({ repo, issues: issueIds }) => {
     // QUESTION: do we reward a subset of these issues? Is one issue out of these indication
     //           something funky is going on? If we allow PRs to partially reward, do we store
     //           some reference to the closed issue so we can resole it later?
-    console.log(`checking issues: ${JSON.stringify(issueIds)}`)
 
     // get the information required from the project
     const [project] = await database('projects')
