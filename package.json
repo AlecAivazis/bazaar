@@ -86,7 +86,7 @@
         "react": "^16.2.0",
         "react-dom": "^16.0.0",
         "react-functional": "^2.0.0",
-        "react-native-web": "^0.3.2",
+        "react-native-web": "^0.4.0",
         "react-relay": "^1.4.1",
         "react-router-dom": "^4.2.2",
         "react-scripts": "1.1.0",
