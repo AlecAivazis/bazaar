@@ -85,7 +85,7 @@
         "query-string": "^5.0.1",
         "react": "^16.2.0",
         "react-dom": "^16.0.0",
-        "react-functional": "^2.0.0",
+        "react-functional": "^3.0.0",
         "react-native-web": "^0.5.0",
         "react-relay": "^1.4.1",
         "react-router-dom": "^4.2.2",
